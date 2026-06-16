@@ -1,0 +1,9 @@
+{
+  "model_key": "saprot_650m",
+  "split_mode": "position_level",
+  "ablation": "embedding_only",
+  "best_layer": 31,
+  "best_layer_rho": 0.32100415520652287,
+  "final_layer_rho": 0.31361727730935335,
+  "invariance_score": 0.05021004905097881
+}

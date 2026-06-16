@@ -1,0 +1,9 @@
+{
+  "model_key": "esm2_650m",
+  "split_mode": "random",
+  "ablation": "auxiliary_only",
+  "best_layer": 0,
+  "best_layer_rho": 0.34110127644163474,
+  "final_layer_rho": 0.34110127644163474,
+  "invariance_score": 0.0
+}
