@@ -50,8 +50,6 @@ esm2-layer-invariance/
 │   ├── analyze_esm2.py                # ESM-2 result analysis
 │   ├── analyze_probe.py               # Probing result analysis
 │   └── download_and_analyze.py         # AutoDL download & analysis
-├── 文章说明_通俗版.md                  # Plain-language explanation (Chinese)
-└── 文章说明_专业版.md                  # Professional summary for advisors (Chinese)
 ```
 
 ## Key Findings
