@@ -321,14 +321,13 @@ residue positions across 10 datasets (Figure~\ref{fig:similarity}).
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.7\textwidth]{figures/output/fig2_similarity_heatmap.png}
-\caption{\textbf{Layer-wise cosine similarity matrix (33$\times$33).}
+\caption{\textbf{\revised{Layer-wise similarity matrices for SaProt (33$\times$33).}
 Averaged over 10 datasets and 50 random residue positions per dataset.
-Adjacent layers are highly similar ($\cos=0.98$); \revised{mean similarity decays
-monotonically with distance and collapses to $-0.01$ only between the most distant
-layers (Layer~0 vs.~32). Linear CKA between layers 0 and 32 remains 0.81 for SaProt,
-indicating a rotation that preserves linearly decodable information rather than
-information loss.} Representations change continuously even when supervised predictive
-performance is nearly unchanged under random-split probing.}
+(\textbf{a}) Cosine: adjacent layers are highly similar ($\cos=0.98$); mean similarity
+decays monotonically with distance and collapses to $-0.01$ only between the most
+distant layers (Layer~0 vs.~32). (\textbf{b}) Linear CKA over the same hidden states:
+the most distant layers retain CKA 0.81, indicating a rotation that preserves linearly
+decodable information rather than information loss.}}
 \label{fig:similarity}
 \end{figure}
 
@@ -344,7 +343,7 @@ was 0.808 while their cosine was $-0.009$ (ESM-2: CKA 0.554, cosine 0.558; adjac
 CKA 0.97 for both models). The depth-wise transformation is therefore well described as
 a rotation of the representation that preserves linearly decodable information, which
 explains how supervised performance can remain flat across depth while raw cosine
-collapses (Figure~\ref{fig:fig4}d).} This large
+collapses (Figure~\ref{fig:probing}c).} This large
 rotation of the representational geometry raises a sharp question: \emph{does this
 representational transformation reflect complementary information encoded at different
 depths, or is mutation-relevant predictive performance preserved under this transformation?}
@@ -493,33 +492,23 @@ the last layer.}
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{figures/output/fig4_summary.png}
-\caption{\textbf{\revised{Layer invariance and its boundary conditions across three experimental paradigms.}}
-(\textbf{a}) \revised{Multi-scale pooling under the unified leakage-free pipeline (mutant arm,
-modulo split, 20 datasets per model): both models occupy a narrow band across strategies
-(ESM-2 Ridge 0.439--0.481; SaProt Ridge 0.429--0.434), and last-layer LightGBM is the best
-single configuration for both models.}
-(\textbf{b}) \revised{Logit lens with ESM-2 ($n = 63$): zero-shot $\rho$ rises with depth to
-0.443 at the final layer.} (\textbf{c}) \revised{Logit lens with SaProt real-3Di inputs
-($n = 63$): zero-shot $\rho$ rises from negative early-layer values to 0.437 at the final layer.}
-(\textbf{d}) \revised{Cosine similarity versus layer distance (unique layer pairs, density-colored
-scatter): SaProt decays monotonically and reaches $-0.01$ only at the largest distances, while
-ESM-2 remains positive; linear CKA between the most distant SaProt layers remains 0.81,
-indicating rotation with preserved linear information rather than loss.}}
-\label{fig:fig4}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=\textwidth]{figures/output/fig3_probing_pooling.png}
-\caption{\textbf{\revised{Per-layer probing and multi-scale pooling under the unified protocol.}}
+\includegraphics[width=\textwidth]{figures/output/fig3_probing_pooling_summary.png}
+\caption{\textbf{\revised{Per-layer probing, multi-scale pooling, and layer distance under
+the unified protocol.}}
 (\textbf{a}) \revised{33-layer probing (combined features): under the random split the
-masked-arm profile is flat for both models ($\sigma \approx 10^{-3}$); under leakage-free
-splits performance is lower and the best layers are consistently late (layers 30--32,
+masked-arm profile is flat for both models ($\sigma \approx 10^{-3}$) and is reproduced by
+the random-position lookup control (dotted, 0.600); under leakage-free splits (modulo,
+mutant arm) performance is lower and the best layers are consistently late (layers 30--32,
 $\Delta\rho \leq 0.009$ versus the final layer).}
-(\textbf{b}) \revised{Pooling (mutant arm, modulo split, 20 datasets per model): ESM-2 spread
-across strategies 0.041 (Ridge) to 0.057 (RF); SaProt spread 0.005 (Ridge) to 0.039 (MLP);
-per-fold-trained attention pooling is never best.}}
+(\textbf{b}) \revised{Pooling (mutant arm, modulo split, 20 datasets per model; four
+strategies as dots, mean connected): ESM-2 spread across strategies 0.041 (Ridge) to 0.057
+(RF); SaProt spread 0.005 (Ridge) to 0.039 (MLP); last-layer LightGBM is the best single
+configuration; per-fold-trained attention pooling is never best.}
+(\textbf{c}) \revised{Cosine similarity versus layer distance (unique layer pairs):
+SaProt decays monotonically and reaches $-0.01$ only at the largest distances, while
+ESM-2 remains positive; linear CKA between the most distant SaProt layers remains 0.81
+(Figure~\ref{fig:similarity}), indicating rotation with preserved linear information
+rather than loss.}}
 \label{fig:probing}
 \end{figure}
 
@@ -527,7 +516,7 @@ per-fold-trained attention pooling is never best.}}
 
 \revised{The re-implemented lens (fp32, per-dataset validation against the official
 logits pathway, $n = 63$) produced monotonically improving zero-shot scores with
-depth for both models (Figure~\ref{fig:logit_lens}; Figure~\ref{fig:fig4}b,c). ESM-2 rose from $\rho = 0.031$
+depth for both models (Figure~\ref{fig:logit_lens}). ESM-2 rose from $\rho = 0.031$
 (layer 0) to $\rho = 0.443$ (layer 32), with only shallow fluctuations in early
 layers; SaProt with real 3Di tokens rose from $-0.077$ (layer 0) through
 approximately zero around layer 20 to $\rho = 0.437$ (layer 32). Both curves attain
