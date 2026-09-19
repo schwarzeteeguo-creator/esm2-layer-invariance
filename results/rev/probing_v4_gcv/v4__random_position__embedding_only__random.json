@@ -1,0 +1,632 @@
+{
+ "A0A1I9GEU1_NEIME_Kennouche_2019": {
+  "n_rows": 922,
+  "n_variants": 922,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.09623844023817663,
+   "rho_std": 0.002418969520291687,
+   "n_draws": 8
+  }
+ },
+ "BLAT_ECOLX_Jacquier_2013": {
+  "n_rows": 989,
+  "n_variants": 989,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.4985370489676064,
+   "rho_std": 0.010234122028272938,
+   "n_draws": 8
+  }
+ },
+ "CCDB_ECOLI_Adkar_2012": {
+  "n_rows": 1176,
+  "n_variants": 1176,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.9979682452993754,
+   "rho_std": 5.771921148674101e-06,
+   "n_draws": 8
+  }
+ },
+ "AACC1_PSEAI_Dandage_2018": {
+  "n_rows": 1801,
+  "n_variants": 1801,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5791654362410741,
+   "rho_std": 0.0005316989565949988,
+   "n_draws": 8
+  }
+ },
+ "CALM1_HUMAN_Weile_2017": {
+  "n_rows": 1813,
+  "n_variants": 1813,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.1566599709360671,
+   "rho_std": 0.0008288018501572215,
+   "n_draws": 8
+  }
+ },
+ "CCDB_ECOLI_Tripathi_2016": {
+  "n_rows": 1663,
+  "n_variants": 1663,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5420919578516703,
+   "rho_std": 0.0018791896932233252,
+   "n_draws": 8
+  }
+ },
+ "A4_HUMAN_Seuma_2021": {
+  "n_rows": 5000,
+  "n_variants": 4377,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.3869939651160832,
+   "rho_std": 9.787640733324544e-05,
+   "n_draws": 8
+  }
+ },
+ "DLG4_RAT_McLaughlin_2012": {
+  "n_rows": 1576,
+  "n_variants": 1576,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6986579988259447,
+   "rho_std": 0.0007116898281508069,
+   "n_draws": 8
+  }
+ },
+ "BLAT_ECOLX_Firnberg_2014": {
+  "n_rows": 4783,
+  "n_variants": 4783,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.755549467763197,
+   "rho_std": 0.000533894561829573,
+   "n_draws": 8
+  }
+ },
+ "B3VI55_LIPST_Klesmith_2015": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5603598580317399,
+   "rho_std": 0.0006324556958744838,
+   "n_draws": 8
+  }
+ },
+ "A4GRB6_PSEAI_Chen_2020": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.8087159952334623,
+   "rho_std": 6.402604136435277e-05,
+   "n_draws": 8
+  }
+ },
+ "BLAT_ECOLX_Deng_2012": {
+  "n_rows": 4996,
+  "n_variants": 4996,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7423359164075072,
+   "rho_std": 0.00022087117519007754,
+   "n_draws": 8
+  }
+ },
+ "ADRB2_HUMAN_Jones_2020": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.487088724326306,
+   "rho_std": 0.0007731722636160757,
+   "n_draws": 8
+  }
+ },
+ "BLAT_ECOLX_Stiffler_2015": {
+  "n_rows": 4996,
+  "n_variants": 4996,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7571908815525258,
+   "rho_std": 0.0005627090765060982,
+   "n_draws": 8
+  }
+ },
+ "AMIE_PSEAE_Wrenbeck_2017": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7063883434640185,
+   "rho_std": 0.00023523447075084083,
+   "n_draws": 8
+  }
+ },
+ "A0A2Z5U3Z0_9INFA_Doud_2016": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.720112999562902,
+   "rho_std": 0.00014877580751332587,
+   "n_draws": 8
+  }
+ },
+ "GAL4_YEAST_Kitzman_2015": {
+  "n_rows": 1195,
+  "n_variants": 1195,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6637679928649748,
+   "rho_std": 0.0004784320089090046,
+   "n_draws": 8
+  }
+ },
+ "IF1_ECOLI_Kelsic_2016": {
+  "n_rows": 1367,
+  "n_variants": 1367,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.713829137684787,
+   "rho_std": 0.0009532215199760174,
+   "n_draws": 8
+  }
+ },
+ "DLG4_HUMAN_Faure_2021": {
+  "n_rows": 5000,
+  "n_variants": 4108,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.48860890828433345,
+   "rho_std": 0.00017943216036402627,
+   "n_draws": 8
+  }
+ },
+ "DYR_ECOLI_Thompson_plusLon_2019": {
+  "n_rows": 2363,
+  "n_variants": 2363,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6409547025637347,
+   "rho_std": 0.0006942235565677993,
+   "n_draws": 8
+  }
+ },
+ "CP2C9_HUMAN_Amorosi_abundance_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.628017748392254,
+   "rho_std": 0.0008616531309131729,
+   "n_draws": 8
+  }
+ },
+ "ESTA_BACSU_Nutschel_2020": {
+  "n_rows": 2172,
+  "n_variants": 2172,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6632856701577461,
+   "rho_std": 0.0005802810707973252,
+   "n_draws": 8
+  }
+ },
+ "CP2C9_HUMAN_Amorosi_activity_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7038532020363966,
+   "rho_std": 0.0012669309010271725,
+   "n_draws": 8
+  }
+ },
+ "HSP82_YEAST_Mishra_2016": {
+  "n_rows": 4323,
+  "n_variants": 4323,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7150694311554875,
+   "rho_std": 7.520949546091427e-05,
+   "n_draws": 8
+  }
+ },
+ "GCN4_YEAST_Staller_induction_2018": {
+  "n_rows": 5000,
+  "n_variants": 1660,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.035923218052557576,
+   "rho_std": 6.289468759550919e-05,
+   "n_draws": 8
+  }
+ },
+ "GRB2_HUMAN_Faure_2021": {
+  "n_rows": 5000,
+  "n_variants": 4355,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.4228557758247914,
+   "rho_std": 6.219315336196473e-05,
+   "n_draws": 8
+  }
+ },
+ "P53_HUMAN_Kotler_2018": {
+  "n_rows": 1048,
+  "n_variants": 1048,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.602831331985847,
+   "rho_std": 0.0038956359117752483,
+   "n_draws": 8
+  }
+ },
+ "HSP82_YEAST_Flynn_2019": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.5363377650056538,
+   "rho_std": 0.0030544605808708112,
+   "n_draws": 8
+  }
+ },
+ "HIS7_YEAST_Pokusaeva_2019": {
+  "n_rows": 5000,
+  "n_variants": 3989,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.3704509474698224,
+   "rho_std": 0.0004844510582962343,
+   "n_draws": 8
+  }
+ },
+ "GFP_AEQVI_Sarkisyan_2016": {
+  "n_rows": 5000,
+  "n_variants": 4008,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.2639691516295051,
+   "rho_std": 0.0003729232761868979,
+   "n_draws": 8
+  }
+ },
+ "P84126_THETH_Chan_2017": {
+  "n_rows": 1519,
+  "n_variants": 1519,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6499405966120388,
+   "rho_std": 0.0003512808958727301,
+   "n_draws": 8
+  }
+ },
+ "MTH3_HAEAE_Rockah-Shmuel_2015": {
+  "n_rows": 1777,
+  "n_variants": 1777,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5857430421859889,
+   "rho_std": 0.003043031421578616,
+   "n_draws": 8
+  }
+ },
+ "NUD15_HUMAN_Suiter_2020": {
+  "n_rows": 2844,
+  "n_variants": 2844,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7237021699865096,
+   "rho_std": 0.0002928036687288427,
+   "n_draws": 8
+  }
+ },
+ "RL401_YEAST_Mavor_2016": {
+  "n_rows": 1253,
+  "n_variants": 1253,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6434311697120279,
+   "rho_std": 0.0005004697179337652,
+   "n_draws": 8
+  }
+ },
+ "KKA2_KLEPN_Melnikov_2014": {
+  "n_rows": 4960,
+  "n_variants": 4960,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7081770196255639,
+   "rho_std": 0.00042672948512578437,
+   "n_draws": 8
+  }
+ },
+ "MK01_HUMAN_Brenan_2016": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.44992610888253726,
+   "rho_std": 0.0005414413452934922,
+   "n_draws": 8
+  }
+ },
+ "RL401_YEAST_Roscoe_2013": {
+  "n_rows": 1195,
+  "n_variants": 1195,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7234333667389404,
+   "rho_std": 0.000574236983219968,
+   "n_draws": 8
+  }
+ },
+ "RL401_YEAST_Roscoe_2014": {
+  "n_rows": 1380,
+  "n_variants": 1380,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7275886793617489,
+   "rho_std": 0.0006305052575611863,
+   "n_draws": 8
+  }
+ },
+ "MSH2_HUMAN_Jia_2020": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.48719708046490373,
+   "rho_std": 0.006085515914356096,
+   "n_draws": 8
+  }
+ },
+ "P53_HUMAN_Giacomelli_NULL_Etoposide_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7040066920277404,
+   "rho_std": 0.0015280686518120475,
+   "n_draws": 8
+  }
+ },
+ "Q59976_STRSQ_Romero_2015": {
+  "n_rows": 2999,
+  "n_variants": 2999,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5522078779660105,
+   "rho_std": 0.0033987357131433156,
+   "n_draws": 8
+  }
+ },
+ "PABP_YEAST_Melamed_2013": {
+  "n_rows": 5000,
+  "n_variants": 4403,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.5247871651851936,
+   "rho_std": 8.584685015673217e-05,
+   "n_draws": 8
+  }
+ },
+ "P53_HUMAN_Giacomelli_NULL_Nutlin_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6760686804021558,
+   "rho_std": 0.0008083242105414025,
+   "n_draws": 8
+  }
+ },
+ "TADBP_HUMAN_Bolognesi_2019": {
+  "n_rows": 1196,
+  "n_variants": 1196,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.25385847335347167,
+   "rho_std": 0.0017287443118840405,
+   "n_draws": 8
+  }
+ },
+ "TPOR_HUMAN_Bridgford_S505N_2020": {
+  "n_rows": 562,
+  "n_variants": 562,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.39491783266557834,
+   "rho_std": 0.0008713330985701982,
+   "n_draws": 8
+  }
+ },
+ "P53_HUMAN_Giacomelli_WT_Nutlin_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.8575693665089679,
+   "rho_std": 4.886335273903189e-05,
+   "n_draws": 8
+  }
+ },
+ "RASH_HUMAN_Bandaru_2017": {
+  "n_rows": 3134,
+  "n_variants": 3134,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.6993959159307596,
+   "rho_std": 0.0002628250875415528,
+   "n_draws": 8
+  }
+ },
+ "TRPC_SACS2_Chan_2017": {
+  "n_rows": 1519,
+  "n_variants": 1519,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5908526508933316,
+   "rho_std": 0.00037528386109501064,
+   "n_draws": 8
+  }
+ },
+ "TRPC_THEMA_Chan_2017": {
+  "n_rows": 1519,
+  "n_variants": 1519,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.658595896586216,
+   "rho_std": 0.0006283594581384043,
+   "n_draws": 8
+  }
+ },
+ "VKOR1_HUMAN_Chiasson_activity_2020": {
+  "n_rows": 697,
+  "n_variants": 697,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.2732120537555311,
+   "rho_std": 0.003462669280811409,
+   "n_draws": 8
+  }
+ },
+ "PTEN_HUMAN_Mighell_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5488076327674667,
+   "rho_std": 0.0013142756260373328,
+   "n_draws": 8
+  }
+ },
+ "PTEN_HUMAN_Matreyek_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.626179974774391,
+   "rho_std": 0.0009450480188708545,
+   "n_draws": 8
+  }
+ },
+ "SUMO1_HUMAN_Weile_2017": {
+  "n_rows": 1700,
+  "n_variants": 1700,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5684642837839454,
+   "rho_std": 0.00024921000671894233,
+   "n_draws": 8
+  }
+ },
+ "SRC_HUMAN_Ahler_CD_2019": {
+  "n_rows": 3372,
+  "n_variants": 3372,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.7364527621489685,
+   "rho_std": 0.0009626091401712871,
+   "n_draws": 8
+  }
+ },
+ "SPG1_STRSG_Olson_2014": {
+  "n_rows": 5000,
+  "n_variants": 4372,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.5188456070009428,
+   "rho_std": 0.00013381103852037803,
+   "n_draws": 8
+  }
+ },
+ "SYUA_HUMAN_Newberry_2020": {
+  "n_rows": 2497,
+  "n_variants": 2497,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.3211456269210846,
+   "rho_std": 0.0013467939565850167,
+   "n_draws": 8
+  }
+ },
+ "SC6A4_HUMAN_Young_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.5275146853437704,
+   "rho_std": 0.0030857965121062784,
+   "n_draws": 8
+  }
+ },
+ "TPK1_HUMAN_Weile_2017": {
+  "n_rows": 3181,
+  "n_variants": 3181,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.2306319668047113,
+   "rho_std": 0.0007224345910469791,
+   "n_draws": 8
+  }
+ },
+ "UBC9_HUMAN_Weile_2017": {
+  "n_rows": 2563,
+  "n_variants": 2563,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.640227210675594,
+   "rho_std": 0.00048701621631791687,
+   "n_draws": 8
+  }
+ },
+ "TPMT_HUMAN_Matreyek_2018": {
+  "n_rows": 3648,
+  "n_variants": 3648,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5234768088094317,
+   "rho_std": 0.00046493031075357647,
+   "n_draws": 8
+  }
+ },
+ "VKOR1_HUMAN_Chiasson_abundance_2020": {
+  "n_rows": 2695,
+  "n_variants": 2695,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.5550702822667805,
+   "rho_std": 0.00041864176021693045,
+   "n_draws": 8
+  }
+ },
+ "YAP1_HUMAN_Araya_2012": {
+  "n_rows": 5000,
+  "n_variants": 4332,
+  "capped": true,
+  "result": {
+   "rho_mean": 0.3698948580510628,
+   "rho_std": 3.899815385667313e-05,
+   "n_draws": 8
+  }
+ },
+ "F7YBW8_MESOW_Aakre_2015": {
+  "n_rows": 5000,
+  "n_variants": 4059,
+  "capped": false,
+  "result": {
+   "rho_mean": 0.07874801174080957,
+   "rho_std": 2.9740089678298028e-05,
+   "n_draws": 33
+  }
+ }
+}

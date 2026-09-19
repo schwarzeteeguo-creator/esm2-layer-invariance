@@ -1,125 +1,75 @@
-# Layer Invariance in Protein Language Models: Multi-Scale Embeddings Do Not Improve Mutation Effect Prediction
+# Conditional Layer Invariance in Protein Language Models: Position Leakage and Readout Choice Determine the Apparent Benefit of Multi-Scale Embeddings
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)]
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This repository contains code, results, and the manuscript for our paper submitted to **Bioinformatics** (Oxford).
+Code, per-dataset results, and manuscript for our paper in revision at
+**Bioinformatics** (BIOINF-2026-2348). This tag of the repository corresponds to
+the revised resubmission; the earlier history (directories `code/`, `analysis/`,
+and the root `results/` and `manuscript/` files dated before September 2026)
+corresponds to the originally submitted version and is retained unchanged as the
+record of what was withdrawn and why.
 
-> **Abstract.** Protein language models such as ESM-2 encode biochemical information across 33 transformer layers. It is widely assumed that different layers capture complementary features and that fusing multi-scale embeddings should improve mutation effect prediction. We systematically test this assumption on ProteinGym's DMS benchmarks (62 datasets) using two 650M-parameter models and three independent experimental paradigms. Our results show that all 33 layers achieve nearly identical predictive performance, and multi-scale fusion provides no benefit over single-layer embeddings — especially for structure-aware models like SaProt. For standard ESM-2, switching to tree-based nonlinear readouts eliminates the apparent layer dependence, achieving the benefits of multi-scale fusion without the dimensionality cost.
+## What the revision shows
 
-## Repository Structure
+- **Random-split layer invariance is largely position memorization.** A Ridge
+  regressor given only random vectors indexed by mutation position reproduces the
+  published random-split probing level (rho = 0.600) and collapses to 0.10-0.14
+  under leakage-free splits (paired drop -0.46, Wilcoxon p = 5.2e-12).
+- **Under leakage-free splits** (ProteinGym-official modulo and contiguous, plus
+  position-grouped), mutation-specific embeddings reach rho up to 0.53, the best
+  layers are consistently 30-32, and best-versus-final differences never exceed
+  0.009 (TOST margin 0.01: 7/19 equivalent, 12 indeterminate, none beyond margin).
+- **Structure tokens help only under leakage-free evaluation** (+0.06 to +0.12,
+  all p <= 1e-4), which explains why they appeared useless in random-split
+  comparisons.
+- **Withdrawn results** (disclosed in the revision): the ESM-2 pooling asymmetry
+  (0.386 vs 0.639, a cross-protocol artifact; 0.463 vs 0.481 under the unified
+  pipeline), the non-monotonic fp16 logit-lens curve (validated fp32 curves are
+  monotonic with the final layer best: ESM-2 0.443, SaProt 0.437), and the
+  U-shaped similarity recovery (recomputed curves are monotone; linear CKA
+  between SaProt layers 0 and 32 is 0.81 while cosine is -0.009).
+
+## Repository structure
 
 ```
-esm2-layer-invariance/
-├── README.md                          # This file
-├── manuscript/                        # LaTeX source & compiled PDF
-│   ├── manuscript.tex
-│   └── manuscript.pdf
-├── figures/                           # Figure generation & output
-│   ├── generate_figures.py            # Python script to generate all 5 figures
-│   └── output/                        # PNG + PDF for all figures
-│       ├── fig1_logit_lens.png/pdf
-│       ├── fig2_similarity_heatmap.png/pdf
-│       ├── fig3_probing_pooling.png/pdf
-│       ├── fig4_summary.png/pdf
-│       └── fig5_position_level.png/pdf
-├── results/                           # All experimental results (JSON)
-│   ├── multiscale_results_v2.json     # SaProt multi-scale pooling (20 datasets)
-│   ├── multiscale_results_v2_esm2.json # ESM-2 multi-scale pooling (20 datasets)
-│   ├── saprot_v2_full.json            # SaProt per-layer probing (62 datasets)
-│   ├── poslevel_saprot_combined.json   # Position-level split probing
-│   ├── logit_lens_*_summary.json       # Logit lens zero-shot results
-│   ├── pooling_v1_full.json            # Pooling benchmark v1
-│   └── final_summary.txt              # Pipeline completion summary
-├── code/                              # Core experiment pipeline
-│   ├── benchmark_v2.py                # Multi-scale pooling benchmark (main)
-│   ├── layer_probing_v3.py            # Per-layer Ridge probing (latest)
-│   ├── layer_probing_v2.py            # Per-layer probing v2
-│   ├── logit_lens.py                  # Logit lens for SaProt
-│   ├── logit_lens_esm2.py             # Logit lens for ESM-2
-│   ├── layer_similarity.py            # Layer-wise cosine similarity
-│   ├── extract.py                     # Masked-position feature extraction
-│   ├── model.py                       # Model loading utilities
-│   ├── pooling.py                     # Pooling strategy implementations
-│   ├── stats_analysis.py              # Statistical analysis & invariance scores
-│   ├── build_esm2_from_saprot.py      # SaProt → ESM-2 model conversion
-│   ├── final_chain.py                 # End-to-end automated pipeline
-│   └── __init__.py
-├── analysis/                          # Result analysis scripts
-│   ├── final_analysis.py              # Comprehensive analysis
-│   ├── analyze_esm2.py                # ESM-2 result analysis
-│   ├── analyze_probe.py               # Probing result analysis
-│   └── download_and_analyze.py         # AutoDL download & analysis
+esm_embedding/                  revision pipeline (python -m esm_embedding.*)
+  probing_v4.py                   three-arm x four-split probing + position control
+  pg_splits.py                    official split schemes
+  benchmark_v3.py                 pooling with per-fold-trained attention
+  logit_lens_v2.py                fp32 lens with per-dataset validation gate
+  cka.py                          cosine + linear CKA
+  stats_tost.py                   TOST / bootstrap CI / d_z
+  aggregate_results.py            rebuilds the master table
+pipelines/                      server orchestration + 3Di gap-fix utilities
+results/rev/                    revision results
+  server_results/                 probing x3 suites, pooling x2, lens x2, CKA x2
+  probing_v4_gcv/                 random-position control (GCV protocol)
+  3di_server/                     Foldseek 3Di tokens (62 datasets)
+  old_ll_fp16_repro/              reproduction record of the withdrawn fp16 curves
+  MAIN_TABLE.md                   master results table (all numbers with n)
+manuscript/
+  manuscript_revised_v2.*         red-marked revised manuscript
+  supplementary_v2.pdf            supplementary tables S1-S5
+code/, analysis/, results/*.json, manuscript/manuscript.tex
+                                submitted version (unchanged, for the record)
 ```
 
-## Key Findings
+See `results/rev/DEPOSIT_README.md` for environment details, seeds, JSON schemas,
+and reproduction commands.
 
-1. **Complete layer equivalence.** All 33 transformer layers achieve near-identical Spearman ρ across 62 DMS datasets (SaProt: μ(ρ) ∈ [0.6054, 0.6071], σ = 2.96×10⁻⁴; ESM-2: μ(ρ) ∈ [0.596, 0.603], σ = 8.29×10⁻⁴). Zero of 528 pairwise layer comparisons survive FDR correction.
+## Data
 
-2. **Structure-aware training compresses layer-wise information.** SaProt shows invariance across ALL readout types (Ridge σ = 1.89×10⁻⁴, RF σ = 2.70×10⁻³, LGBM σ = 1.29×10⁻³). Standard ESM-2 shows large layer differences under Ridge (Last Layer ρ = 0.386 vs. Concat 5L ρ = 0.639, +66%) — but tree-based readouts (RF ρ ≈ 0.63, LightGBM ρ ≈ 0.66) eliminate the gap.
-
-3. **37% position-leakage inflation.** Random mutation splitting inflates performance by 37–43% compared to position-level cross-validation. Invariance score increases 150-fold under position-level evaluation.
-
-4. **Representations change dramatically while information is preserved.** Layer 0 vs. Layer 32 cosine similarity ≈ −0.01 (near orthogonal), yet predictive information is invariant across all layers.
-
-## Models & Data
-
-- **SaProt_650M_AF2**: Structure-aware PLM with 446-token vocabulary (21 aa × 21 Foldseek 3Di states)
-- **ESM-2 650M**: Standard sequence-only PLM, 33 layers, 1280-dim hidden states
-- **ProteinGym DMS benchmark**: 62 substitution datasets spanning diverse protein families
-
-## Quick Start
-
-### Requirements
-
-```bash
-pip install torch transformers scikit-learn lightgbm numpy scipy
-```
-
-### Reproduce Per-Layer Probing
-
-```bash
-python code/layer_probing_v3.py
-```
-
-### Reproduce Multi-Scale Pooling Benchmark
-
-```bash
-python code/benchmark_v2.py
-```
-
-### Generate Figures
-
-```bash
-python figures/generate_figures.py
-```
-
-### Compile Manuscript
-
-```bash
-cd manuscript
-pdflatex manuscript.tex
-pdflatex manuscript.tex
-```
-
-## Computational Resources
-
-All experiments were conducted on a single NVIDIA RTX 5090 32GB GPU via AutoDL. Total wall-clock time for the complete benchmark (per-layer probing + multi-scale pooling + logit lens) was approximately 12 hours.
-
-## Citation
-
-If you use this work, please cite:
-
-```bibtex
-@article{guo2026layer,
-  title={Layer Invariance in Protein Language Models: Multi-Scale Embeddings Do Not Improve Mutation Effect Prediction},
-  author={Guo, Yutao and Zhang, Zihan and Zhao, Xuezhou and Chen, Mengxi and Wu, Dan},
-  journal={Bioinformatics},
-  year={2026},
-  publisher={Oxford University Press}
-}
-```
+ProteinGym substitution benchmark (Notin et al., 2024). Structure tokens from
+AlphaFold Protein Structure Database alignments via Foldseek (62 of 63 datasets;
+two C-terminally truncated and gap-padded; influenza nucleoprotein
+structure-masked).
 
 ## License
 
-MIT License. See the manuscript for data availability statements regarding ProteinGym.
+Code: MIT. Results and 3Di token files: CC-BY-4.0.
+
+## Archived version
+
+A snapshot of this repository is archived on Zenodo with a DOI (see the release
+sidebar). The DOI is cited in the revised manuscript's Data Availability section.

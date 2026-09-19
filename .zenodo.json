@@ -1,0 +1,48 @@
+{
+  "title": "esm2-layer-invariance: conditional layer invariance in protein language models (BIOINF-2026-2348 revision)",
+  "upload_type": "software",
+  "publication_date": "2026-09-19",
+  "description": "<p>Complete analysis pipeline and per-dataset results for the revised version of BIOINF-2026-2348. Includes: (1) unified per-layer probing of ESM-2 650M and SaProt_650M_AF2 on all 63 ProteinGym substitution datasets under three feature arms (masked wild-type, unmasked wild-type, mutant) and four train-test splits (random, ProteinGym-official modulo and contiguous, position-grouped); (2) a random-position lookup control showing random-split probing performance is largely position memorization; (3) multi-scale pooling benchmarks with per-fold-trained attention; (4) fp32 logit lens scoring validated against the official logits pathway; (5) layer-wise cosine and linear CKA similarity analyses; (6) TOST equivalence tests, and (7) Foldseek 3Di structure tokens for 62 datasets. Also includes the reproduction record of the withdrawn fp16 lens curves. Code MIT; results CC-BY-4.0.</p>",
+  "creators": [
+    {
+      "name": "Guo, Yutao",
+      "affiliation": "International College of Pharmaceutical Innovation, Soochow University; School of Pharmacy and Biomolecular Sciences, RCSI"
+    },
+    {
+      "name": "Zhang, Zihan",
+      "affiliation": "International College of Pharmaceutical Innovation, Soochow University; School of Pharmacy and Biomolecular Sciences, RCSI"
+    },
+    {
+      "name": "Zhao, Xuezhou",
+      "affiliation": "International College of Pharmaceutical Innovation, Soochow University; School of Pharmacy and Biomolecular Sciences, RCSI"
+    },
+    {
+      "name": "Chen, Mengxi",
+      "affiliation": "International College of Pharmaceutical Innovation, Soochow University; School of Pharmacy and Biomolecular Sciences, RCSI"
+    },
+    {
+      "name": "Wu, Dan",
+      "affiliation": "International College of Pharmaceutical Innovation, Soochow University; Department of Chemistry, RCSI"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "protein language models",
+    "ESM-2",
+    "SaProt",
+    "ProteinGym",
+    "mutation effect prediction",
+    "position leakage",
+    "logit lens",
+    "CKA",
+    "layer selection",
+    "deep mutational scanning"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/schwarzeteeguo-creator/esm2-layer-invariance",
+      "relation": "isSupplementTo"
+    }
+  ],
+  "notes": "Deposited as part of the revision of manuscript BIOINF-2026-2348. Data files (JSON results, 3Di tokens) are released under CC-BY-4.0; the MIT license applies to the software."
+}

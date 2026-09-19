@@ -1,0 +1,25 @@
+{
+ "model": "esm2",
+ "n_datasets": 10,
+ "n_positions": 50,
+ "datasets": [
+  "A0A1I9GEU1_NEIME_Kennouche_2019",
+  "A0A2Z5U3Z0_9INFA_Doud_2016",
+  "A4GRB6_PSEAI_Chen_2020",
+  "A4_HUMAN_Seuma_2021",
+  "AACC1_PSEAI_Dandage_2018",
+  "ADRB2_HUMAN_Jones_2020",
+  "AMIE_PSEAE_Wrenbeck_2017",
+  "B3VI55_LIPST_Klesmith_2015",
+  "BLAT_ECOLX_Deng_2012",
+  "BLAT_ECOLX_Firnberg_2014"
+ ],
+ "adjacent_cos": 0.96202130317688,
+ "adjacent_cka": 0.9669999917969108,
+ "L0_vs_L32_cos": 0.5581506967544556,
+ "L0_vs_L32_cka": 0.553518283367157,
+ "pearson_r_cos_vs_distance_unique_pairs": -0.9328823777166112,
+ "pearson_r_cka_vs_distance_unique_pairs": -0.6049627347821736,
+ "unit_of_analysis": "unique layer pairs i<j, diagonal excluded",
+ "note": "CKA is basis-invariant; high distant-layer CKA with near-zero distant-layer cosine indicates a change of coordinates with preserved linear information."
+}

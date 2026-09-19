@@ -1,0 +1,1029 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[hidelinks,breaklinks]{hyperref}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{xurl}
+\usepackage[labelfont=bf]{caption}
+\usepackage{xcolor}
+\newcommand{\revised}[1]{\textcolor{red}{#1}}
+\onehalfspacing
+
+\title{\LARGE\bfseries Conditional Layer Invariance in Protein Language Models:\\\revised{Position Leakage and Readout Choice Determine the Apparent Benefit of Multi-Scale Embeddings}}
+
+\author{
+\large
+Yutao Guo\textsuperscript{1,2}, Zihan Zhang\textsuperscript{1,2}, Xuezhou Zhao\textsuperscript{1,2},\\[2pt]
+Mengxi Chen\textsuperscript{1,2}, Dan Wu\textsuperscript{1,3*}\\[8pt]
+\small
+\textsuperscript{1}International College of Pharmaceutical Innovation,\\
+\hspace*{1em}Soochow University, Suzhou 215123, China\\[4pt]
+\textsuperscript{2}School of Pharmacy and Biomolecular Sciences, RCSI,\\
+\hspace*{1em}123 St Stephen's Green, Dublin 2, D02 VN51, Ireland\\[4pt]
+\textsuperscript{3}Department of Chemistry, RCSI,\\
+\hspace*{1em}123 St Stephen's Green, Dublin 2, D02 YN77, Ireland\\[8pt]
+*Corresponding author: \texttt{danwu@suda.edu.cn}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\textbf{Motivation:} Protein language models such as ESM-2 encode biochemical information across
+33 transformer layers. Multi-layer embedding fusion is often used under the assumption
+that different layers provide complementary mutation-relevant information. However,
+the conditions under which this assumption holds for mutation effect prediction remain
+poorly characterized.
+
+\textbf{Results:} \revised{We benchmarked two 650M-parameter PLMs on the ProteinGym substitution
+benchmark using per-layer probing under three feature arms and four train--test splits,
+multi-scale pooling, logit lens scoring, layer-wise similarity analysis, and a
+position-lookup control. Representational geometry changed substantially across depth
+(adjacent-layer cosine $\approx 0.98$), yet for SaProt the linear CKA between layers 0
+and 32 remained 0.81 despite a raw cosine of $-0.01$: the network rotates its
+representations while preserving linearly decodable information. Under the standard
+random split, all 33 layers again gave nearly indistinguishable predictions
+($\rho \approx 0.60$), but a control regressor given only random position vectors
+reproduced this level ($\rho = 0.600$) and collapsed to $0.10$--$0.14$ under
+leakage-free splits (paired drop $-0.46$, Wilcoxon $p = 5.2 \times 10^{-12}$):
+random-split layer invariance is largely position memorization. Under three
+leakage-free splits (modulo, contiguous, position-grouped), mutation-specific
+embeddings reached $\rho$ up to 0.53, the best layers were consistently late (layers
+30--32), and the best-layer versus final-layer difference never exceeded
+$\Delta\rho = 0.009$ (TOST equivalence at margin 0.01 in 7 of 19 tests; the remainder
+inconclusive, none beyond the margin). Real Foldseek 3Di structure tokens improved
+SaProt only under leakage-free evaluation ($+0.06$ to $+0.12$, all $p \leq 10^{-4}$),
+with much smaller gains under the random split ($\leq +0.03$), so both the apparent
+uselessness of structure tokens and the apparent layer invariance are artifacts of
+position leakage. A corrected logit lens implementation (fp32, validated against the
+official logits pathway) showed monotonically improving zero-shot scoring with depth
+for both models, final layer best (ESM-2 $\rho = 0.443$; SaProt $\rho = 0.437$); the
+previously reported non-monotonic ESM-2 curve is withdrawn. Multi-scale pooling under
+the leakage-free protocol occupied a narrow band across four fusion strategies and
+four readouts (20 datasets per model), with per-fold-trained attention pooling never
+outperforming the last layer.}
+
+\textbf{Availability and Implementation:} All code and processed results are available at
+\url{https://github.com/schwarzeteeguo-creator/esm2-layer-invariance}. \revised{An archived
+snapshot of the code and per-dataset results for this revision is deposited at Zenodo
+(DOI: [AUTHOR\_INPUT\_NEEDED]).} The benchmarking pipeline, including masked-position
+feature extraction, multi-scale pooling, and logit lens analysis, is implemented in Python
+using PyTorch and scikit-learn.
+\end{abstract}
+
+%=============================================================================
+\section{Introduction}
+%=============================================================================
+
+Protein language models (PLMs) pre-trained via masked language modeling (MLM) on
+millions of protein sequences have become indispensable for mutation effect
+prediction~\cite{rives2021biological,meier2021language,lin2023evolutionary}.
+Among these, ESM-2~\cite{lin2023evolutionary}
+is one of the most widely adopted, with a 650M-parameter architecture comprising 33
+transformer layers that produce 1280-dimensional per-residue hidden states. These
+embeddings have been successfully applied to diverse tasks including variant effect
+prediction~\cite{frazer2021disease,hie2021learning}, protein design, and functional
+annotation~\cite{elnaggar2022prottrans,brandes2022proteinbert}, establishing ESM-2 as a
+foundational tool in computational biology.
+
+The internal organization of information across transformer layers has been
+extensively studied in natural language processing, where the ``BERTology''
+literature~\cite{rogers2021bertology,tenney2019bert} has revealed that different layers specialize
+in distinct linguistic phenomena: lower layers encode surface-level syntax, middle
+layers capture semantic content, and final layers refine task-specific
+predictions~\revised{\cite{tenney2019bert,rogers2021bertology}}.
+This hierarchical view has motivated analogous investigations in protein language
+models. A growing body of work posits that different transformer layers in PLMs
+similarly encode complementary biochemical information, and that combining
+representations from multiple layers should therefore improve downstream tasks.
+Kumar and Jha~\cite{kumar2025} demonstrated that mid-to-late ESM-2 layers (20--33)
+outperform the final layer for kinase function prediction, while early layers
+(6--14) have been shown to encode local physicochemical properties such as
+hydrophobicity and secondary structure propensity~\cite{detlefsen2022}.
+Alsamkary, Elshaffei et al.~\cite{elshaffei2025} proposed hierarchical pooling and
+pooled attention architectures for fusing representations across multiple PLMs and
+reported up to a 12\% Spearman improvement for protein--protein interaction
+prediction. More broadly, the strategy of extracting and fusing embeddings from
+multiple transformer layers has become common practice in PLM-based
+pipelines~\cite{rao2019tape}, often under the implicit assumption that each layer
+contributes non-redundant information.
+
+These claims, however, rest on an assumption that has not been systematically tested:
+that different ESM-2 layers genuinely encode \emph{complementary} information for
+mutation effect prediction, rather than merely offering different views of the same
+underlying signal. If layers are functionally similar under a given readout and
+evaluation protocol, then multi-scale fusion may add cost without improving prediction.
+If layer complementarity appears only under specific readouts or split protocols,
+then layer selection should be treated as a conditional design choice rather than
+a universal rule. Resolving this question carries practical
+consequences: the computational cost of extracting and storing embeddings from
+multiple layers is substantial for large-scale screening efforts, and the
+proliferation of ad-hoc layer-selection heuristics complicates reproducibility.
+
+To resolve this question, we conducted a large-scale benchmark on ProteinGym~\cite{notin2024proteingym},
+a comprehensive collection of deep mutational scanning (DMS) experiments spanning
+diverse protein families, assay types, and organismal contexts. We employed
+three independent experimental paradigms (Figure~\ref{fig:concept}): (1) per-layer supervised probing via Ridge
+regression, (2) multi-scale embedding pooling with controlled feature sets, and
+(3) logit lens zero-shot scoring. In parallel, we quantified layer-wise representational
+similarity through cosine similarity analysis. Together, these approaches test when
+PLM layers behave as practically interchangeable representations for mutation effect
+prediction and when readout choice or evaluation protocol exposes layer-specific
+differences. \revised{We report both the artifacts and the leakage-free re-analysis:
+the random-split layer profile is largely position memorization, while leakage-free
+evaluation reveals small, consistent late-layer advantages and a measurable benefit of
+structure tokens that the standard protocol cannot see.}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/output/fig0_concept.pdf}
+\caption{\textbf{Experimental design overview.}
+The three complementary experimental paradigms employed in this study:
+(\textbf{a}) Per-layer probing: Ridge regression on hidden states extracted from each
+of the 33 transformer layers \revised{under three feature arms (masked wild-type,
+unmasked wild-type, and mutant) and four train--test splits (random, modulo,
+contiguous, and position-grouped), quantifying the predictive information content per
+layer together with a random-position lookup control}.
+(\textbf{b}) Multi-scale pooling: four embedding fusion strategies (Last Layer,
+Mean L20--33, Concat 5L, Attention-weighted\revised{, with attention weights trained
+within each cross-validation fold}) tested across four readout models
+(Ridge, Random Forest, MLP, LightGBM) to assess whether combining layers improves
+prediction.
+(\textbf{c}) Logit lens: applying the final-layer LM head to intermediate hidden
+states for zero-shot mutation scoring, directly measuring how token predictions
+are refined across depth.
+(\textbf{d}) Layer-wise cosine similarity analysis: quantifying representational
+divergence independent of predictive performance.
+Together, these paradigms provide converging evidence on whether different
+transformer layers encode complementary or redundant information for mutation
+effect prediction.}
+\label{fig:concept}
+\end{figure}
+
+%=============================================================================
+\section{Methods}
+%=============================================================================
+
+\subsection{Models and Data}
+
+We used SaProt\_650M\_AF2~\cite{su2024saprot}, a structure-aware variant of ESM-2 650M
+that extends the vocabulary to 446 structure-informed tokens (21 amino acids $\times$ 21
+Foldseek 3Di states~\cite{vankempen2024foldseek}), as our primary model. For validation,
+we also tested standard ESM-2 650M~\cite{lin2023evolutionary} in both the probing and
+logit lens experiments, enabling direct comparison between structure-aware and
+sequence-only representations. All experiments used ProteinGym's substitution DMS
+benchmark~\cite{notin2024proteingym}, comprising 63 datasets with experimentally measured
+fitness effects for single and multiple amino acid substitutions. \revised{All 63 datasets
+were used for the probing and logit lens experiments ($n = 63$ for the random, modulo, and
+position-grouped splits; six datasets whose mutated positions form a single contiguous
+block have undefined Spearman correlations under the contiguous split, which is therefore
+reported on the remaining 57).} The pooling benchmark was run on a computationally tractable subset of
+20 datasets because it crossed four pooling strategies with four readout models and
+multiple cross-validation folds. We therefore treat the pooling analysis as a
+controlled validation of the probing result rather than as a full ProteinGym-wide
+estimate. \revised{The subset comprises the first 20 datasets in alphabetical order,
+fixed identically for both models.} Per-dataset mutation counts range from under 100 to over 200,000.
+\revised{For SaProt, we additionally prepared real Foldseek 3Di structure tokens by
+assigning each wild-type residue the 3Di state of its aligned residue in the
+AlphaFold Protein Structure Database entry for that sequence (structures available for
+62 of 63 datasets; two aligned structures were truncated at the C terminus and the
+missing residues were padded with the Foldseek gap state; the influenza nucleoprotein
+dataset has no AFDB entry and was evaluated with structure-masked tokens). SaProt
+results are reported for both structure-masked and real-3Di inputs.}
+
+\subsection{Experiment 1: Per-Layer Probing}
+
+\revised{For each DMS dataset we extracted per-layer hidden states under three feature
+arms. The \textbf{masked\_wt} arm replaces each mutated position in the wild-type
+sequence with the mask token (``M\#'' for SaProt, \texttt{<mask>} for ESM-2) and reads
+the hidden state at that position, exactly as in the submitted version. The
+\textbf{unmasked\_wt} arm reads the wild-type token at the mutated position without
+masking. The \textbf{mutant} arm feeds the full mutant sequence and reads the hidden
+state at the mutated position; it is the only arm whose representation differs between
+two mutations at the same position, and therefore the only one that can carry
+mutation-specific information beyond position identity. All mutations of a variant
+were masked jointly in the masked\_wt arm. Both SaProt\_650M\_AF2 (structure-masked
+and real-3Di inputs) and standard ESM-2 650M were evaluated under identical conditions.}
+
+\revised{Each arm was evaluated under four train--test splits, all with five
+cross-validation folds (four for the single four-position dataset under the
+position-grouped split) and with all rows of a multi-mutant variant assigned to the
+same fold: the standard \textbf{random} split over mutations; the \textbf{modulo}
+split, which assigns each residue position to fold $(\text{position} - 1) \bmod 5$
+following the official ProteinGym protocol; the \textbf{contiguous} split, which
+divides the sequence into five contiguous segments and holds out one segment per
+fold; and a \textbf{position-grouped} split (GroupKFold over residue positions, so
+that all mutations at a given position share a fold). The latter three are
+leakage-free with respect to positions. For each layer $l \in \{0,\dots,32\}$ and
+feature configuration (combined: the hidden state concatenated with 42 auxiliary
+features, namely one-hot encodings of wild-type and mutant amino acids, the BLOSUM62
+substitution score, and a normalized Grantham distance proxy; embedding\_only; and
+auxiliary\_only), we trained Ridge regression with the regularization strength
+selected per dataset by generalized cross-validation~\cite{golub1979generalized}
+(grid $10^{-2}$ to $10^{3}$), standardization fit inside each training fold, and
+reported Spearman rank correlation $\rho$. Datasets were subsampled to at most 10,000
+rows before feature construction and 5,000 rows inside the pipeline (11 of 63 datasets
+were capped), with a fixed seed shared across arms, splits, and layers. The single
+dataset with fewer than five mutated positions (four positions) used four
+position-grouped folds.}
+
+\revised{To quantify how much probing performance is attributable to position identity
+alone, we added a \textbf{random-position control}: each mutation is represented by a
+fixed random vector indexed by its residue position (33 independent draws), probed with
+the identical Ridge protocol with and without auxiliary features. This control contains
+no sequence information; any performance it recovers measures position memorization.}
+
+\subsection{Experiment 2: Multi-Scale Pooling}
+
+\revised{We compared four embedding strategies using fixed auxiliary features,
+evaluated on the \textbf{mutant} arm under the modulo split as the primary
+leakage-free protocol: (1) \textbf{Last Layer}: the standard approach using only the
+final transformer layer;
+(2) \textbf{Mean L20--33}: mean pooling across layers 20--33, motivated by
+Kumar and Jha~\cite{kumar2025};
+(3) \textbf{Concat 5L}: concatenation of layers 6, 14, 20, 26, and 32 (0-indexed,
+including the final layer), spanning the full representational depth; and
+(4) \textbf{Attention-Weighted}: softmax-weighted pooling across all 33 layers, with
+the weights trained within each cross-validation fold.}
+
+\revised{For each strategy, we evaluated Ridge regression (regularized by generalized
+cross-validation as above), Random Forest (50 estimators,
+max depth 10), MLP (two hidden layers of 256 units, ReLU), and LightGBM (100 estimators,
+max depth 7) with 3-fold cross-validation for datasets exceeding 3,000 mutations
+(5-fold otherwise). Standardization was fit inside training folds, and the auxiliary
+features were identical across strategies, isolating the effect of embedding choice.}
+
+\subsection{Experiment 3: Logit Lens}
+
+\revised{We applied the model's final-layer LM head to the hidden states of each
+intermediate layer, producing pseudo-logits for zero-shot mutation scoring. All
+computations ran in fp32, and for every dataset the final-layer pseudo-logits were
+validated against the model's official logits pathway (maximum $|\Delta \log P| <
+10^{-3}$; all 63 datasets passed for both models). For standard ESM-2, we used the
+conventional log-ratio, $\log P(\text{mutant}) - \log P(\text{wild-type})$. For SaProt
+with structure-masked input tokens ($\text{AA}\#$, where $\#$ denotes masked
+structure), we marginalized over all 21 structure-token variants per amino acid; with
+real 3Di inputs, the wild-type structure token at each position was retained. We
+reported per-layer Spearman $\rho$ between these zero-shot scores and experimental
+DMS fitness values across all 63 datasets. The lens curves published in the submitted
+version were produced by an fp16 pipeline whose numerical error invalidated the ESM-2
+curve; they are withdrawn and replaced by these validated results
+(cf.\ the tuned lens literature~\cite{belrose2023eliciting}).}
+
+\subsection{Layer Similarity Analysis}
+
+\revised{We computed the $33 \times 33$ cosine similarity matrix of per-layer hidden states,
+averaged over 50 randomly selected residue positions across 10 datasets. Because raw
+cosine is not invariant to rotations of the coordinate system, we additionally computed
+linear CKA~\cite{kornblith2019similarity} on the same hidden-state matrices. The unit
+of analysis for similarity-versus-distance statistics is the set of unique layer pairs
+$(i, j)$ with $i < j$, diagonal excluded. A high CKA combined with a near-zero cosine
+indicates a change of basis that preserves linearly decodable information.}
+
+\subsection{Statistical Evaluation}
+
+We used three complementary metrics: (1) \textbf{invariance score}, defined as
+the standard deviation of per-layer mean Spearman $\rho$ (smaller indicates greater invariance);
+\revised{(2) \textbf{equivalence testing}: for each model, arm, and leakage-free split,
+we tested whether the mean per-dataset difference between the best layer and the final
+layer falls within a margin of $\Delta\rho = 0.01$ using two one-sided tests (TOST) on
+paired differences, with the best layer fixed as the argmax of the layer-mean curve
+(19 tests in total), each reported with its 90\% bootstrap confidence interval and
+Cohen's $d_z$; and (3) \textbf{paired Wilcoxon signed-rank tests} for split contrasts
+(random versus leakage-free) and for real-3Di versus structure-masked SaProt inputs.}
+We use the term \emph{practical layer invariance} operationally rather than as a
+formal proof of mathematical equivalence. A layer set was considered practically
+invariant when per-layer variation was small relative to between-dataset variation,
+when the best-layer versus final-layer difference had negligible effect size, and
+when no layer comparison remained significant after false-discovery-rate correction.
+This framing is intentionally conservative: non-significant hypothesis tests alone
+are not interpreted as proof that two layers are identical.
+
+%=============================================================================
+\section{Results}
+%=============================================================================
+
+\subsection{Representations Change Dramatically While Predictive Performance Is Preserved}
+
+We first asked whether different transformer layers encode representations that are
+merely different views of the same underlying information, or whether they capture
+genuinely complementary features. To answer this, we computed the $33 \times 33$ layer-wise
+cosine similarity matrix of per-layer hidden states, averaged over 50 randomly selected
+residue positions across 10 datasets (Figure~\ref{fig:similarity}).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/output/fig2_similarity_heatmap.png}
+\caption{\textbf{Layer-wise cosine similarity matrix (33$\times$33).}
+Averaged over 10 datasets and 50 random residue positions per dataset.
+Adjacent layers are highly similar ($\cos=0.98$); \revised{mean similarity decays
+monotonically with distance and collapses to $-0.01$ only between the most distant
+layers (Layer~0 vs.~32). Linear CKA between layers 0 and 32 remains 0.81 for SaProt,
+indicating a rotation that preserves linearly decodable information rather than
+information loss.} Representations change continuously even when supervised predictive
+performance is nearly unchanged under random-split probing.}
+\label{fig:similarity}
+\end{figure}
+
+The matrix revealed a smooth representational trajectory across layers. Adjacent layers
+were highly similar ($\cos = 0.979 \pm 0.011$), and similarity decayed approximately
+linearly with layer distance (Pearson $r = -0.50$). \revised{The decay was smooth and
+monotonic, with no intermediate trough: for SaProt the mean cosine by distance fell
+from 0.97 ($d=2$) through 0.80 ($d=20$) to 0.50 ($d=30$), collapsing to $-0.009$
+between the most distant layers (Layer~0 vs.\ Layer~32). ESM-2 decayed more gently and
+remained positive throughout (0.93 at $d=2$, 0.56 at $d=32$). Crucially, near-zero raw
+cosine does not imply lost information: the linear CKA between SaProt layers 0 and 32
+was 0.808 while their cosine was $-0.009$ (ESM-2: CKA 0.554, cosine 0.558; adjacent-layer
+CKA 0.97 for both models). The depth-wise transformation is therefore well described as
+a rotation of the representation that preserves linearly decodable information, which
+explains how supervised performance can remain flat across depth while raw cosine
+collapses (Figure~\ref{fig:fig4}d).} This large
+rotation of the representational geometry raises a sharp question: \emph{does this
+representational transformation reflect complementary information encoded at different
+depths, or is mutation-relevant predictive performance preserved under this transformation?}
+
+To answer this, we conducted three converging experimental paradigms, each designed to
+interrogate the information content of individual layers from a different angle.
+
+\subsection{\revised{Random-Split Layer Invariance Is Largely Position Memorization}}
+
+We first asked \revised{whether the near-flat random-split layer profile of the submitted
+version reflects genuine representational redundancy. Under the unified pipeline it
+replicates exactly: for the masked\_wt arm, per-layer mean $\rho$ spans
+$0.603$--$0.606$ for both models with invariance scores $\sigma \approx 5 \times
+10^{-4}$ to $1.2 \times 10^{-3}$ (Table~\ref{tab:probing}). A Ridge regressor given
+\emph{random vectors indexed only by mutation position} plus the same auxiliary
+features recovered $\rho = 0.600$ under the random split (Table~\ref{tab:control}),
+matching the full masked-position PLM probing level. Under leakage-free splits the
+same control collapsed to $\rho = 0.138$ (modulo), $0.096$ (contiguous, $n=57$), and
+$0.135$ (position-grouped), a paired drop of $-0.46$ (random versus modulo, Wilcoxon
+$p = 5.2 \times 10^{-12}$); the random vectors alone carried $0.557$ under the random
+split and approximately zero elsewhere, and the auxiliary features alone fell from
+$0.339$ to $0.19$--$0.23$. Because every mutation at the same position shares one
+masked-position embedding, the random-split task is solvable by a position lookup
+table; the flat layer profile is therefore largely an artifact of position
+memorization rather than evidence that mutation information is distributed uniformly
+across depth.}
+
+\begin{table}[ht]
+\centering
+\caption{\revised{Random-position lookup control (63 datasets; contiguous $n = 57$).
+Mean Spearman $\rho$ of Ridge regressors given no sequence information. The control
+reproduces the random-split PLM probing level and collapses under leakage-free
+splits.}}
+\label{tab:control}
+\begin{tabular}{lcccc}
+\toprule
+Features & Random & Modulo & Contiguous & Position-grouped \\
+\midrule
+Random position vector + aux & 0.600 & 0.138 & 0.096 & 0.135 \\
+Random position vector only  & 0.557 & $-0.008$ & $-0.056$ & $-0.010$ \\
+Auxiliary only               & 0.339 & 0.230 & 0.188 & 0.228 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\revised{Table~\ref{tab:probing} and Figure~\ref{fig:probing}a report the unified
+re-probing of all three arms,
+both models, and all four splits ($n = 63$; contiguous $n = 57$). Two patterns are
+stable across every leakage-free column. First, the best layer sits in a narrow late
+band: layers 30--32 are best in 26 of 27 model--arm--split combinations (layer 27 in
+the remaining one). Second, the best layer is at most marginally better than the
+final layer: the mean per-dataset difference never exceeded $\Delta\rho = 0.009$,
+TOST at the 0.01 margin declared equivalence in 7 of 19 leakage-free tests, and the
+remaining 12 were inconclusive (90\% confidence intervals overlapping the margin); no
+test indicated a difference beyond the margin (Supplementary Table S4). The
+invariance score rose from $\sigma \approx 10^{-3}$ (masked\_wt, random) to
+$4$--$7 \times 10^{-2}$ under leakage-free evaluation, yet remained well below the
+cross-dataset standard deviation ($\approx 0.17$): performance varies far more
+\emph{across} datasets than \emph{across layers}, but under leakage-free evaluation
+the residual layer variation has a consistent direction, favoring the final layers.
+The mutant arm exceeded the masked arms in every split (e.g., 0.681 versus 0.606
+under random, 0.483 versus 0.459 under modulo for ESM-2), confirming that
+mutation-specific signal exists and is recoverable once the representation actually
+depends on the mutation.}
+
+\begin{table}[ht]
+\centering
+\caption{\revised{Unified per-layer probing, combined features (mean Spearman
+$\rho$; best layer in parentheses, followed by the final-layer value when the best
+layer is not layer 32). $n = 63$; contiguous $n = 57$. Full 33-layer curves in
+Supplementary Table S2; per-dataset results in Supplementary Table S3.}}
+\label{tab:probing}
+\begin{tabular}{llcccc}
+\toprule
+Model & Arm & Random & Modulo & Contiguous & Pos.-grouped \\
+\midrule
+ESM-2 & masked\_wt   & 0.606 (32) & 0.459 (32) & 0.370 (32) & 0.450 (32) \\
+ESM-2 & unmasked\_wt & 0.606 (32) & 0.470 (32) & 0.388 (32) & 0.461 (32) \\
+ESM-2 & mutant       & 0.681 (32) & 0.483 (31) $\rightarrow$ 0.479 & 0.365 (31) $\rightarrow$ 0.360 & 0.477 (31) $\rightarrow$ 0.475 \\
+\midrule
+SaProt (mask) & masked\_wt   & 0.603 (31) $\rightarrow$ 0.603 & 0.391 (30) $\rightarrow$ 0.386 & 0.282 (31) $\rightarrow$ 0.274 & 0.385 (31) $\rightarrow$ 0.382 \\
+SaProt (mask) & unmasked\_wt & 0.604 (32) & 0.412 (30) $\rightarrow$ 0.406 & 0.324 (31) $\rightarrow$ 0.320 & 0.403 (27) $\rightarrow$ 0.400 \\
+SaProt (mask) & mutant       & 0.652 (23) $\rightarrow$ 0.651 & 0.465 (30) $\rightarrow$ 0.460 & 0.323 (32) & 0.461 (30) $\rightarrow$ 0.458 \\
+\midrule
+SaProt (3Di) & masked\_wt   & 0.606 (32) & 0.461 (31) $\rightarrow$ 0.460 & 0.394 (31) $\rightarrow$ 0.394 & 0.454 (31) $\rightarrow$ 0.453 \\
+SaProt (3Di) & unmasked\_wt & 0.606 (27) $\rightarrow$ 0.605 & 0.473 (31) $\rightarrow$ 0.466 & 0.415 (31) $\rightarrow$ 0.406 & 0.467 (31) $\rightarrow$ 0.459 \\
+SaProt (3Di) & mutant       & 0.684 (26) $\rightarrow$ 0.683 & 0.531 (31) $\rightarrow$ 0.525 & 0.451 (31) $\rightarrow$ 0.445 & 0.532 (31) $\rightarrow$ 0.524 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{\revised{Multi-Scale Pooling Shows No Practical Gain Under a Leakage-Free Protocol}}
+
+\revised{We re-ran the pooling benchmark with the unified pipeline (mutant arm, modulo
+split, GCV-regularized Ridge, fold-internal standardization, attention weights trained
+per fold) on the 20-dataset design subset for each model
+(Table~\ref{tab:pooling}; Figure~\ref{fig:probing}b).
+For SaProt (structure-masked inputs), all four strategies occupied a narrow band for
+every readout (Ridge spread across strategies 0.005; LightGBM 0.014). For ESM-2,
+spreads were likewise small (Ridge 0.041; LightGBM 0.050), and the best single
+configuration was the last layer with LightGBM ($\rho = 0.508$), exceeding every
+multi-scale strategy under every readout. Per-fold-trained attention pooling was
+never the best strategy for either model.}
+
+\begin{table}[ht]
+\centering
+\caption{\revised{Multi-scale pooling under the unified leakage-free pipeline (mutant
+arm, modulo split, combined features; 20 datasets per model; mean $\rho \pm$ sd).
+Spreads across strategies: ESM-2 Ridge 0.041, RF 0.057, MLP 0.045, LightGBM 0.050;
+SaProt Ridge 0.005, RF 0.010, MLP 0.039, LightGBM 0.014.}}
+\label{tab:pooling}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{ESM-2 650M} & Ridge & RF & MLP & LightGBM \\
+\midrule
+Last Layer (baseline) & $0.463 \pm 0.174$ & $0.476 \pm 0.173$ & $0.480 \pm 0.198$ & $\mathbf{0.508} \pm 0.189$ \\
+Mean L20--33          & $0.473 \pm 0.180$ & $0.420 \pm 0.165$ & $0.436 \pm 0.179$ & $0.457 \pm 0.174$ \\
+Concat 5L             & $0.481 \pm 0.183$ & $0.453 \pm 0.181$ & $0.435 \pm 0.170$ & $0.495 \pm 0.190$ \\
+Attention-weighted    & $0.439 \pm 0.201$ & $0.419 \pm 0.209$ & $0.440 \pm 0.209$ & $0.463 \pm 0.208$ \\
+\midrule
+\textbf{SaProt\_650M\_AF2} & Ridge & RF & MLP & LightGBM \\
+\midrule
+Last Layer (baseline) & $0.432 \pm 0.163$ & $0.415 \pm 0.174$ & $0.445 \pm 0.168$ & $\mathbf{0.448} \pm 0.178$ \\
+Mean L20--33          & $0.433 \pm 0.166$ & $0.415 \pm 0.166$ & $0.429 \pm 0.166$ & $0.439 \pm 0.182$ \\
+Concat 5L             & $0.434 \pm 0.185$ & $0.407 \pm 0.173$ & $0.406 \pm 0.176$ & $0.436 \pm 0.183$ \\
+Attention-weighted    & $0.429 \pm 0.164$ & $0.405 \pm 0.166$ & $0.426 \pm 0.164$ & $0.433 \pm 0.177$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{\revised{The Previously Reported ESM-2 Asymmetry Was a Cross-Protocol Artifact}}
+
+\revised{The large ESM-2 asymmetry in the submitted version (last-layer Ridge
+$\rho = 0.386$ versus Concat~5L $\rho = 0.639$) does not survive protocol
+unification. It arose from comparing feature constructions that differed in masking
+state, regularization, and split protocol. Under the unified leakage-free pipeline
+the corresponding contrast is $0.463$ versus $0.481$ ($+0.018$), inside the narrow
+band described above. The MLP readout, previously reported at $\rho \approx 0.33$
+across strategies, reflected an under-trained surrogate configuration in the
+submitted pipeline (one hidden layer of 128 units, 50 iterations) rather than the
+described architecture; with the described two-layer architecture it performs on par
+with Ridge here. We therefore withdraw the claim that standard ESM-2 exhibits a
+large readout-specific layer dependence; residual readout interactions are an order
+of magnitude smaller under the unified protocol, and no strategy consistently beats
+the last layer.}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/output/fig4_summary.png}
+\caption{\textbf{\revised{Layer invariance and its boundary conditions across three experimental paradigms.}}
+(\textbf{a}) \revised{Multi-scale pooling under the unified leakage-free pipeline (mutant arm,
+modulo split, 20 datasets per model): both models occupy a narrow band across strategies
+(ESM-2 Ridge 0.439--0.481; SaProt Ridge 0.429--0.434), and last-layer LightGBM is the best
+single configuration for both models.}
+(\textbf{b}) \revised{Logit lens with ESM-2 ($n = 63$): zero-shot $\rho$ rises with depth to
+0.443 at the final layer.} (\textbf{c}) \revised{Logit lens with SaProt real-3Di inputs
+($n = 63$): zero-shot $\rho$ rises from negative early-layer values to 0.437 at the final layer.}
+(\textbf{d}) \revised{Cosine similarity versus layer distance (unique layer pairs, density-colored
+scatter): SaProt decays monotonically and reaches $-0.01$ only at the largest distances, while
+ESM-2 remains positive; linear CKA between the most distant SaProt layers remains 0.81,
+indicating rotation with preserved linear information rather than loss.}}
+\label{fig:fig4}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/output/fig3_probing_pooling.png}
+\caption{\textbf{\revised{Per-layer probing and multi-scale pooling under the unified protocol.}}
+(\textbf{a}) \revised{33-layer probing (combined features): under the random split the
+masked-arm profile is flat for both models ($\sigma \approx 10^{-3}$); under leakage-free
+splits performance is lower and the best layers are consistently late (layers 30--32,
+$\Delta\rho \leq 0.009$ versus the final layer).}
+(\textbf{b}) \revised{Pooling (mutant arm, modulo split, 20 datasets per model): ESM-2 spread
+across strategies 0.041 (Ridge) to 0.057 (RF); SaProt spread 0.005 (Ridge) to 0.039 (MLP);
+per-fold-trained attention pooling is never best.}}
+\label{fig:probing}
+\end{figure}
+
+\subsection{Logit Lens \revised{Confirms Late-Layer Information Accumulation}}
+
+\revised{The re-implemented lens (fp32, per-dataset validation against the official
+logits pathway, $n = 63$) produced monotonically improving zero-shot scores with
+depth for both models (Figure~\ref{fig:logit_lens}; Figure~\ref{fig:fig4}b,c). ESM-2 rose from $\rho = 0.031$
+(layer 0) to $\rho = 0.443$ (layer 32), with only shallow fluctuations in early
+layers; SaProt with real 3Di tokens rose from $-0.077$ (layer 0) through
+approximately zero around layer 20 to $\rho = 0.437$ (layer 32). Both curves attain
+their maximum at the final layer, at magnitudes consistent with published zero-shot
+PLM scoring. The submitted version instead reported a non-monotonic ESM-2 curve
+peaking at layer 1 ($\rho = 0.056$) and ending at $-0.021$; that curve was produced
+by an fp16 pipeline and is withdrawn. The corrected result removes the apparent
+model contrast and agrees with the leakage-free probing: mutation-relevant
+information accumulates toward the final layers. Zero-shot absolute levels remain
+below supervised probing (0.44 versus up to 0.53), so the lens is best read as a
+consistency check on layer-wise trends rather than a standalone benchmark.}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/output/fig1_logit_lens.png}
+\caption{\textbf{Logit lens: zero-shot mutation scoring by layer ($n = 63$).}
+\revised{Both models improve with depth and attain their maximum at the final layer:
+ESM-2 (orange) rises from $\rho = 0.03$ (layer 0) to $\rho = 0.443$ (layer 32);
+SaProt with real 3Di tokens (blue) rises from negative early-layer values to
+$\rho = 0.437$ (layer 32). Shaded bands indicate $\pm 1$ standard deviation across
+datasets. All computations in fp32 and validated against the official logits
+pathway; the previously reported non-monotonic ESM-2 curve is withdrawn.}}
+\label{fig:logit_lens}
+\end{figure}
+
+\subsection{Boundary Conditions}
+
+The results above provide evidence for practical layer invariance under common
+random-split supervised benchmarking conditions. \revised{We now examine the two
+factors that moderate this conclusion: evaluation protocol and input
+representation.}
+
+\subsubsection{\revised{Leakage-Free Splits: What Is Lost and What Remains}}
+
+\revised{The control and main-table results above already localize the leakage: the
+random-position lookup table reproduces the random-split level ($0.600$ versus
+$0.603$--$0.606$ for full probing) and loses it entirely under leakage-free splits
+($0.10$--$0.14$), while the random vectors alone carry $0.557$ under the random
+split and approximately zero elsewhere (Tables~\ref{tab:control}
+and~\ref{tab:probing}; Figure~\ref{fig:position_level}). Among the leakage-free
+splits, modulo and position-grouped give similar levels (e.g., SaProt real-3Di
+mutant arm: $0.531$ and $0.532$) while contiguous is uniformly hardest ($0.451$),
+consistent with sequence-contiguous segments correlating with local structural
+context and mutational scope. Random mutation splitting, the de facto standard in DMS
+benchmarking, therefore inflates absolute performance estimates by roughly
+$0.15$--$0.20$ $\rho$ in these arms and masks both layer differences and
+structure-token contributions. We recommend that future DMS benchmarks report at
+least one leakage-free split alongside the standard random split, analogous to the
+time-series community's practice of reporting both random and temporal
+cross-validation~\cite{roberts2017crossvalidation}.}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/output/fig5_position_level.png}
+\caption{\textbf{\revised{Random versus leakage-free split probing (SaProt, 63 datasets).}}
+(\textbf{a}) \revised{Random mutation split: flat per-layer profile
+($\sigma \approx 10^{-3}$), reproduced by the random-position lookup control
+($\rho = 0.600$).} (\textbf{b})
+\revised{Leakage-free splits (modulo, position-grouped, contiguous): performance
+drops to $0.27$--$0.53$ depending on arm and model, the invariance score rises to
+$4$--$7 \times 10^{-2}$, and the best layers shift consistently to layers 30--32.}}
+\label{fig:position_level}
+\end{figure}
+
+\revised{Together, these boundary conditions refine the central finding: apparent
+layer invariance under random splitting is dominated by position memorization,
+leakage-free evaluation reveals small but consistent late-layer advantages, and the
+benefit of structure tokens is itself conditional on the evaluation protocol.}
+
+\subsection{\revised{Structure Tokens Help Only Under Leakage-Free Evaluation}}
+
+\revised{Because SaProt can be run with real 3Di tokens or with structure-masked
+tokens, the unified protocol allows a paired test, dataset by dataset and layer by
+layer, of what structure tokens actually contribute (Table~\ref{tab:3di}). Under the
+random split the two input modes were nearly identical (paired differences at layer
+32: $+0.003$ masked\_wt, $+0.002$ unmasked\_wt, $+0.032$ mutant). Under every
+leakage-free split the real-3Di inputs were consistently superior, with mean paired
+advantages of $+0.059$ to $+0.122$ across arms and splits, all with Wilcoxon
+$p \leq 10^{-4}$. Structure tokens therefore carry genuine mutation-relevant
+information, but that contribution becomes visible only when position memorization
+is removed from the evaluation. This conditional benefit also retroactively
+explains why structure-aware inputs appeared useless in random-split comparisons:
+the position channel, available to both input modes, saturates the task.}
+
+\begin{table}[ht]
+\centering
+\caption{\revised{Real-3Di versus structure-masked SaProt inputs (paired per-dataset
+differences at layer 32, combined features; Wilcoxon signed-rank $p$). The benefit of
+structure tokens is small and mostly non-significant under the random split and
+large and highly significant under all leakage-free splits.}}
+\label{tab:3di}
+\begin{tabular}{lcc|ccc}
+\toprule
+& \multicolumn{2}{c|}{\textbf{Random}} & \multicolumn{3}{c}{\textbf{Leakage-free}} \\
+Arm & $\Delta\rho$ & $p$ & Modulo & Contiguous & Pos.-grouped \\
+\midrule
+masked\_wt   & $+0.003$ & $2.2 \times 10^{-2}$ & $+0.073$ ($3.5 \times 10^{-7}$) & $+0.120$ ($8.7 \times 10^{-8}$) & $+0.071$ ($8.4 \times 10^{-7}$) \\
+unmasked\_wt & $+0.002$ & $9.1 \times 10^{-1}$ & $+0.060$ ($4.6 \times 10^{-6}$) & $+0.086$ ($2.1 \times 10^{-6}$) & $+0.059$ ($1.2 \times 10^{-5}$) \\
+mutant       & $+0.032$ & $2.5 \times 10^{-6}$ & $+0.064$ ($6.9 \times 10^{-5}$) & $+0.122$ ($6.5 \times 10^{-7}$) & $+0.067$ ($4.6 \times 10^{-5}$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=============================================================================
+\section{Discussion}
+%=============================================================================
+
+\revised{The central result of this study is conditional rather than absolute. Under
+the standard random-split protocol, the 33 transformer layers of SaProt and ESM-2 show
+near-flat mutation effect prediction performance, but the position-lookup control shows
+that this flatness is largely position memorization rather than distributed mutation
+information. Under leakage-free evaluation, genuine mutation-specific performance is
+lower ($\rho$ up to 0.53), small but consistent late-layer advantages emerge (best
+layers 30--32, $\Delta\rho \leq 0.009$), and structure tokens deliver a measurable
+benefit ($+0.06$ to $+0.12$) that is invisible under random splitting. Multi-scale
+pooling provides no practical gain for either model under the unified pipeline. The
+practical conclusion is therefore not that multi-scale embeddings are never useful,
+but that their apparent benefit is determined by the evaluation protocol and the
+readout, and that leakage-free evaluation is required to see it.}
+
+\subsection{Why Might Layers Appear Invariant?}
+
+We propose that this practical invariance may be a consequence of the MLM pre-training
+objective. During pre-training, all layers receive gradients through the same
+cross-entropy loss computed at the final LM head. While this setup allows layers
+to develop distinct representational formats (as the cosine similarity analysis
+shows), it may not strongly incentivize each depth to specialize in fundamentally
+different mutation-relevant factors. Consequently, a supervised readout trained on
+individual layers can recover very similar performance under random-split evaluation
+\revised{, where position memorization dominates the task}.
+
+\revised{The cosine similarity between layers decays monotonically with distance and,
+for SaProt, collapses to approximately zero only between the most distant layers,
+while the linear CKA between the same layers remains 0.81. This combination, a
+near-rotation that preserves linearly decodable information, is consistent with the
+effect of residual connections~\cite{he2016deep}: because residual streams accumulate
+representations from all preceding layers, late layers retain a linearly accessible
+trace of early-layer content even as their raw coordinates rotate. The U-shaped
+recovery described in the submitted version is not present in the recomputed curves
+and is withdrawn.}
+
+This interpretation is consistent with the logit lens
+hypothesis~\cite{nostalgebraist2020,belrose2023eliciting},
+which posits that intermediate layers in transformer language models progressively
+refine token predictions toward the final output distribution, rather than
+constructing qualitatively different representations. \revised{The corrected lens
+curves support this directly for both models: zero-shot scoring improves with depth
+and peaks at the final layer.} The near-orthogonality of the most distant SaProt
+layers ($\cos \approx -0.01$) \revised{alongside their high linear CKA (0.81)}
+combined with near-flat supervised probing
+performance suggests that mutation-relevant signal may remain accessible while
+representations move through successive coordinate frames.
+
+Notably, this pattern contrasts with findings from NLP transformers, where
+probing classifiers consistently recover different linguistic features from
+different layer depths~\cite{tenney2019bert,rogers2021bertology}. In BERT, for example,
+surface syntactic features peak in early layers while semantic features dominate
+in middle-to-late layers. The relative flatness of the PLM probing curve may
+reflect the fundamentally different nature of the learning signal in protein
+versus natural language: whereas language contains hierarchical structure at
+multiple timescales (morphology, syntax, semantics, discourse), the MLM task on
+protein sequences operates on a single level of abstraction (amino acid identity),
+potentially eliminating the pressure for layer-wise specialization.
+
+\subsubsection{\revised{What Separates SaProt from Standard ESM-2?}}
+
+\revised{Under the unified protocol the two models differ mainly in two measured
+ways: how much their final representations retain early-layer geometry (ESM-2
+distant-layer cosine 0.56 with CKA 0.55; SaProt cosine $-0.01$ with CKA 0.81), and
+the benefit conferred by structure tokens. The submitted version interpreted the
+pooling contrast between the models as structure-aware training distributing
+information more uniformly across layers; that contrast dissolved under protocol
+unification, and we no longer draw that inference. The surviving, directly measured
+difference is the conditional structure-token benefit: real 3Di inputs improve
+leakage-free probing by $+0.06$ to $+0.12$ while leaving random-split performance
+essentially unchanged. Structure information is genuinely present and genuinely
+useful, but only leakage-free evaluation can see it.}
+
+\revised{This framing carries a testable prediction: fine-tuning standard ESM-2
+with structural objectives (e.g., contact prediction or fold classification)
+should reproduce a similar leakage-free advantage over the sequence-only baseline.
+This remains a mechanistic hypothesis rather than a direct result of the present
+experiments.}
+
+\subsection{Reconciling with Prior Layer-Selection Studies}
+
+Our findings do not contradict the observation that different layers may be
+optimal for different \emph{task types}. Kumar and Jha~\cite{kumar2025}
+demonstrated that mid-to-late ESM-2 layers (20--33) outperform the final layer
+for kinase function prediction, achieving 32\% higher clustering quality and
+superior classification accuracy. This is compatible with our narrower conclusion:
+different downstream tasks may induce different optimal readout directions, while
+mutation effect prediction under random-split probing shows little layer dependence.
+The key distinction is between \emph{task-level} specialization and
+\emph{within-task} layer complementarity under a specified readout and evaluation
+protocol.
+
+Similarly, the 12\% Spearman improvement reported by Alsamkary, Elshaffei
+et al.~\cite{elshaffei2025} for attention-based fusion architectures was
+observed in the context of multi-chain protein--protein interaction prediction,
+a task that differs substantially from per-residue mutation effect scoring.
+The benefit of sophisticated pooling may therefore be task-dependent rather than
+inherent to multi-scale representation fusion. For mutation effect prediction,
+our results suggest that such improvements should be interpreted in light of
+model type, readout choice, and split protocol.
+
+\subsection{Practical Implications}
+
+For researchers using protein language model embeddings for mutation effect
+prediction, our results support two practical recommendations that depend on
+the model variant, readout model, and evaluation protocol:
+
+\begin{enumerate}
+    \item \textbf{Structure-aware models (SaProt, ESM-2 fine-tuned with structural
+    objectives):} The final transformer layer is a strong default. \revised{In our
+    benchmarks, multi-scale fusion provided no practical benefit over single-layer
+    embeddings for either model under leakage-free evaluation}, and 1280 dimensions
+    sufficed for both linear and nonlinear readouts.
+    This reduces
+    storage and computational costs by a factor of 5--10 compared to the common
+    practice of concatenating 6--8 layers (up to 10,240 dimensions).
+
+    \item \textbf{Standard PLMs (ESM-2, ProtBERT, etc.):} \revised{Under leakage-free
+    evaluation, concatenation of 3--5 strategically spaced layers offers at most a
+    marginal linear-readout gain ($+0.018$ in our experiments, from $\rho = 0.463$
+    to 0.481). Switching the readout matters more than fusing layers: last-layer
+    LightGBM reached $\rho = 0.508$, the best pooling configuration overall,
+    achieving the benefits claimed for multi-scale fusion without the dimensionality
+    cost.}
+\end{enumerate}
+
+Table~\ref{tab:cost} quantifies the practical trade-offs. Concat~5L uses
+$4.9\times$ more features than single-layer approaches and incurs roughly
+$25\times$ the computational cost for Ridge regression (the covariance matrix
+grows from $1{,}322^2$ to $6{,}442^2$ entries), yet offered no benefit on
+\revised{either model} in our benchmark \revised{and was matched or exceeded on
+ESM-2 by switching from Ridge to LightGBM on a single layer}. Storing Concat~5L embeddings for a typical DMS
+benchmark ($\sim$10,000 variants) requires 258~MB versus 53~MB for a single
+layer, a gap that widens linearly with dataset size and becomes substantial
+for genome-scale studies.
+
+\begin{table}[ht]
+\centering
+\caption{Computational cost comparison across pooling strategies.
+``Per-mutation'' storage assumes float32 precision. Time estimates are
+per-dataset averages on an NVIDIA RTX 5090, including embedding extraction
+and readout training across 20 ProteinGym DMS subsets.
+\revised{Best achievable $\rho$ from Table~\ref{tab:pooling} (mutant arm,
+modulo split).}}
+\label{tab:cost}
+\begin{tabular}{lcccc}
+\toprule
+& Last Layer & Mean L20--33 & Attention & Concat 5L \\
+\midrule
+Feature dimension                  & 1,322 & 1,322 & 1,322 & 6,442 \\
+Storage per mutation (KB)          & 5.2   & 5.2   & 5.2   & 25.2 \\
+Ridge design matrix (5,000 vars)   & $6.6 \times 10^6$ & same & same & $3.2 \times 10^7$ \\
+Ridge covariance matrix entries    & $1.7 \times 10^6$ & same & same & $4.1 \times 10^7$ \\
+Avg.\ time per dataset (min)       & $\sim$3 & $\sim$3 & $\sim$3 & $\sim$3 \\
+\midrule
+\multicolumn{5}{l}{\small \textbf{Best achievable $\rho$ (ESM-2 / SaProt):}} \\
+\quad With Ridge                    & \revised{0.463 / 0.432} & \revised{0.473 / 0.433} & \revised{0.439 / 0.429} & \revised{0.481 / 0.434} \\
+\quad With LightGBM                 & \textbf{\revised{0.508 / 0.448}} & \revised{0.457 / 0.439} & \revised{0.463 / 0.433} & \revised{0.495 / 0.436} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In both cases, computational resources may be better directed toward feature types
+that are plausibly complementary to PLM embeddings:
+\begin{enumerate}
+    \item Structural features (e.g., AlphaFold-predicted pLDDT, PAE~\cite{jumper2021alphafold},
+          or Foldseek 3Di states~\cite{vankempen2024foldseek}), which complement
+          sequence-based embeddings;
+    \item Sequence-level representations that capture global protein properties
+          beyond per-residue features;
+    \item Multiple sequence alignment (MSA)-based approaches~\cite{riesselman2018deepsequence,
+          hopf2017mutation} that leverage evolutionary information beyond what PLMs encode.
+\end{enumerate}
+
+As discussed under Boundary Conditions (Section~3.5), \revised{the position-lookup
+control shows that} standard evaluation protocols can conflate mutation-effect learning with
+position-level memorization. We recommend that future DMS benchmarks adopt
+position-aware evaluation as a standard complement to random splitting.
+
+\subsection{Limitations}
+
+Several limitations should be noted. First, we tested the 650M-parameter
+ESM-2 variant and its structure-aware derivative SaProt. Smaller (35M, 150M)
+and larger (3B, 15B) variants may show different degrees of layer specialization,
+and this remains to be tested. Second, our
+experiments are restricted to per-residue mutation effect prediction; for other
+tasks such as kinase function prediction~\cite{kumar2025}, subcellular
+localization, or protein--protein interaction scoring~\cite{elshaffei2025},
+layer-wise differences and the benefits of multi-scale fusion may be more
+pronounced. Third, our pooling benchmark used a 20-dataset validation subset,
+which is smaller than the \revised{63}-dataset probing analysis. \revised{Fourth,
+the SaProt pooling runs use structure-masked inputs, whereas the probing and logit
+lens runs include real 3Di inputs, and one dataset (influenza nucleoprotein) lacks
+an AFDB structure. Fifth, our}
+feature ablation (embedding-only vs.\ auxiliary-only) indicates that learned embeddings
+dominate predictive performance in this setting, but it does
+not rule out the possibility that nonlinear combinations of auxiliary features
+could provide stronger baselines.
+\revised{Sixth,} the
+maximum sample size of 10,000 mutations per dataset (subsampled to 5,000 for
+regression\revised{; 11 of 63 datasets were capped}) may limit sensitivity to
+subtle layer-wise effects on the largest DMS screens ($>$200,000 mutations),
+though the consistency of invariance scores across dataset-size categories argues
+against this concern. \revised{Seventh,} our linear probing approach can only detect
+information that is linearly separable; nonlinear interactions between layers
+could theoretically exist but would require a different experimental design to
+identify. \revised{Eighth}, position-level data splitting (Section~3.5) shows that
+random mutation splits permit position-level leakage, \revised{which the lookup
+control quantifies and which now motivates our reporting of leakage-free splits
+throughout; future DMS benchmarks should adopt position-aware evaluation as a
+standard protocol alongside random splitting. Finally, our equivalence margin}
+($\Delta\rho = 0.01$) is \revised{a reporting convention rather than a
+task-derived requirement, and} our
+statistical analysis supports practical invariance by small effect sizes and
+relative variation, but it does not constitute a pre-specified formal equivalence
+test.
+
+\subsection{Conclusion}
+
+\revised{Under leakage-free evaluation, protein language model layers are close to
+interchangeable for mutation effect prediction, with a small consistent final-layer
+advantage; under the standard random split, apparent interchangeability is dominated
+by position memorization.} Under standard random-split probing,
+SaProt and ESM-2 showed near-flat per-layer performance despite large changes in
+representational geometry. \revised{Multi-scale pooling added no practical benefit
+over the final layer for either model under the unified leakage-free pipeline.
+Structure tokens helped SaProt, but only under leakage-free evaluation.
+Position-level evaluation showed that random splits inflate both absolute
+performance and apparent invariance.} These findings argue for a more empirical use
+of PLM layers: choose the layer strategy jointly with the readout model and the
+evaluation protocol, and treat claims of layer-specific representations in PLMs with
+the same scrutiny that has become standard in the NLP community~\cite{rogers2021bertology}.
+
+%=============================================================================
+\section*{Acknowledgments}
+We thank the International
+College of Pharmaceutical Innovation, SUDA-RCSI for institutional support.
+
+\section*{Funding}
+\revised{This work was supported by the Jiangsu Tepin Foundation (Z241922) and
+the Health Research Board (ILP-PHR-2024-014).}
+
+\section*{Competing Interests}
+\revised{[AUTHOR\_INPUT\_NEEDED: competing interests declaration for all authors.]}
+
+\section*{Data Availability}
+Code and results are available at \url{https://github.com/schwarzeteeguo-creator/esm2-layer-invariance}.
+\revised{An archived snapshot of the code, per-dataset results, and extracted
+structure tokens for this revision is deposited at Zenodo, DOI:
+[AUTHOR\_INPUT\_NEEDED].}
+Raw ProteinGym data: \url{https://github.com/OATML-Markslab/ProteinGym}.
+
+\newpage
+\begin{thebibliography}{99}
+
+% === References numbered by order of first citation in the text ===
+
+\bibitem{rives2021biological}
+Rives, A.\ \textit{et al.} (2021)
+Biological structure and function emerge from scaling unsupervised learning to 250
+million protein sequences.
+\textit{Proceedings of the National Academy of Sciences}, \textbf{118}(15), e2016239118.
+
+\bibitem{meier2021language}
+Meier, J.\ \textit{et al.} (2021)
+Language models enable zero-shot prediction of the effects of mutations on protein
+function.
+\textit{Advances in Neural Information Processing Systems}, \textbf{34}, 29287--29303.
+
+\bibitem{lin2023evolutionary}
+Lin, Z.\ \textit{et al.} (2023)
+Evolutionary-scale prediction of atomic-level protein structure with a language model.
+\textit{Science}, \textbf{379}(6637), 1123--1130.
+
+\bibitem{frazer2021disease}
+Frazer, J.\ \textit{et al.} (2021)
+Disease variant prediction with deep generative models of evolutionary data.
+\textit{Nature}, \textbf{599}(7883), 91--95.
+
+\bibitem{hie2021learning}
+Hie, B.\ \textit{et al.} (2021)
+Learning the language of viral evolution and escape.
+\textit{Science}, \textbf{371}(6526), 284--288.
+
+\bibitem{elnaggar2022prottrans}
+Elnaggar, A.\ \textit{et al.} (2022)
+ProtTrans: Toward understanding the language of life through self-supervised learning.
+\textit{IEEE Transactions on Pattern Analysis and Machine Intelligence}, \textbf{44}(10),
+7112--7127.
+
+\bibitem{brandes2022proteinbert}
+Brandes, N.\ \textit{et al.} (2022)
+ProteinBERT: A universal deep-learning model of protein sequence and function.
+\textit{Bioinformatics}, \textbf{38}(8), 2102--2110.
+
+\bibitem{rogers2021bertology}
+Rogers, A., Kovaleva, O.\ and Rumshisky, A. (\revised{2020})
+A primer in BERTology: What we know about how BERT works.
+\textit{Transactions of the Association for Computational Linguistics}, \textbf{8},
+842--866.
+
+\bibitem{tenney2019bert}
+Tenney, I., Das, D.\ and Pavlick, E. (2019)
+BERT rediscovers the classical NLP pipeline.
+\textit{Proceedings of the 57th Annual Meeting of the Association for Computational
+Linguistics}, 4593--4601.
+
+\bibitem{nostalgebraist2020}
+nostalgebraist (2020)
+Interpreting GPT: the logit lens.
+\url{https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/}.
+
+\bibitem{kumar2025}
+Kumar, A.\ and Jha, I.P. (2025)
+Layer probing improves kinase functional prediction with protein language models.
+\textit{arXiv}, 2512.00376.
+
+\bibitem{detlefsen2022}
+Detlefsen, N.S.\ \textit{et al.} (2022)
+Learning meaningful representations of protein sequences.
+\textit{Nature Communications}, \textbf{13}(1), 1914.
+
+\bibitem{elshaffei2025}
+Alsamkary, H., Elshaffei, M.\ \textit{et al.} (2025)
+Beyond simple concatenation: Fairly assessing PLM architectures for multi-chain
+protein--protein interactions prediction.
+\textit{arXiv}, 2505.20036.
+
+\bibitem{rao2019tape}
+Rao, R.\ \textit{et al.} (2019)
+Evaluating protein transfer learning with TAPE.
+\textit{Advances in Neural Information Processing Systems}, \textbf{32}.
+
+\bibitem{notin2024proteingym}
+Notin, P.\ \textit{et al.} (2024)
+ProteinGym: Large-scale benchmarks for protein fitness prediction and design.
+\textit{Advances in Neural Information Processing Systems}, \textbf{36}.
+
+\bibitem{su2024saprot}
+Su, J.\ \textit{et al.} (2024)
+SaProt: Protein language modeling with structure-aware vocabulary.
+\textit{International Conference on Learning Representations (ICLR)}.
+
+\bibitem{vankempen2024foldseek}
+van Kempen, M.\ \textit{et al.} (2024)
+Fast and accurate protein structure search with Foldseek.
+\textit{Nature Biotechnology}, \textbf{42}(2), 243--246.
+
+\bibitem{roberts2017crossvalidation}
+Roberts, D.R.\ \textit{et al.} (2017)
+Cross-validation strategies for data with temporal, spatial, hierarchical, or
+phylogenetic structure.
+\textit{Ecography}, \textbf{40}(8), 913--929.
+
+\bibitem{he2016deep}
+He, K.\ \textit{et al.} (2016)
+Deep residual learning for image recognition.
+\textit{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+770--778.
+
+\bibitem{jumper2021alphafold}
+Jumper, J.\ \textit{et al.} (2021)
+Highly accurate protein structure prediction with AlphaFold.
+\textit{Nature}, \textbf{596}(7873), 583--589.
+
+\bibitem{riesselman2018deepsequence}
+Riesselman, A.J., Ingraham, J.B.\ and Marks, D.S. (2018)
+Deep generative models of genetic variation capture the effects of mutations.
+\textit{Nature Methods}, \textbf{15}(10), 816--822.
+
+\bibitem{hopf2017mutation}
+Hopf, T.A.\ \textit{et al.} (2017)
+Mutation effects predicted from sequence co-variation.
+\textit{Nature Biotechnology}, \textbf{35}(2), 128--135.
+
+\bibitem{golub1979generalized}
+\revised{Golub, G.H., Heath, M.\ and Wahba, G. (1979)
+Generalized cross-validation as a method for choosing a good ridge parameter.
+\textit{Technometrics}, \textbf{21}(2), 215--223.}
+
+\bibitem{kornblith2019similarity}
+\revised{Kornblith, S., Norouzi, M., Lee, H.\ and Hinton, G. (2019)
+Similarity of neural network representations revisited.
+\textit{Proceedings of the 36th International Conference on Machine Learning},
+3519--3529.}
+
+\bibitem{belrose2023eliciting}
+\revised{Belrose, N. \textit{et al.} (2023)
+Eliciting latent predictions from transformers with the tuned lens.
+\textit{arXiv}, 2303.08112.}
+
+\end{thebibliography}
+
+\end{document}
