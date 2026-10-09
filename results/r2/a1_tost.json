@@ -1,0 +1,475 @@
+{
+ "summary": {
+  "n_tests": 20,
+  "equivalent": 8,
+  "inconclusive": 12,
+  "difference": 0,
+  "n_degenerate_best_is_L32": 7
+ },
+ "rows": [
+  {
+   "model": "ESM-2",
+   "arm": "mutant",
+   "split": "modulo",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.004072068514655726,
+   "boot_ci90": [
+    -0.001517888545736223,
+    0.009863183565577274
+   ],
+   "t_ci90": [
+    -0.0018244921182380873,
+    0.009968629147549538
+   ],
+   "tost_p": 0.04912335104512733,
+   "tost_verdict": "Equivalent",
+   "verdict": "Equivalent",
+   "dz": 0.14528192062048334,
+   "wilcoxon_p": 0.5198777995211031
+  },
+  {
+   "model": "ESM-2",
+   "arm": "mutant",
+   "split": "contiguous",
+   "best_layer": 31,
+   "n": 57,
+   "mean_delta": 0.0058213879253555464,
+   "boot_ci90": [
+    -0.003988958600770287,
+    0.016335816541829206
+   ],
+   "t_ci90": [
+    -0.004466508694345811,
+    0.016109284545056904
+   ],
+   "tost_p": 0.2498652523834289,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.1253529154476239,
+   "wilcoxon_p": 0.8332399813710263
+  },
+  {
+   "model": "ESM-2",
+   "arm": "mutant",
+   "split": "position_groupkfold",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.0028552816323552965,
+   "boot_ci90": [
+    -0.004471853533439736,
+    0.010195380233947825
+   ],
+   "t_ci90": [
+    -0.004682631229960222,
+    0.010393194494670816
+   ],
+   "tost_p": 0.059288668780136874,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.07968803235909959,
+   "wilcoxon_p": 0.33097753130130325
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "masked_wt",
+   "split": "modulo",
+   "best_layer": 30,
+   "n": 63,
+   "mean_delta": 0.005383890431054189,
+   "boot_ci90": [
+    0.0010629221332059523,
+    0.009751011082596255
+   ],
+   "t_ci90": [
+    0.000898924909950854,
+    0.009868855952157526
+   ],
+   "tost_p": 0.04533588306887,
+   "tost_verdict": "Equivalent",
+   "verdict": "Equivalent",
+   "dz": 0.25254127501113044,
+   "wilcoxon_p": 0.07286437522262688
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "masked_wt",
+   "split": "contiguous",
+   "best_layer": 31,
+   "n": 57,
+   "mean_delta": 0.0076925439713224604,
+   "boot_ci90": [
+    0.003435287392090436,
+    0.01191732383471345
+   ],
+   "t_ci90": [
+    0.003365728213171366,
+    0.012019359729473555
+   ],
+   "tost_p": 0.18812014965595883,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.39385473825663264,
+   "wilcoxon_p": 0.006197889098100532
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "masked_wt",
+   "split": "position_groupkfold",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.0034554290131226495,
+   "boot_ci90": [
+    0.0002703783646288495,
+    0.0066301031812472724
+   ],
+   "t_ci90": [
+    0.00019918541593247786,
+    0.006711672610312821
+   ],
+   "tost_p": 0.0006770505320012351,
+   "tost_verdict": "Equivalent",
+   "verdict": "Equivalent",
+   "dz": 0.22324428677935806,
+   "wilcoxon_p": 0.06355422440121059
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "unmasked_wt",
+   "split": "modulo",
+   "best_layer": 30,
+   "n": 63,
+   "mean_delta": 0.006305594693595005,
+   "boot_ci90": [
+    0.0010189831598063398,
+    0.011837256624395344
+   ],
+   "t_ci90": [
+    0.0007310625099847595,
+    0.01188012687720525
+   ],
+   "tost_p": 0.13636503908024175,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.23796489259655135,
+   "wilcoxon_p": 0.32758349436930534
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "unmasked_wt",
+   "split": "contiguous",
+   "best_layer": 31,
+   "n": 57,
+   "mean_delta": 0.004110858518778146,
+   "boot_ci90": [
+    -0.0013230154127505463,
+    0.009587481877610708
+   ],
+   "t_ci90": [
+    -0.00145195321075829,
+    0.009673670248314581
+   ],
+   "tost_p": 0.04103187390515273,
+   "tost_verdict": "Equivalent",
+   "verdict": "Equivalent",
+   "dz": 0.16370903871692183,
+   "wilcoxon_p": 0.19121721814049875
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "unmasked_wt",
+   "split": "position_groupkfold",
+   "best_layer": 27,
+   "n": 63,
+   "mean_delta": 0.0031136206718362933,
+   "boot_ci90": [
+    -0.003776629480913161,
+    0.009859619495690848
+   ],
+   "t_ci90": [
+    -0.0038366129941024597,
+    0.010063854337775046
+   ],
+   "tost_p": 0.05154393050101827,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Equivalent",
+   "dz": 0.09424570354282182,
+   "wilcoxon_p": 0.4555312989774659
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "mutant",
+   "split": "modulo",
+   "best_layer": 30,
+   "n": 63,
+   "mean_delta": 0.004657322934809059,
+   "boot_ci90": [
+    -0.0019188282552800326,
+    0.011427440211752843
+   ],
+   "t_ci90": [
+    -0.0021668935005968847,
+    0.011481539370215003
+   ],
+   "tost_p": 0.09797100423691851,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.14357499995304113,
+   "wilcoxon_p": 0.6269151320046382
+  },
+  {
+   "model": "SaProt (mask)",
+   "arm": "mutant",
+   "split": "position_groupkfold",
+   "best_layer": 30,
+   "n": 63,
+   "mean_delta": 0.00382997128202864,
+   "boot_ci90": [
+    -0.004194277105110725,
+    0.01219667937457457
+   ],
+   "t_ci90": [
+    -0.004501838282412218,
+    0.012161780846469497
+   ],
+   "tost_p": 0.11045810620054702,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.09670556066935508,
+   "wilcoxon_p": 0.8319282061082802
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "masked_wt",
+   "split": "modulo",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.001742845971419039,
+   "boot_ci90": [
+    -0.0010072950593413507,
+    0.004633432977030224
+   ],
+   "t_ci90": [
+    -0.0011787848734974773,
+    0.0046644768163355554
+   ],
+   "tost_p": 6.963298684323482e-06,
+   "tost_verdict": "Equivalent",
+   "verdict": "Equivalent",
+   "dz": 0.125495724620941,
+   "wilcoxon_p": 0.560621343889764
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "masked_wt",
+   "split": "contiguous",
+   "best_layer": 31,
+   "n": 57,
+   "mean_delta": 0.0008585883069555859,
+   "boot_ci90": [
+    -0.003854816545380846,
+    0.005650718145098363
+   ],
+   "t_ci90": [
+    -0.004017986282815855,
+    0.005735162896727026
+   ],
+   "tost_p": 0.0013670797838550449,
+   "tost_verdict": "Equivalent",
+   "verdict": "Equivalent",
+   "dz": 0.03900359050149079,
+   "wilcoxon_p": 0.7779014241777106
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "masked_wt",
+   "split": "position_groupkfold",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.0015833256119513754,
+   "boot_ci90": [
+    -0.0010733436678990597,
+    0.004313510293488646
+   ],
+   "t_ci90": [
+    -0.0011746451617377263,
+    0.004341296385640478
+   ],
+   "tost_p": 1.7501980408890476e-06,
+   "tost_verdict": "Equivalent",
+   "verdict": "Equivalent",
+   "dz": 0.12077466511268034,
+   "wilcoxon_p": 0.6513821830489249
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "unmasked_wt",
+   "split": "modulo",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.007117305385489132,
+   "boot_ci90": [
+    0.0038869994299135326,
+    0.010579868027684071
+   ],
+   "t_ci90": [
+    0.0037092450196405924,
+    0.010525365751337671
+   ],
+   "tost_p": 0.08141649992238731,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.4393428739242175,
+   "wilcoxon_p": 0.0014553707319241108
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "unmasked_wt",
+   "split": "contiguous",
+   "best_layer": 31,
+   "n": 57,
+   "mean_delta": 0.008587468270289939,
+   "boot_ci90": [
+    0.0035940971204851757,
+    0.013841288682952393
+   ],
+   "t_ci90": [
+    0.003321325831709402,
+    0.013853610708870475
+   ],
+   "tost_p": 0.3277188908113314,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.36124931613180133,
+   "wilcoxon_p": 0.01770911500920643
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "unmasked_wt",
+   "split": "position_groupkfold",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.008333004588791158,
+   "boot_ci90": [
+    0.004547364803812664,
+    0.012598027812245132
+   ],
+   "t_ci90": [
+    0.004159469938905007,
+    0.012506539238677308
+   ],
+   "tost_p": 0.2536380591143083,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.42004213966376125,
+   "wilcoxon_p": 0.0036189825894151254
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "mutant",
+   "split": "modulo",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.006001171142184919,
+   "boot_ci90": [
+    0.0010370970088247574,
+    0.011171524318550619
+   ],
+   "t_ci90": [
+    0.0008249145094329363,
+    0.011177427774936901
+   ],
+   "tost_p": 0.10092443879194962,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.24390206472120182,
+   "wilcoxon_p": 0.3808662449935054
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "mutant",
+   "split": "contiguous",
+   "best_layer": 31,
+   "n": 57,
+   "mean_delta": 0.005722564528520749,
+   "boot_ci90": [
+    -0.003136981205548719,
+    0.014795020151183846
+   ],
+   "t_ci90": [
+    -0.003410537363172459,
+    0.014855666420213957
+   ],
+   "tost_p": 0.21837093099825403,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.13880556738724317,
+   "wilcoxon_p": 0.5328253883550829
+  },
+  {
+   "model": "SaProt (3Di)",
+   "arm": "mutant",
+   "split": "position_groupkfold",
+   "best_layer": 31,
+   "n": 63,
+   "mean_delta": 0.007795070038390818,
+   "boot_ci90": [
+    0.0028853050032489253,
+    0.012945639686258871
+   ],
+   "t_ci90": [
+    0.0026249091117787416,
+    0.012965230965002895
+   ],
+   "tost_p": 0.23952929168323459,
+   "tost_verdict": "Not equiv.",
+   "verdict": "Inconclusive",
+   "dz": 0.3171839659611439,
+   "wilcoxon_p": 0.18187952131962537
+  }
+ ],
+ "degenerate": [
+  [
+   "ESM-2",
+   "masked_wt",
+   "modulo",
+   0.45896114115247166
+  ],
+  [
+   "ESM-2",
+   "masked_wt",
+   "contiguous",
+   0.3699575219874545
+  ],
+  [
+   "ESM-2",
+   "masked_wt",
+   "position_groupkfold",
+   0.450235525308814
+  ],
+  [
+   "ESM-2",
+   "unmasked_wt",
+   "modulo",
+   0.46991036579540396
+  ],
+  [
+   "ESM-2",
+   "unmasked_wt",
+   "contiguous",
+   0.3878966916902212
+  ],
+  [
+   "ESM-2",
+   "unmasked_wt",
+   "position_groupkfold",
+   0.46092642215375906
+  ],
+  [
+   "SaProt (mask)",
+   "mutant",
+   "contiguous",
+   0.32302789534083637
+  ]
+ ]
+}

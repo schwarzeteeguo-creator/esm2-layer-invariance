@@ -1,0 +1,27 @@
+{
+ "model": "esm2",
+ "n_datasets": 10,
+ "n_positions": 200,
+ "datasets": [
+  "A0A2Z5U3Z0_9INFA_Doud_2016",
+  "A4GRB6_PSEAI_Chen_2020",
+  "A4_HUMAN_Seuma_2021",
+  "ADRB2_HUMAN_Jones_2020",
+  "AMIE_PSEAE_Wrenbeck_2017",
+  "B3VI55_LIPST_Klesmith_2015",
+  "BLAT_ECOLX_Deng_2012",
+  "BLAT_ECOLX_Firnberg_2014",
+  "BLAT_ECOLX_Jacquier_2013",
+  "BLAT_ECOLX_Stiffler_2015"
+ ],
+ "adjacent_cos": 0.9623016202822328,
+ "adjacent_cka": 0.9532719047740101,
+ "adjacent_cka_debiased": 1.002444984562242,
+ "L0_vs_L32_cos": 0.5417791873216629,
+ "L0_vs_L32_cka": 0.4092479318380356,
+ "L0_vs_L32_cka_debiased": 0.963467848034959,
+ "pearson_r_cos_vs_distance_unique_pairs": -0.9306629067056388,
+ "pearson_r_cka_vs_distance_unique_pairs": -0.6587477845556428,
+ "unit_of_analysis": "unique layer pairs i<j, diagonal excluded",
+ "note": "CKA is basis-invariant; high distant-layer CKA with near-zero distant-layer cosine indicates a change of coordinates with preserved linear information. The debiased estimator (Szekely et al. 2021) removes the small-n upward bias of standard CKA."
+}

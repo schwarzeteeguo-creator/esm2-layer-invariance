@@ -1,4 +1,5 @@
-# Conditional Layer Invariance in Protein Language Models: Position Leakage and Readout Choice Determine the Apparent Benefit of Multi-Scale Embeddings
+# Depth Matters but the Final Layer Suffices: Leakage-Free Evaluation of Layer Choice in Protein Language Models for Mutation Effect Prediction
+
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)]
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,7 +11,38 @@ and the root `results/` and `manuscript/` files dated before September 2026)
 corresponds to the originally submitted version and is retained unchanged as the
 record of what was withdrawn and why.
 
-## What the revision shows
+## What v3 (second revision) adds
+
+- **Retitled and reframed**: the core claim is now final-layer sufficiency, not
+  layer invariance (best-versus-final within 0.01 rho across 20 leakage-free
+  TOST comparisons: 8 equivalent, 12 inconclusive, 0 beyond the margin; 7
+  further combinations have the final layer as the best layer).
+- **Unified-protocol pooling under the random split** (`results/r2/a2_a3_pooling.json`,
+  `analysis/analysis_r2.py`): small significant fusion advantages appear under
+  the random split (+0.009 to +0.050) and vanish, sometimes reversing, under
+  leakage-free evaluation.
+- **Published ProteinGym anchors recomputed on the same assays**
+  (`results/r2/r2_anchors_zeroshot.json`, `r2_anchors_supervised.json`,
+  `esm_embedding/pg_anchor_scores.py`): official ESM-2 650M 0.472 vs our
+  validated lens 0.438; Kermut 0.605 / ProteinNPT 0.566 under the official
+  modulo fold; the published one-hot baseline collapses from 0.570 (random)
+  to -0.003 (modulo).
+- **CKA at 200 positions + debiased estimator** (`results/r2/cka200_*`,
+  updated `esm_embedding/cka.py`): SaProt L0-L32 0.78, ESM-2 0.41.
+- **Single-substitution-only sensitivity analysis**
+  (`results/r2/probing_v4_single_*`, `analysis/analysis_single_site.py`,
+  `--single_site_only` in `probing_v4.py`): depth trend and structure-token
+  benefit replicate; final layer within 0.01 of best for SaProt, within 0.02
+  for ESM-2.
+- **Envision-style supervised baseline** (`esm_embedding/envision_baseline.py`,
+  `results/r2/envision_per_dataset.json`): 0.634 random vs 0.410 modulo /
+  0.302 contiguous under identical folds.
+- **Assay composition audit** (`esm_embedding/multisite_stats.py`,
+  `results/r2/r2_multisite_lmdb.json`): 84.6% of variants are multi-site,
+  contributing 95.8% of analyzed rows; caps affect 11 (10k variants) and 26
+  (5k rows) of 63 datasets.
+
+## What the (first) revision shows
 
 - **Random-split layer invariance is largely position memorization.** A Ridge
   regressor given only random vectors indexed by mutation position reproduces the
@@ -20,7 +52,7 @@ record of what was withdrawn and why.
   position-grouped), mutation-specific embeddings reach rho up to 0.53, the best
   layers are consistently 30-32, and best-versus-final differences never exceed
   0.009 (TOST margin 0.01: 7/19 equivalent, 12 indeterminate, none beyond margin).
-- **Structure tokens help only under leakage-free evaluation** (+0.06 to +0.12,
+- **Structure tokens help mainly under leakage-free evaluation** (+0.06 to +0.12,
   all p <= 1e-4), which explains why they appeared useless in random-split
   comparisons.
 - **Withdrawn results** (disclosed in the revision): the ESM-2 pooling asymmetry

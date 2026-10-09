@@ -166,11 +166,14 @@ def build_aux(from_aa, to_aa):
     return np.concatenate([wt, mt, [blosum], [grantham]])
 
 
-def load_dataset_rows(lmdb_path, max_variants=10000, max_rows=5000, seed=42):
+def load_dataset_rows(lmdb_path, max_variants=10000, max_rows=5000, seed=42,
+                      single_site_only=False):
     """Load one LMDB dataset into per-substitution rows.
 
     Returns dict with rows (variant_id, position, from_aa, to_aa, fitness),
     aux matrix, mutant sequences per variant, WT sequence, and bookkeeping.
+    single_site_only keeps only single-substitution variants (R2 sensitivity
+    analysis) BEFORE the variant cap, so caps apply to the filtered set.
     """
     data = read_lmdb(lmdb_path)
     name = Path(lmdb_path).name
@@ -202,6 +205,9 @@ def load_dataset_rows(lmdb_path, max_variants=10000, max_rows=5000, seed=42):
         if isinstance(mseq, str) and len(mseq) != L:
             continue  # indel — out of scope
         variants.append((key, subs, fitness, mseq))
+
+    if single_site_only:
+        variants = [v for v in variants if len(v[1]) == 1]
 
     if len(variants) < 5:
         return None
@@ -490,9 +496,10 @@ _CPU_ARMS = {"random_position", "aux"}
 def _cpu_worker(args):
     """Compute results for one dataset; returns them (parent writes)."""
     (lmdb_path, arms, splits, feature_sets, n_random_draws, n_folds,
-     seed, max_variants, max_rows) = args
+     seed, max_variants, max_rows, single_site_only) = args
     try:
-        ds = load_dataset_rows(lmdb_path, max_variants, max_rows, seed)
+        ds = load_dataset_rows(lmdb_path, max_variants, max_rows, seed,
+                               single_site_only=single_site_only)
         if ds is None:
             return None
         res = evaluate_arms_on_dataset(
@@ -500,6 +507,7 @@ def _cpu_worker(args):
             n_random_draws, n_folds, seed)
         return {"name": ds["name"], "n_rows": ds["n_rows"],
                 "n_variants": ds["n_variants"], "capped": ds["capped"],
+                "single_site_only": single_site_only,
                 "results": res}
     except Exception as e:  # never kill the pool
         return {"error": f"{Path(lmdb_path).name}: {e}"}
@@ -551,7 +559,7 @@ def run(data_dir, arms, splits, feature_sets, output_dir,
         n_random_draws=33, n_folds=5, seed=42, max_variants=10000,
         max_rows=5000, model_key=None, model_dir=None, device=None,
         max_datasets=None, workers=1, batch_size=8, struct_dir=None,
-        shard=0, nshards=1):
+        shard=0, nshards=1, single_site_only=False):
     data_dir = Path(data_dir)
     lmdb_files = sorted(p for p in data_dir.iterdir() if p.is_dir())
     if max_datasets:
@@ -563,7 +571,8 @@ def run(data_dir, arms, splits, feature_sets, output_dir,
                       if i % nshards == shard]
     sfx = f"__shard{shard}" if nshards > 1 else ""
     print(f"Datasets found: {len(lmdb_files)} | arms: {arms} | splits: {splits}"
-          f"{' | shard %d/%d' % (shard, nshards) if nshards > 1 else ''}")
+          f"{' | shard %d/%d' % (shard, nshards) if nshards > 1 else ''}"
+          f"{' | single-site only' if single_site_only else ''}")
 
     cpu_arms = [a for a in arms if a in _CPU_ARMS]
     gpu_arms = [a for a in arms if a in ("masked_wt", "unmasked_wt", "mutant")]
@@ -582,7 +591,7 @@ def run(data_dir, arms, splits, feature_sets, output_dir,
             if not done:
                 todo.append((str(f), arms, splits, feature_sets,
                              n_random_draws, n_folds, seed, max_variants,
-                             max_rows))
+                             max_rows, single_site_only))
         print(f"CPU-arm datasets to process: {len(todo)}")
         if todo:
             import multiprocessing as mp
@@ -599,7 +608,8 @@ def run(data_dir, arms, splits, feature_sets, output_dir,
                     _append_result(output_dir, payload["name"],
                                    {"n_rows": payload["n_rows"],
                                     "n_variants": payload["n_variants"],
-                                    "capped": payload["capped"]},
+                                    "capped": payload["capped"],
+                                    "single_site_only": single_site_only},
                                    payload["results"], suffix=sfx)
                     print(f"  [{i+1}/{len(todo)}] {payload['name']}",
                           flush=True)
@@ -620,7 +630,8 @@ def run(data_dir, arms, splits, feature_sets, output_dir,
                        for sp in splits)
             if done:
                 continue
-            ds = load_dataset_rows(f, max_variants, max_rows, seed)
+            ds = load_dataset_rows(f, max_variants, max_rows, seed,
+                                   single_site_only=single_site_only)
             if ds is None:
                 continue
             struct_tokens, struct_src = None, "n/a"
@@ -640,6 +651,7 @@ def run(data_dir, arms, splits, feature_sets, output_dir,
                            {"n_rows": ds["n_rows"],
                             "n_variants": ds["n_variants"],
                             "capped": ds["capped"],
+                            "single_site_only": single_site_only,
                             "struct": struct_src},
                            res, suffix=sfx)
             print(f"  [{i+1}/{len(lmdb_files)}] {ds['name']} "
@@ -710,6 +722,10 @@ def main():
                     help="split the dataset list into N disjoint shards; "
                          "outputs carry a __shardK suffix to be merged by "
                          "merge_shards.py")
+    ap.add_argument("--single_site_only", action="store_true",
+                    help="keep only single-substitution variants (R2 "
+                         "sensitivity analysis); filter applied before "
+                         "the variant cap")
     args = ap.parse_args()
     run(**vars(args))
 

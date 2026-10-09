@@ -38,6 +38,25 @@ def linear_cka(X, Y):
     return float(num / (den + 1e-12))
 
 
+def debiased_cka(X, Y):
+    """Debiased (unbiased-HSIC) linear CKA, Szekély et al. NeurIPS 2021.
+
+    Columns are centered first so the estimate is directly comparable to
+    standard linear CKA (Kornblith et al. 2019); then the unbiased-HSIC
+    estimator removes the O(1/n) positive sample bias:
+    hsic_u = (||X^T Y||_F^2 - ||diag(X^T Y)||^2) / (n(n-1));
+    cka = hsic_u(X,Y) / sqrt(hsic_u(X,X) * hsic_u(Y,Y))."""
+    X = X - X.mean(axis=0, keepdims=True)
+    Y = Y - Y.mean(axis=0, keepdims=True)
+    n = X.shape[0]
+    def hsic_u(A, B=None):
+        B = A if B is None else B
+        M = A.T @ B
+        num = np.linalg.norm(M, "fro") ** 2 - np.sum(np.diag(M) ** 2)
+        return num / (n * (n - 1))
+    return float(hsic_u(X, Y) / np.sqrt(hsic_u(X) * hsic_u(Y) + 1e-12))
+
+
 def cosine_mean(X, Y):
     """Mean uncentred cosine between matched rows of X and Y [n, d]."""
     num = (X * Y).sum(axis=1)
@@ -70,7 +89,7 @@ def main():
     files = sorted(p for p in Path(args.data_dir).iterdir() if p.is_dir())
     rng = np.random.RandomState(args.seed)
 
-    cos_mats, cka_mats = [], []
+    cos_mats, cka_mats, cka_d_mats = [], [], []
     used = []
     for f in files:
         if len(used) >= args.n_datasets:
@@ -99,20 +118,26 @@ def main():
 
         cos = np.zeros((n_layers, n_layers))
         cka = np.zeros((n_layers, n_layers))
+        cka_d = np.zeros((n_layers, n_layers))
         for i in range(n_layers):
             for j in range(i, n_layers):
                 c = cosine_mean(acts[i], acts[j])
                 k = linear_cka(acts[i], acts[j])
+                kd = debiased_cka(acts[i].astype(np.float64),
+                                  acts[j].astype(np.float64))
                 cos[i, j] = cos[j, i] = c
                 cka[i, j] = cka[j, i] = k
+                cka_d[i, j] = cka_d[j, i] = kd
         cos_mats.append(cos)
         cka_mats.append(cka)
+        cka_d_mats.append(cka_d)
         used.append(f.name)
         print(f"  {f.name}: cos[L0,L32]={cos[0,-1]:+.3f} "
-              f"cka[L0,L32]={cka[0,-1]:+.3f}")
+              f"cka[L0,L32]={cka[0,-1]:+.3f} debiased={cka_d[0,-1]:+.3f}")
 
     cos_avg = np.mean(cos_mats, axis=0)
     cka_avg = np.mean(cka_mats, axis=0)
+    cka_d_avg = np.mean(cka_d_mats, axis=0)
 
     # similarity vs layer distance — explicit unit of analysis:
     # unique unordered pairs (i<j), diagonal excluded
@@ -132,18 +157,25 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     np.save(out_dir / "cosine_matrix_avg.npy", cos_avg)
     np.save(out_dir / "cka_matrix_avg.npy", cka_avg)
+    np.save(out_dir / "cka_debiased_matrix_avg.npy", cka_d_avg)
+    adj_cka_d = float(np.mean([cka_d_avg[i, i + 1]
+                               for i in range(n_layers - 1)]))
     summary = {
         "model": args.model, "n_datasets": len(used),
         "n_positions": args.n_positions, "datasets": used,
         "adjacent_cos": adj_cos, "adjacent_cka": adj_cka,
+        "adjacent_cka_debiased": adj_cka_d,
         "L0_vs_L32_cos": float(cos_avg[0, -1]),
         "L0_vs_L32_cka": float(cka_avg[0, -1]),
+        "L0_vs_L32_cka_debiased": float(cka_d_avg[0, -1]),
         "pearson_r_cos_vs_distance_unique_pairs": r_cos,
         "pearson_r_cka_vs_distance_unique_pairs": r_cka,
         "unit_of_analysis": "unique layer pairs i<j, diagonal excluded",
         "note": "CKA is basis-invariant; high distant-layer CKA with "
                 "near-zero distant-layer cosine indicates a change of "
-                "coordinates with preserved linear information.",
+                "coordinates with preserved linear information. The "
+                "debiased estimator (Szekely et al. 2021) removes the "
+                "small-n upward bias of standard CKA.",
     }
     with open(out_dir / "cka_summary.json", "w") as fh:
         json.dump(summary, fh, indent=1)

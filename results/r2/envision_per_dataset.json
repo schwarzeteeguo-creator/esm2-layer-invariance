@@ -1,0 +1,1577 @@
+{
+ "A0A1I9GEU1_NEIME_Kennouche_2019": {
+  "n_rows": 922,
+  "n_variants": 922,
+  "capped": false,
+  "msa": "A0A1I9GEU1_NEIME_full_11-26-2021_b08.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.09910660751621975,
+    "n": 922
+   },
+   "modulo": {
+    "spearman": 0.038153907391106724,
+    "n": 922
+   },
+   "contiguous": {
+    "spearman": 0.060334997054417784,
+    "n": 922
+   },
+   "position_groupkfold": {
+    "spearman": 0.02668848110736303,
+    "n": 922
+   }
+  }
+ },
+ "A0A2Z5U3Z0_9INFA_Doud_2016": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "msa": "A0A2Z5U3Z0_9INFA_theta0.99_full_11-26-2021_b09.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7814199340783053,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.5761696156867846,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.5103752446541832,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5779468850912289,
+    "n": 5000
+   }
+  }
+ },
+ "A4GRB6_PSEAI_Chen_2020": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "A4GRB6_PSEAI_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.862301705084754,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.5652866204382674,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.4693208911034819,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5944166429589317,
+    "n": 5000
+   }
+  }
+ },
+ "A4_HUMAN_Seuma_2021": {
+  "n_rows": 5000,
+  "n_variants": 4377,
+  "capped": true,
+  "msa": "A4_HUMAN_2023-08-07_b01.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5465958226703935,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.3464001293789402,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": null,
+    "n": 0
+   },
+   "position_groupkfold": {
+    "spearman": 0.3094887004712614,
+    "n": 5000
+   }
+  }
+ },
+ "AACC1_PSEAI_Dandage_2018": {
+  "n_rows": 1801,
+  "n_variants": 1801,
+  "capped": false,
+  "msa": "AACC1_PSEAI_full_04-29-2022_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5907286327816942,
+    "n": 1801
+   },
+   "modulo": {
+    "spearman": 0.41010905295661826,
+    "n": 1801
+   },
+   "contiguous": {
+    "spearman": 0.30561656650607566,
+    "n": 1801
+   },
+   "position_groupkfold": {
+    "spearman": 0.39272938986332523,
+    "n": 1801
+   }
+  }
+ },
+ "ADRB2_HUMAN_Jones_2020": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "ADRB2_HUMAN_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5475799384831778,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.45093602438426345,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.42873511028118166,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.4643492964708915,
+    "n": 5000
+   }
+  }
+ },
+ "AMIE_PSEAE_Wrenbeck_2017": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "AMIE_PSEAE_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7932562292194807,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.6146865914891569,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.48234522386163037,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.6108114384267627,
+    "n": 5000
+   }
+  }
+ },
+ "B3VI55_LIPST_Klesmith_2015": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.7170997216929771,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.5866244832266214,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.3640000972546979,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.584630874759265,
+    "n": 5000
+   }
+  }
+ },
+ "BLAT_ECOLX_Deng_2012": {
+  "n_rows": 4996,
+  "n_variants": 4996,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.7626420846184994,
+    "n": 4996
+   },
+   "modulo": {
+    "spearman": 0.2506007991914416,
+    "n": 4996
+   },
+   "contiguous": {
+    "spearman": 0.22952970268050407,
+    "n": 4996
+   },
+   "position_groupkfold": {
+    "spearman": 0.2506007991914416,
+    "n": 4996
+   }
+  }
+ },
+ "BLAT_ECOLX_Firnberg_2014": {
+  "n_rows": 4783,
+  "n_variants": 4783,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.8068370020911875,
+    "n": 4783
+   },
+   "modulo": {
+    "spearman": 0.37648333336959616,
+    "n": 4783
+   },
+   "contiguous": {
+    "spearman": 0.32877683057515017,
+    "n": 4783
+   },
+   "position_groupkfold": {
+    "spearman": 0.3482552143507882,
+    "n": 4783
+   }
+  }
+ },
+ "BLAT_ECOLX_Jacquier_2013": {
+  "n_rows": 989,
+  "n_variants": 989,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.5557061695648357,
+    "n": 989
+   },
+   "modulo": {
+    "spearman": 0.39828522928484067,
+    "n": 989
+   },
+   "contiguous": {
+    "spearman": 0.2672233580678504,
+    "n": 989
+   },
+   "position_groupkfold": {
+    "spearman": 0.3647375846854986,
+    "n": 989
+   }
+  }
+ },
+ "BLAT_ECOLX_Stiffler_2015": {
+  "n_rows": 4996,
+  "n_variants": 4996,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.8132532669227864,
+    "n": 4996
+   },
+   "modulo": {
+    "spearman": 0.40371901526774673,
+    "n": 4996
+   },
+   "contiguous": {
+    "spearman": 0.3335420316187774,
+    "n": 4996
+   },
+   "position_groupkfold": {
+    "spearman": 0.40371901526774673,
+    "n": 4996
+   }
+  }
+ },
+ "CALM1_HUMAN_Weile_2017": {
+  "n_rows": 1813,
+  "n_variants": 1813,
+  "capped": false,
+  "msa": "CALM1_HUMAN_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.2508730950567326,
+    "n": 1813
+   },
+   "modulo": {
+    "spearman": 0.16248644640659266,
+    "n": 1813
+   },
+   "contiguous": {
+    "spearman": 0.17466675134344042,
+    "n": 1813
+   },
+   "position_groupkfold": {
+    "spearman": 0.2042421878026599,
+    "n": 1813
+   }
+  }
+ },
+ "CCDB_ECOLI_Adkar_2012": {
+  "n_rows": 1176,
+  "n_variants": 1176,
+  "capped": false,
+  "msa": "CCDB_ECOLI_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.9975923488898858,
+    "n": 1176
+   },
+   "modulo": {
+    "spearman": 0.44178232447439403,
+    "n": 1176
+   },
+   "contiguous": {
+    "spearman": 0.19956603820782925,
+    "n": 1176
+   },
+   "position_groupkfold": {
+    "spearman": 0.5077864954967877,
+    "n": 1176
+   }
+  }
+ },
+ "CCDB_ECOLI_Tripathi_2016": {
+  "n_rows": 1663,
+  "n_variants": 1663,
+  "capped": false,
+  "msa": "CCDB_ECOLI_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.591727378432732,
+    "n": 1663
+   },
+   "modulo": {
+    "spearman": 0.4212250576385936,
+    "n": 1663
+   },
+   "contiguous": {
+    "spearman": 0.23956502138001007,
+    "n": 1663
+   },
+   "position_groupkfold": {
+    "spearman": 0.4161665980273251,
+    "n": 1663
+   }
+  }
+ },
+ "CP2C9_HUMAN_Amorosi_abundance_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "CP2C9_HUMAN_full_11-26-2021_b04.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7336543626998207,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.48643457298473175,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.40213320860567237,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5027144731666636,
+    "n": 5000
+   }
+  }
+ },
+ "CP2C9_HUMAN_Amorosi_activity_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "CP2C9_HUMAN_full_11-26-2021_b04.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.8012246024109662,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.5317207265741581,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.41387636218937895,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5564650692990613,
+    "n": 5000
+   }
+  }
+ },
+ "DLG4_HUMAN_Faure_2021": {
+  "n_rows": 5000,
+  "n_variants": 4108,
+  "capped": false,
+  "msa": "DLG4_HUMAN_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5005442744646148,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.35464863359599474,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": null,
+    "n": 0
+   },
+   "position_groupkfold": {
+    "spearman": 0.2722904425330826,
+    "n": 5000
+   }
+  }
+ },
+ "DLG4_RAT_McLaughlin_2012": {
+  "n_rows": 1576,
+  "n_variants": 1576,
+  "capped": false,
+  "msa": "DLG4_HUMAN_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7113069783826498,
+    "n": 1576
+   },
+   "modulo": {
+    "spearman": 0.45703662726591093,
+    "n": 1576
+   },
+   "contiguous": {
+    "spearman": null,
+    "n": 0
+   },
+   "position_groupkfold": {
+    "spearman": 0.45703662726591093,
+    "n": 1576
+   }
+  }
+ },
+ "DYR_ECOLI_Thompson_plusLon_2019": {
+  "n_rows": 2363,
+  "n_variants": 2363,
+  "capped": false,
+  "msa": "DYR_ECOLI_2023-08-07_b01.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.663985288760372,
+    "n": 2363
+   },
+   "modulo": {
+    "spearman": 0.25970975680632663,
+    "n": 2363
+   },
+   "contiguous": {
+    "spearman": 0.19573305991691087,
+    "n": 2363
+   },
+   "position_groupkfold": {
+    "spearman": 0.2549679504015318,
+    "n": 2363
+   }
+  }
+ },
+ "ESTA_BACSU_Nutschel_2020": {
+  "n_rows": 2172,
+  "n_variants": 2172,
+  "capped": false,
+  "msa": "ESTA_BACSU_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6685694248072375,
+    "n": 2172
+   },
+   "modulo": {
+    "spearman": 0.22565195438656477,
+    "n": 2172
+   },
+   "contiguous": {
+    "spearman": 0.10431409543532853,
+    "n": 2172
+   },
+   "position_groupkfold": {
+    "spearman": 0.2951588444008818,
+    "n": 2172
+   }
+  }
+ },
+ "F7YBW8_MESOW_Aakre_2015": {
+  "n_rows": 5000,
+  "n_variants": 4059,
+  "capped": false,
+  "msa": "F7YBW8_MESOW_full_01-07-2022_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.14259970681882594,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": -0.027233304019920235,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": null,
+    "n": 0
+   },
+   "position_groupkfold": {
+    "spearman": 0.00900227928667597,
+    "n": 5000
+   }
+  }
+ },
+ "GAL4_YEAST_Kitzman_2015": {
+  "n_rows": 1195,
+  "n_variants": 1195,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.6768734749362599,
+    "n": 1195
+   },
+   "modulo": {
+    "spearman": 0.21168964876899968,
+    "n": 1195
+   },
+   "contiguous": {
+    "spearman": null,
+    "n": 0
+   },
+   "position_groupkfold": {
+    "spearman": 0.2473806418295406,
+    "n": 1195
+   }
+  }
+ },
+ "GCN4_YEAST_Staller_induction_2018": {
+  "n_rows": 5000,
+  "n_variants": 1660,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.04842920681029234,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.022859330428486795,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.021768238510745927,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.03278513974195706,
+    "n": 5000
+   }
+  }
+ },
+ "GFP_AEQVI_Sarkisyan_2016": {
+  "n_rows": 5000,
+  "n_variants": 4008,
+  "capped": true,
+  "msa": "GFP_AEQVI_full_04-29-2022_b08.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.30442331343884677,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.20949731383724796,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.16494852668948776,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.2186202464882957,
+    "n": 5000
+   }
+  }
+ },
+ "GRB2_HUMAN_Faure_2021": {
+  "n_rows": 5000,
+  "n_variants": 4355,
+  "capped": true,
+  "msa": "GRB2_HUMAN_full_11-26-2021_b05.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5221670779640495,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.1487725227873125,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.059247217527058825,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.18320801996939326,
+    "n": 5000
+   }
+  }
+ },
+ "HIS7_YEAST_Pokusaeva_2019": {
+  "n_rows": 5000,
+  "n_variants": 3989,
+  "capped": true,
+  "msa": "HIS7_YEAST_full_11-26-2021_b09.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.41343382558525105,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.28934738268022936,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.18709141290525835,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.3201896899760947,
+    "n": 5000
+   }
+  }
+ },
+ "HSP82_YEAST_Flynn_2019": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "msa": "HSP82_YEAST_2023-08-07_b01.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5682575126195258,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.47344175193456767,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.24541977401270015,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.48153507579962707,
+    "n": 5000
+   }
+  }
+ },
+ "HSP82_YEAST_Mishra_2016": {
+  "n_rows": 4323,
+  "n_variants": 4323,
+  "capped": false,
+  "msa": "HSP82_YEAST_2023-08-07_b01.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7330772683166777,
+    "n": 4323
+   },
+   "modulo": {
+    "spearman": 0.5564227885531707,
+    "n": 4323
+   },
+   "contiguous": {
+    "spearman": 0.45936746066537687,
+    "n": 4323
+   },
+   "position_groupkfold": {
+    "spearman": 0.546957946102537,
+    "n": 4323
+   }
+  }
+ },
+ "IF1_ECOLI_Kelsic_2016": {
+  "n_rows": 1367,
+  "n_variants": 1367,
+  "capped": false,
+  "msa": "IF1_ECOLI_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7426479106977274,
+    "n": 1367
+   },
+   "modulo": {
+    "spearman": 0.30504655644644124,
+    "n": 1367
+   },
+   "contiguous": {
+    "spearman": 0.24520047450567592,
+    "n": 1367
+   },
+   "position_groupkfold": {
+    "spearman": 0.30504655644644124,
+    "n": 1367
+   }
+  }
+ },
+ "KKA2_KLEPN_Melnikov_2014": {
+  "n_rows": 4960,
+  "n_variants": 4960,
+  "capped": false,
+  "msa": "KKA2_KLEPN_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7568442604313118,
+    "n": 4960
+   },
+   "modulo": {
+    "spearman": 0.528576615043531,
+    "n": 4960
+   },
+   "contiguous": {
+    "spearman": 0.4890659546896499,
+    "n": 4960
+   },
+   "position_groupkfold": {
+    "spearman": 0.481643802929829,
+    "n": 4960
+   }
+  }
+ },
+ "MK01_HUMAN_Brenan_2016": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "MK01_HUMAN_full_11-26-2021_b06.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6978267157624953,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.6110489551392662,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.4953063411383238,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5906874319956749,
+    "n": 5000
+   }
+  }
+ },
+ "MSH2_HUMAN_Jia_2020": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "msa": "MSH2_HUMAN_full_11-26-2021_b05.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5597396860952586,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.4181257220662847,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.1723620122821677,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.40250319135851387,
+    "n": 5000
+   }
+  }
+ },
+ "MTH3_HAEAE_Rockah-Shmuel_2015": {
+  "n_rows": 1777,
+  "n_variants": 1777,
+  "capped": false,
+  "msa": "MTH3_HAEAE_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6830607327167176,
+    "n": 1777
+   },
+   "modulo": {
+    "spearman": 0.5429004397378588,
+    "n": 1777
+   },
+   "contiguous": {
+    "spearman": 0.3562473029699368,
+    "n": 1777
+   },
+   "position_groupkfold": {
+    "spearman": 0.5243255089361546,
+    "n": 1777
+   }
+  }
+ },
+ "NUD15_HUMAN_Suiter_2020": {
+  "n_rows": 2844,
+  "n_variants": 2844,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.7608546018011638,
+    "n": 2844
+   },
+   "modulo": {
+    "spearman": 0.4028633376079896,
+    "n": 2844
+   },
+   "contiguous": {
+    "spearman": 0.09711722589794233,
+    "n": 2844
+   },
+   "position_groupkfold": {
+    "spearman": 0.3347487125473722,
+    "n": 2844
+   }
+  }
+ },
+ "P53_HUMAN_Giacomelli_NULL_Etoposide_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "P53_HUMAN_full_04-29-2022_b09.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7249364605008416,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.6238227004486819,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.4939062023250394,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.6220536613812372,
+    "n": 5000
+   }
+  }
+ },
+ "P53_HUMAN_Giacomelli_NULL_Nutlin_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "P53_HUMAN_full_04-29-2022_b09.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6993290441168397,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.6125682902627314,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.45983343530980425,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5969669898115508,
+    "n": 5000
+   }
+  }
+ },
+ "P53_HUMAN_Giacomelli_WT_Nutlin_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "P53_HUMAN_full_04-29-2022_b09.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.8695204463787137,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.8117640866953162,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.3391171431895683,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.8082949212245675,
+    "n": 5000
+   }
+  }
+ },
+ "P53_HUMAN_Kotler_2018": {
+  "n_rows": 1048,
+  "n_variants": 1048,
+  "capped": false,
+  "msa": "P53_HUMAN_full_04-29-2022_b09.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6913087424781099,
+    "n": 1048
+   },
+   "modulo": {
+    "spearman": 0.5399429882434937,
+    "n": 1048
+   },
+   "contiguous": {
+    "spearman": 0.20911988515284943,
+    "n": 1048
+   },
+   "position_groupkfold": {
+    "spearman": 0.5696375427704419,
+    "n": 1048
+   }
+  }
+ },
+ "P84126_THETH_Chan_2017": {
+  "n_rows": 1519,
+  "n_variants": 1519,
+  "capped": false,
+  "msa": "P84126_THETH_full_11-26-2021_b04.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.80430214248136,
+    "n": 1519
+   },
+   "modulo": {
+    "spearman": 0.4606373684887652,
+    "n": 1519
+   },
+   "contiguous": {
+    "spearman": 0.45699379354025127,
+    "n": 1519
+   },
+   "position_groupkfold": {
+    "spearman": 0.42330534573963086,
+    "n": 1519
+   }
+  }
+ },
+ "PABP_YEAST_Melamed_2013": {
+  "n_rows": 5000,
+  "n_variants": 4403,
+  "capped": true,
+  "msa": "PABP_YEAST_full_11-26-2021_b07.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6250039053650892,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.47544258818278967,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": null,
+    "n": 0
+   },
+   "position_groupkfold": {
+    "spearman": 0.46088604203431816,
+    "n": 5000
+   }
+  }
+ },
+ "PTEN_HUMAN_Matreyek_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "PTEN_HUMAN_full_11-26-2021_b01.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6609850835361364,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.5030910721202708,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.4760081231912682,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5165929221302746,
+    "n": 5000
+   }
+  }
+ },
+ "PTEN_HUMAN_Mighell_2018": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": false,
+  "msa": "PTEN_HUMAN_full_11-26-2021_b01.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5866575364397211,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.4102876024484616,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.3225067730526615,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.3739623840191296,
+    "n": 5000
+   }
+  }
+ },
+ "Q59976_STRSQ_Romero_2015": {
+  "n_rows": 2999,
+  "n_variants": 2999,
+  "capped": false,
+  "msa": "Q59976_STRSQ_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.731326027714391,
+    "n": 2999
+   },
+   "modulo": {
+    "spearman": 0.6235703965742112,
+    "n": 2999
+   },
+   "contiguous": {
+    "spearman": 0.5414310446375199,
+    "n": 2999
+   },
+   "position_groupkfold": {
+    "spearman": 0.6180316504059802,
+    "n": 2999
+   }
+  }
+ },
+ "RASH_HUMAN_Bandaru_2017": {
+  "n_rows": 3134,
+  "n_variants": 3134,
+  "capped": false,
+  "msa": "RASH_HUMAN_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7906031435090667,
+    "n": 3134
+   },
+   "modulo": {
+    "spearman": 0.4256780619525667,
+    "n": 3134
+   },
+   "contiguous": {
+    "spearman": 0.4110204901951525,
+    "n": 3134
+   },
+   "position_groupkfold": {
+    "spearman": 0.4256780619525667,
+    "n": 3134
+   }
+  }
+ },
+ "RL401_YEAST_Mavor_2016": {
+  "n_rows": 1253,
+  "n_variants": 1253,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.6892014825916563,
+    "n": 1253
+   },
+   "modulo": {
+    "spearman": 0.5221002235818636,
+    "n": 1253
+   },
+   "contiguous": {
+    "spearman": 0.17502467001676547,
+    "n": 1253
+   },
+   "position_groupkfold": {
+    "spearman": 0.503346362304638,
+    "n": 1253
+   }
+  }
+ },
+ "RL401_YEAST_Roscoe_2013": {
+  "n_rows": 1195,
+  "n_variants": 1195,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.7841805457230117,
+    "n": 1195
+   },
+   "modulo": {
+    "spearman": 0.6513929901955166,
+    "n": 1195
+   },
+   "contiguous": {
+    "spearman": 0.2828034787845929,
+    "n": 1195
+   },
+   "position_groupkfold": {
+    "spearman": 0.6295602781261931,
+    "n": 1195
+   }
+  }
+ },
+ "RL401_YEAST_Roscoe_2014": {
+  "n_rows": 1380,
+  "n_variants": 1380,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.7109670927586424,
+    "n": 1380
+   },
+   "modulo": {
+    "spearman": 0.34173945638691344,
+    "n": 1380
+   },
+   "contiguous": {
+    "spearman": 0.22658175163204958,
+    "n": 1380
+   },
+   "position_groupkfold": {
+    "spearman": 0.22033453868039796,
+    "n": 1380
+   }
+  }
+ },
+ "SC6A4_HUMAN_Young_2021": {
+  "n_rows": 5000,
+  "n_variants": 5000,
+  "capped": true,
+  "msa": "SC6A4_HUMAN_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6475791649094238,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.5147205968263692,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.11778243913504029,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.5206857732420711,
+    "n": 5000
+   }
+  }
+ },
+ "SPG1_STRSG_Olson_2014": {
+  "n_rows": 5000,
+  "n_variants": 4372,
+  "capped": true,
+  "msa": "SPG1_STRSG_full_11-26-2021_b07.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5723847073527676,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.14307050251853798,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": 0.14656406378778988,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.10486793197442049,
+    "n": 5000
+   }
+  }
+ },
+ "SRC_HUMAN_Ahler_CD_2019": {
+  "n_rows": 3372,
+  "n_variants": 3372,
+  "capped": false,
+  "msa": "SRC_HUMAN_2023-08-07_b06.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7811637482711636,
+    "n": 3372
+   },
+   "modulo": {
+    "spearman": 0.48730844965765646,
+    "n": 3372
+   },
+   "contiguous": {
+    "spearman": 0.45183898212916745,
+    "n": 3372
+   },
+   "position_groupkfold": {
+    "spearman": 0.4765530978149885,
+    "n": 3372
+   }
+  }
+ },
+ "SUMO1_HUMAN_Weile_2017": {
+  "n_rows": 1700,
+  "n_variants": 1700,
+  "capped": false,
+  "msa": "SUMO1_HUMAN_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.592632774165625,
+    "n": 1700
+   },
+   "modulo": {
+    "spearman": 0.4113065831917751,
+    "n": 1700
+   },
+   "contiguous": {
+    "spearman": 0.3126281983622123,
+    "n": 1700
+   },
+   "position_groupkfold": {
+    "spearman": 0.46519432746394385,
+    "n": 1700
+   }
+  }
+ },
+ "SYUA_HUMAN_Newberry_2020": {
+  "n_rows": 2497,
+  "n_variants": 2497,
+  "capped": false,
+  "msa": "SYUA_HUMAN_full_04-29-2022_b01.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.616488742196422,
+    "n": 2497
+   },
+   "modulo": {
+    "spearman": 0.5736096630047478,
+    "n": 2497
+   },
+   "contiguous": {
+    "spearman": 0.5030851533768155,
+    "n": 2497
+   },
+   "position_groupkfold": {
+    "spearman": 0.5424476249110087,
+    "n": 2497
+   }
+  }
+ },
+ "TADBP_HUMAN_Bolognesi_2019": {
+  "n_rows": 1196,
+  "n_variants": 1196,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.7332818820721423,
+    "n": 1196
+   },
+   "modulo": {
+    "spearman": 0.6290183414624495,
+    "n": 1196
+   },
+   "contiguous": {
+    "spearman": 0.479175376790706,
+    "n": 1196
+   },
+   "position_groupkfold": {
+    "spearman": 0.607725594334558,
+    "n": 1196
+   }
+  }
+ },
+ "TPK1_HUMAN_Weile_2017": {
+  "n_rows": 3181,
+  "n_variants": 3181,
+  "capped": false,
+  "msa": "TPK1_HUMAN_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.3210019474123007,
+    "n": 3181
+   },
+   "modulo": {
+    "spearman": 0.2406719859187466,
+    "n": 3181
+   },
+   "contiguous": {
+    "spearman": 0.2049518865449378,
+    "n": 3181
+   },
+   "position_groupkfold": {
+    "spearman": 0.23385713375524908,
+    "n": 3181
+   }
+  }
+ },
+ "TPMT_HUMAN_Matreyek_2018": {
+  "n_rows": 3648,
+  "n_variants": 3648,
+  "capped": false,
+  "msa": "TPMT_HUMAN_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5601977730926782,
+    "n": 3648
+   },
+   "modulo": {
+    "spearman": 0.44027461294745923,
+    "n": 3648
+   },
+   "contiguous": {
+    "spearman": 0.39207051454795744,
+    "n": 3648
+   },
+   "position_groupkfold": {
+    "spearman": 0.4422484443081452,
+    "n": 3648
+   }
+  }
+ },
+ "TPOR_HUMAN_Bridgford_S505N_2020": {
+  "n_rows": 562,
+  "n_variants": 562,
+  "capped": false,
+  "msa": "none",
+  "with_pssm": false,
+  "result": {
+   "random": {
+    "spearman": 0.5495504565725743,
+    "n": 562
+   },
+   "modulo": {
+    "spearman": 0.3491070440010898,
+    "n": 562
+   },
+   "contiguous": {
+    "spearman": 0.030357522942742382,
+    "n": 562
+   },
+   "position_groupkfold": {
+    "spearman": 0.3491070440010898,
+    "n": 562
+   }
+  }
+ },
+ "TRPC_SACS2_Chan_2017": {
+  "n_rows": 1519,
+  "n_variants": 1519,
+  "capped": false,
+  "msa": "TRPC_THEMA_full_11-26-2021_b07.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7140502708290506,
+    "n": 1519
+   },
+   "modulo": {
+    "spearman": 0.2517840510153768,
+    "n": 1519
+   },
+   "contiguous": {
+    "spearman": 0.22944832485100955,
+    "n": 1519
+   },
+   "position_groupkfold": {
+    "spearman": 0.2019190926675264,
+    "n": 1519
+   }
+  }
+ },
+ "TRPC_THEMA_Chan_2017": {
+  "n_rows": 1519,
+  "n_variants": 1519,
+  "capped": false,
+  "msa": "TRPC_THEMA_full_11-26-2021_b07.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.7216664424835135,
+    "n": 1519
+   },
+   "modulo": {
+    "spearman": 0.4187883771740568,
+    "n": 1519
+   },
+   "contiguous": {
+    "spearman": 0.3658473527150601,
+    "n": 1519
+   },
+   "position_groupkfold": {
+    "spearman": 0.3443879564488697,
+    "n": 1519
+   }
+  }
+ },
+ "UBC9_HUMAN_Weile_2017": {
+  "n_rows": 2563,
+  "n_variants": 2563,
+  "capped": false,
+  "msa": "UBC9_HUMAN_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.6727908000271895,
+    "n": 2563
+   },
+   "modulo": {
+    "spearman": 0.38746333872294086,
+    "n": 2563
+   },
+   "contiguous": {
+    "spearman": 0.31118353899738693,
+    "n": 2563
+   },
+   "position_groupkfold": {
+    "spearman": 0.4097921669096695,
+    "n": 2563
+   }
+  }
+ },
+ "VKOR1_HUMAN_Chiasson_abundance_2020": {
+  "n_rows": 2695,
+  "n_variants": 2695,
+  "capped": false,
+  "msa": "VKOR1_HUMAN_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.75920722807337,
+    "n": 2695
+   },
+   "modulo": {
+    "spearman": 0.4563440883643283,
+    "n": 2695
+   },
+   "contiguous": {
+    "spearman": 0.4027183627370252,
+    "n": 2695
+   },
+   "position_groupkfold": {
+    "spearman": 0.4790224271493778,
+    "n": 2695
+   }
+  }
+ },
+ "VKOR1_HUMAN_Chiasson_activity_2020": {
+  "n_rows": 697,
+  "n_variants": 697,
+  "capped": false,
+  "msa": "VKOR1_HUMAN_full_11-26-2021_b03.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.39406988174399354,
+    "n": 697
+   },
+   "modulo": {
+    "spearman": 0.3632161751194341,
+    "n": 697
+   },
+   "contiguous": {
+    "spearman": 0.3831414407835633,
+    "n": 697
+   },
+   "position_groupkfold": {
+    "spearman": 0.3545146827372748,
+    "n": 697
+   }
+  }
+ },
+ "YAP1_HUMAN_Araya_2012": {
+  "n_rows": 5000,
+  "n_variants": 4332,
+  "capped": true,
+  "msa": "YAP1_HUMAN_full_11-26-2021_b02.a2m",
+  "with_pssm": true,
+  "result": {
+   "random": {
+    "spearman": 0.5097735863184516,
+    "n": 5000
+   },
+   "modulo": {
+    "spearman": 0.12859911605650273,
+    "n": 5000
+   },
+   "contiguous": {
+    "spearman": -0.01350347585767553,
+    "n": 5000
+   },
+   "position_groupkfold": {
+    "spearman": 0.15962512794258785,
+    "n": 5000
+   }
+  }
+ }
+}
