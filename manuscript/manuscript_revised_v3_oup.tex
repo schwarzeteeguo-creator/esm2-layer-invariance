@@ -1,44 +1,50 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{float}
-\usepackage[section]{placeins}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage[hidelinks,breaklinks]{hyperref}
+\documentclass[numbered,webpdf,modern,large]{oup-authoring-template}
+\usepackage[mathlines,switch]{lineno}
+\linenumbers
 \usepackage{amsmath}
-\usepackage{enumitem}
-\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{graphicx}
 \usepackage{xurl}
-\usepackage[labelfont=bf]{caption}
 \usepackage{xcolor}
-\newcommand{\revised}[1]{\textcolor{red}{#1}}
 \newcommand{\rev}[1]{\textcolor{red}{#1}}
-\graphicspath{{figures/output/}{./}}
-\onehalfspacing
-
-\title{\LARGE\bfseries Depth Matters but the Final Layer Suffices:\\\revised{Leakage-Free Evaluation of Layer Choice in Protein Language Models for Mutation Effect Prediction}}
-
-\author{
-\large
-Yutao Guo\textsuperscript{1,2}, Zihan Zhang\textsuperscript{1,2}, Xuezhou Zhao\textsuperscript{1,2},\\[2pt]
-Mengxi Chen\textsuperscript{1,2}, Dan Wu\textsuperscript{1,3*}\\[8pt]
-\small
-\textsuperscript{1}International College of Pharmaceutical Innovation,\\
-\hspace*{1em}Soochow University, Suzhou 215123, China\\[4pt]
-\textsuperscript{2}School of Pharmacy and Biomolecular Sciences, RCSI,\\
-\hspace*{1em}123 St Stephen's Green, Dublin 2, D02 VN51, Ireland\\[4pt]
-\textsuperscript{3}Department of Chemistry, RCSI,\\
-\hspace*{1em}123 St Stephen's Green, Dublin 2, D02 YN77, Ireland\\[8pt]
-*Corresponding author: \texttt{danwu@suda.edu.cn}}
-\date{}
+\graphicspath{{figures/output/}}
+\newcommand{\societylogo}{}
 
 \begin{document}
-\maketitle
 
-\begin{abstract}
-\textbf{Motivation:} Protein language models such as ESM-2 encode
+\journaltitle{Bioinformatics}
+\DOI{DOI added during production}
+\copyrightyear{2026}
+\pubyear{2026}
+\vol{XX}
+\issue{x}
+\access{Published: date added during production}
+\appnotes{Original Paper}
+\firstpage{1}
+
+\title[Layer Choice in Protein Language Models]{Depth Matters but the Final
+Layer Suffices: \rev{Leakage-Free Evaluation of Layer Choice in Protein
+Language Models for Mutation Effect Prediction}}
+
+\author[1,2]{Yutao Guo}
+\author[1,2]{Zihan Zhang}
+\author[1,2]{Xuezhou Zhao}
+\author[1,2]{Mengxi Chen}
+\author[1,3,$\ast$]{Dan Wu}
+
+\address[1]{\orgname{International College of Pharmaceutical Innovation, Soochow
+University}, \orgaddress{Suzhou, \postcode{215123}, \country{China}}}
+\address[2]{\orgname{School of Pharmacy and Biomolecular Sciences, RCSI}, \orgaddress{
+Dublin, \postcode{D02 VN51}, \country{Ireland}}}
+\address[3]{\orgname{Department of Chemistry, RCSI}, \orgaddress{Dublin,
+Dublin, \postcode{D02 YN77}, \country{Ireland}}}
+
+\corresp[$\ast$]{Corresponding author. \href{mailto:danwu@suda.edu.cn}{danwu@suda.edu.cn}}
+
+\received{11 September 2026}{0}{2026}
+\revised{19 September 2026}{0}{2026}
+
+\abstract{\textbf{Motivation:} Protein language models such as ESM-2 encode
 biochemical information across 33 transformer layers. Multi-layer embedding fusion is
 often used under the assumption that different layers provide complementary
 mutation-relevant information. However, the conditions under which this assumption
@@ -87,12 +93,11 @@ available at \url{https://github.com/schwarzeteeguo-creator/esm2-layer-invarianc
 \rev{An archived snapshot of the code and per-dataset results for this revision is
 deposited at Zenodo (DOI: 10.5281/zenodo.22844290).} The benchmarking pipeline,
 including masked-position feature extraction, multi-scale pooling, and logit lens
-analysis, is implemented in Python using PyTorch and scikit-learn.
-\end{abstract}
+analysis, is implemented in Python using PyTorch and scikit-learn.}
+\keywords{protein language models, layer selection, final-layer sufficiency,
+mutation effect prediction, ProteinGym, position leakage, logit lens, CKA}
 
-\vspace{2pt}
-\noindent\textbf{Keywords:} protein language models, layer selection, final-layer sufficiency,
-mutation effect prediction, ProteinGym, position leakage, logit lens, CKA
+\maketitle
 
 %=============================================================================
 \section{Introduction}
@@ -1296,6 +1301,5 @@ prediction.
 \textit{eLife}, \textbf{12}, RP92184.}
 
 \end{thebibliography}
-
 
 \end{document}
