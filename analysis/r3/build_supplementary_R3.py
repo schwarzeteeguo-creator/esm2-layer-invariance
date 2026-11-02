@@ -419,39 +419,54 @@ fv = pool['fusion_vs_last']
 
 def pcell(v):
     lo, hi = v['boot_ci90']
-    return '%+.3f (%+.3f, %+.3f)%s' % (v['mean_delta'], lo, hi, DAGGER if lo > 0 or hi < 0 else '')
+    return '%+.3f (%+.3f,%+.3f)%s' % (v['mean_delta'], lo, hi, DAGGER if lo > 0 or hi < 0 else '')
 
 
+wtp = load(R3 / 'pooling_masked_wt_r3.json')['fusion_vs_last']
+lf_cells = [(fv, 'mutant'), (wtp, 'masked_wt')]
+n_better = sum(v['boot_ci90'][0] > 0 for src, _ in lf_cells for m in ('ESM-2', 'SaProt')
+               for sp in ('modulo', 'contiguous') for v in src['%s|%s' % (m, sp)].values())
+n_worse = sum(v['boot_ci90'][1] < 0 for src, _ in lf_cells for m in ('ESM-2', 'SaProt')
+              for sp in ('modulo', 'contiguous') for v in src['%s|%s' % (m, sp)].values())
+n_all = sum(len(src['%s|%s' % (m, sp)]) for src, _ in lf_cells for m in ('ESM-2', 'SaProt')
+            for sp in ('modulo', 'contiguous'))
 tex.append(r'''\section*{Multi-scale pooling: paired comparisons}
 Paired per-dataset differences (strategy minus last layer) for the pooling benchmark of
-main Table 3 (mutant arm, combined features, 20 datasets per model; SaProt with
-structure-masked inputs) under the modulo split, under the random split, and under the
-modulo split after excluding the two datasets that contain multi-site variants
-(A4\_HUMAN\_Seuma\_2021, DLG4\_HUMAN\_Faure\_2021; 18 datasets). Entries give the mean
-difference with its bootstrap 90\%% confidence interval; %s marks intervals excluding zero.
-Under the modulo split no combination significantly improves on the last layer, with or
-without the two multi-site datasets; under the random split several fusion strategies do.''' % DAGGER)
-tex.append(r'\begin{landscape}\begin{table}[p]\centering\footnotesize\setlength{\tabcolsep}{2pt}')
+main Table 3 (combined features, 20 datasets per model, 17 under the contiguous split;
+SaProt with structure-masked inputs), for (A) the mutant arm under the modulo,
+contiguous, and random splits and under the modulo split after excluding the two datasets
+that contain multi-site variants (A4\_HUMAN\_Seuma\_2021, DLG4\_HUMAN\_Faure\_2021; 18
+datasets), and (B) the masked\_wt arm under the modulo, contiguous, and random splits.
+Entries give the mean difference with its bootstrap 90\%% confidence interval; %s marks
+intervals excluding zero. Across both arms, both models, and the two position-based fold
+schemes, %d of %d comparisons favour fusion and %d favour the last layer. Under the random
+split several fusion strategies improve on the last layer in the mutant arm; in the
+masked\_wt arm, whose embeddings are identical for all mutations at a position, none
+does.''' % (DAGGER, n_better, n_all, n_worse))
+tex.append(r'\begin{landscape}\begin{table}[p]\centering\scriptsize\setlength{\tabcolsep}{1.5pt}')
 tex.append(r'\caption{Paired fusion-minus-last-layer differences, $\Delta\rho$ (90\% CI).}\label{tab:S9}')
-tex.append(r'\begin{tabular}{llcccccc}')
+tex.append(r'\resizebox{\linewidth}{!}{%')
+tex.append(r'\begin{tabular}{lllccccccc}')
 tex.append(r'\toprule')
-tex.append(r'& & \multicolumn{3}{c}{ESM-2} & \multicolumn{3}{c}{SaProt} \\')
-tex.append(r'\cmidrule(lr){3-5}\cmidrule(lr){6-8}')
-tex.append(r'Readout & Strategy & Modulo & Random & Modulo, excl. & Modulo & Random & Modulo, excl. \\')
+tex.append(r'& & & \multicolumn{4}{c}{A. Mutant arm} & \multicolumn{3}{c}{B. masked\_wt arm} \\')
+tex.append(r'\cmidrule(lr){4-7}\cmidrule(lr){8-10}')
+tex.append(r'Model & Readout & Strategy & Modulo & Contig. & Random & Mod., excl. & Modulo & Contig. & Random \\')
 tex.append(r'\midrule')
-for rk, rl in READS:
-    for sk, sl in STRATS:
-        key = '%s|%s' % (sk, rk)
-        cells = [rl, sl]
-        for model in ('ESM-2', 'SaProt'):
-            cells.append(pcell(fv['%s|modulo' % model][key]))
-            cells.append(pcell(fv['%s|random' % model][key]))
-            cells.append(pcell(excl['%s|modulo' % model][key]))
-        tex.append(' & '.join(cells) + r' \\')
-    if rk != 'lightgbm':
-        tex.append(r'\midrule')
+for model in ('ESM-2', 'SaProt'):
+    for rk, rl in READS:
+        for sk, sl in STRATS:
+            key = '%s|%s' % (sk, rk)
+            cells = [model if (rk == 'ridge' and sk == 'mean_20_33') else '',
+                     rl if sk == 'mean_20_33' else '', sl,
+                     pcell(fv['%s|modulo' % model][key]), pcell(fv['%s|contiguous' % model][key]),
+                     pcell(fv['%s|random' % model][key]), pcell(excl['%s|modulo' % model][key]),
+                     pcell(wtp['%s|modulo' % model][key]), pcell(wtp['%s|contiguous' % model][key]),
+                     pcell(wtp['%s|random' % model][key])]
+            tex.append(' & '.join(cells) + r' \\')
+        if not (model == 'SaProt' and rk == 'lightgbm'):
+            tex.append(r'\midrule')
 tex.append(r'\bottomrule')
-tex.append(r'\end{tabular}\end{table}\end{landscape}')
+tex.append(r'\end{tabular}}\end{table}\end{landscape}')
 
 # =============================================================== S10 readout contrast
 tex.append(r'''\section*{Last-layer readout contrast by split}

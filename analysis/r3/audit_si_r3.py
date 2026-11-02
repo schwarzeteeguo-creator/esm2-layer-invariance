@@ -105,14 +105,42 @@ check('S4 verdict counts 7/14/0, t-verdict 6', [r[11] for r in s4].count('Equiva
 check('S4 text names 5th/95th percentiles', '5th and 95th' in si)
 
 # ---- m3: random-split pooling and readout contrast
-s9 = data_rows(table_block('tab:S9'))
-check('S9 has 12 rows x 6 data columns', len(s9) == 12 and all(len(r) == 8 for r in s9))
-v = POOL['fusion_vs_last']['ESM-2|random']['concat_5L|ridge']
-check('S9 ESM-2 random Concat5L Ridge = %+.3f' % v['mean_delta'],
-      any(r[0] == 'Ridge' and r[1] == 'Concat 5L' and r[3].startswith('%+.3f' % v['mean_delta']) for r in s9))
-v = EXCL['SaProt|modulo']['concat_5L|lightgbm']
-check('S9 SaProt modulo-excl Concat5L LightGBM = %+.3f' % v['mean_delta'],
-      any(r[0] == 'LightGBM' and r[1] == 'Concat 5L' and r[7].startswith('%+.3f' % v['mean_delta']) for r in s9))
+WT = json.load(open(R3 / 'pooling_masked_wt_r3.json'))['fusion_vs_last']
+s9, model, ro = [], '', ''
+for line in table_block('tab:S9').splitlines():
+    line = line.strip()
+    if line.endswith(r'\\') and line.count('&') == 9 and '(' in line:
+        c = [x.strip() for x in line[:-2].split('&')]
+        model, ro = c[0] or model, c[1] or ro
+        s9.append([model, ro] + c[2:])
+check('S9 has 24 rows (2 models x 4 readouts x 3 strategies) x 7 data columns',
+      len(s9) == 24 and all(len(r) == 10 for r in s9), str(len(s9)))
+COL = {'mut_modulo': 3, 'mut_contig': 4, 'mut_random': 5, 'mut_excl': 6, 'wt_modulo': 7, 'wt_contig': 8, 'wt_random': 9}
+RO = {'ridge': 'Ridge', 'rf': 'RF', 'mlp': 'MLP', 'lightgbm': 'LightGBM'}
+ST = {'mean_20_33': 'Mean L20--33', 'concat_5L': 'Concat 5L', 'attention': 'Attention'}
+ok = True
+for m in ('ESM-2', 'SaProt'):
+    for sk, sl in ST.items():
+        for rk, rl in RO.items():
+            row = [r for r in s9 if r[0] == m and r[1] == rl and r[2] == sl]
+            if len(row) != 1:
+                ok = False
+                continue
+            row = row[0]
+            key = '%s|%s' % (sk, rk)
+            want = {'mut_modulo': POOL['fusion_vs_last']['%s|modulo' % m][key],
+                    'mut_contig': POOL['fusion_vs_last']['%s|contiguous' % m][key],
+                    'mut_random': POOL['fusion_vs_last']['%s|random' % m][key],
+                    'mut_excl': EXCL['%s|modulo' % m][key],
+                    'wt_modulo': WT['%s|modulo' % m][key], 'wt_contig': WT['%s|contiguous' % m][key],
+                    'wt_random': WT['%s|random' % m][key]}
+            for col, v in want.items():
+                ok &= row[COL[col]].startswith('%+.3f (%+.3f,%+.3f)' % (v['mean_delta'], *v['boot_ci90']))
+check('S9 all 168 cells match result files (mutant, excl., masked_wt)', ok)
+nb = sum(r[COL[c]].endswith(r'$^{\dagger}$') and r[COL[c]].startswith('+')
+         for r in s9 for c in ('mut_modulo', 'mut_contig', 'wt_modulo', 'wt_contig'))
+check('S9 leakage-free cells: exactly 1 significant gain', nb == 1, str(nb))
+check('S9 text states 1 of 96 / 55', '1 of 96 comparisons favour fusion and 55' in si.replace('\n', ' '))
 s10 = data_rows(table_block('tab:S10'))
 check('S10 has random/modulo/contiguous for both models', len(s10) == 6)
 check('S10 random-split contrast -0.035 / -0.065',
@@ -142,7 +170,7 @@ cites = {
     'S3': ('debiased estimator', 'estimable'),
     'S4': ('comparisons', 'equivalent'),
     'S8': ('single substitutions', 'single-substitution'),
-    'S9': ('Paired per-dataset', 'multi-site', 'paired comparisons'),
+    'S9': ('Paired per-dataset', 'multi-site', 'paired comparisons', 'masked'),
     'S10': ('Ridge',),
     'S11': ('anchor', 'single substitutions', 'shared'),
 }

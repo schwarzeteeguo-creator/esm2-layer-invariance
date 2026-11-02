@@ -11,6 +11,17 @@ and the root `results/` and `manuscript/` files dated before September 2026)
 corresponds to the originally submitted version and is retained unchanged as the
 record of what was withdrawn and why.
 
+## What v3.1.1 changes
+
+v3.1.1 (DOI 10.5281/zenodo.23878920) supersedes v3.1.0 and is the archived
+version cited in the third-revision manuscript. It adds the pooling benchmark on
+the masked_wt arm, previously computed but unreported (`analysis/r3/pooling_masked_wt_r3.py`,
+`results/r3/pooling_masked_wt_r3.json`, Supplementary Table S9 panel B): across
+both arms, both models and the modulo and contiguous splits, 1 of 96
+strategy-readout comparisons favours fusion over the last layer and 55 favour the
+last layer. The manuscript's pooling summary now reads "did not reliably improve
+on the final layer" accordingly.
+
 ## What v3.1.0 (third revision) adds
 
 Release v3.1.0 matches the third-revision manuscript and Supplementary

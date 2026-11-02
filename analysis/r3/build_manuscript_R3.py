@@ -53,9 +53,10 @@ SaProt slightly under the random split and substantially under leakage-free spli
 ($+0.06$ to $+0.12$).""",
    r"""the best layer (layers 27--32) exceeded the final layer by at most
 \rthree{$\Delta\rho = 0.019$ (90\% upper bound $0.036$). This deficit is small relative
-to the cross-dataset standard deviation of $0.17$. No pooling strategy significantly improved
-on the final layer under leakage-free evaluation, whereas some fusion gains appeared
-under the random split.} Real 3Di structure tokens improved
+to the cross-dataset standard deviation of $0.17$. Multi-scale pooling did not reliably
+improve on the final layer under leakage-free evaluation (1 of 96 comparisons
+significantly better, 55 worse), whereas fusion gains appeared under the random
+split.} Real 3Di structure tokens improved
 SaProt slightly under the random split and substantially under leakage-free splits
 (\rthree{$+0.06$ to $+0.13$}).""")
 
@@ -108,8 +109,8 @@ ed("pooling_protocol",
    r"""evaluated on the \textbf{mutant} arm under the modulo split as the primary
 leakage-free protocol:""",
    r"""evaluated on the \textbf{mutant} arm under the modulo split as the primary
-leakage-free protocol\rthree{, and additionally under the random split for
-comparison}:""")
+leakage-free protocol\rthree{, and additionally under the contiguous and random splits
+and on the masked\_wt arm with the same pipeline}:""")
 ed("pooling_folds",
    r"""using the same five cross-validation folds as the probing
 experiment for every dataset}.""",
@@ -276,7 +277,14 @@ contain multi-site variants left this unchanged (no combination significantly be
 17 of 24 significantly worse). Under the random split, by contrast, some fusion
 strategies did exceed the last layer: Concat~5L for ESM-2 with Ridge, Random Forest,
 and LightGBM ($+0.009$ to $+0.012$, 90\% CIs excluding zero), and 10 of 12
-strategy--readout combinations for SaProt ($+0.010$ to $+0.064$).}}""")
+strategy--readout combinations for SaProt ($+0.010$ to $+0.064$).} \rthree{The same
+benchmark on the masked\_wt arm gave a similar picture (Supplementary Table S9). Under
+the modulo and contiguous splits no combination significantly improved on the last
+layer for ESM-2, and one did for SaProt (Concat~5L with Ridge, modulo split, $+0.020$,
+90\% CI $+0.006$ to $+0.034$). Across both arms, both models, and both position-based
+fold schemes, 1 of 96 strategy--readout comparisons favoured fusion and 55 favoured
+the last layer; one gain among 96 intervals is fewer than expected by chance at this
+interval level.}}""")
 ed("tab3_caption",
    r"""Spreads across strategies: ESM-2 Ridge 0.041, RF 0.057, MLP 0.045, LightGBM 0.050;
 SaProt Ridge 0.005, RF 0.010, MLP 0.039, LightGBM 0.014.}}""",
@@ -414,8 +422,8 @@ evaluation.""",
    r"""the best layers are the last few (layers 27--32), the final layer is within
 \rthree{$\Delta\rho = 0.019$ of the best layer (point estimates; 90\% upper bounds up to
 0.036)}, and structure tokens deliver a measurable benefit (\rthree{$+0.06$ to $+0.13$}).
-No multi-scale pooling strategy \rthree{significantly} improved on the final layer under leakage-free
-evaluation.""")
+\rthree{Multi-scale pooling did not reliably improve on the final layer under leakage-free
+evaluation (1 of 96 comparisons significantly better).}""")
 ed("disc_cka",
    r"""while the linear CKA between the same layers remains 0.81.""",
    r"""while the linear CKA between the same layers remains \rthree{0.78}.""")
@@ -467,8 +475,8 @@ the evaluation and is not informative for such comparisons.}""")
 ed("disc_practical",
    r"""Multi-scale fusion provided no benefit over the final layer for either
 model under leakage-free evaluation,""",
-   r"""Multi-scale fusion provided no \rthree{significant} benefit over the final layer for either
-model under leakage-free evaluation,""")
+   r"""Multi-scale fusion \rthree{did not reliably improve on} the final layer for either
+model under leakage-free evaluation\rthree{ (one significant gain in 96 comparisons)},""")
 ed("disc_readout",
    r"""for ESM-2, last-layer LightGBM exceeded last-layer Ridge by
 $+0.045$ (paired, $p = 0.011$) and reached $\rho = 0.508$, the best pooling
@@ -480,10 +488,10 @@ this ranking holds under the modulo split and reverses under the random split}.}
 
 ed("r33_heading",
    r"\subsection{\revised{Multi-Scale Pooling Shows No Practical Gain Under a Leakage-Free Protocol}}",
-   r"\subsection{\revised{Multi-Scale Pooling \rthree{Does Not Significantly Improve on the Final Layer} Under a Leakage-Free Protocol}}")
+   r"\subsection{\revised{Multi-Scale Pooling \rthree{Does Not Reliably Improve on the Final Layer} Under a Leakage-Free Protocol}}")
 ed("disc_concat_nobenefit",
-   "Concat~5L\noffered no benefit on\n\\revised{either model}",
-   "Concat~5L\noffered no \\rthree{significant} benefit on\n\\revised{either model}")
+   "Concat~5L\noffered no benefit on\n\\revised{either model} in our benchmark",
+   "Concat~5L\noffered no \\rthree{significant} benefit on\n\\revised{either model} in our \\rthree{mutant-arm} benchmark")
 
 # ------------------------------------------------------------------ alt text under each legend (editor)
 ALT = {
@@ -539,14 +547,14 @@ substitutions---and no multi-scale pooling strategy improved on it under leakage
 evaluation.""",
    r"""The final layer is a sufficient choice---within
 \rthree{$\Delta\rho = 0.019$ of the best layer (point estimates; 90\% upper bounds up to
-0.036), a small deficit relative to the variation across datasets}---and no multi-scale
-pooling strategy \rthree{significantly} improved on it under leakage-free
+0.036), a small deficit relative to the variation across datasets}---and \rthree{multi-scale
+pooling did not reliably improve on it} under leakage-free
 evaluation.""")
 
 # ------------------------------------------------------------------ Data availability (R2.m1)
 ed("zenodo_version",
    r"archived version \rtwo{v3.0.0, DOI 10.5281/zenodo.23264208}).}",
-   r"archived version \rthree{v3.1.0, DOI 10.5281/zenodo.[to be assigned on release]}).}")
+   r"archived version \rthree{v3.1.1, DOI 10.5281/zenodo.23878920}).}")
 
 
 def main():

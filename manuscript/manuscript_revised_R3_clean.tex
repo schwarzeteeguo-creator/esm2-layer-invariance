@@ -55,9 +55,10 @@ property of the evaluation, not of the representations. Under leakage-free split
 performance rose with depth (ESM-2: $\rho = 0.23$ at layer 0, $0.46$ at layer 32), and
 the best layer (layers 27--32) exceeded the final layer by at most
 \rthree{$\Delta\rho = 0.019$ (90\% upper bound $0.036$). This deficit is small relative
-to the cross-dataset standard deviation of $0.17$. No pooling strategy significantly improved
-on the final layer under leakage-free evaluation, whereas some fusion gains appeared
-under the random split.} Real 3Di structure tokens improved
+to the cross-dataset standard deviation of $0.17$. Multi-scale pooling did not reliably
+improve on the final layer under leakage-free evaluation (1 of 96 comparisons
+significantly better, 55 worse), whereas fusion gains appeared under the random
+split.} Real 3Di structure tokens improved
 SaProt slightly under the random split and substantially under leakage-free splits
 (\rthree{$+0.06$ to $+0.13$}). A validated logit lens peaked at the final layer and reproduced
 published ProteinGym zero-shot scores on single-substitution assays. Depth matters,
@@ -262,8 +263,8 @@ no sequence information; any performance it recovers measures position memorizat
 
 \revised{We compared four embedding strategies using fixed auxiliary features,
 evaluated on the \textbf{mutant} arm under the modulo split as the primary
-leakage-free protocol\rthree{, and additionally under the random split for
-comparison}: (1) \textbf{Last Layer}: the standard approach using only the
+leakage-free protocol\rthree{, and additionally under the contiguous and random splits
+and on the masked\_wt arm with the same pipeline}: (1) \textbf{Last Layer}: the standard approach using only the
 final transformer layer;
 (2) \textbf{Mean L20--33}: mean pooling across layers 20--33, motivated by
 Kumar and Jha~\cite{kumar2025};
@@ -496,7 +497,7 @@ SaProt (3Di) & mutant       & 0.684 (26) $\rightarrow$ 0.683 & \rthree{0.492 (30
 \end{tabular}}
 \end{table}
 
-\subsection{\revised{Multi-Scale Pooling \rthree{Does Not Significantly Improve on the Final Layer} Under a Leakage-Free Protocol}}
+\subsection{\revised{Multi-Scale Pooling \rthree{Does Not Reliably Improve on the Final Layer} Under a Leakage-Free Protocol}}
 
 \revised{We ran the pooling benchmark (mutant arm, modulo
 split, GCV-regularized Ridge, fold-internal standardization, attention weights trained
@@ -516,7 +517,14 @@ contain multi-site variants left this unchanged (no combination significantly be
 17 of 24 significantly worse). Under the random split, by contrast, some fusion
 strategies did exceed the last layer: Concat~5L for ESM-2 with Ridge, Random Forest,
 and LightGBM ($+0.009$ to $+0.012$, 90\% CIs excluding zero), and 10 of 12
-strategy--readout combinations for SaProt ($+0.010$ to $+0.064$).}}
+strategy--readout combinations for SaProt ($+0.010$ to $+0.064$).} \rthree{The same
+benchmark on the masked\_wt arm gave a similar picture (Supplementary Table S9). Under
+the modulo and contiguous splits no combination significantly improved on the last
+layer for ESM-2, and one did for SaProt (Concat~5L with Ridge, modulo split, $+0.020$,
+90\% CI $+0.006$ to $+0.034$). Across both arms, both models, and both position-based
+fold schemes, 1 of 96 strategy--readout comparisons favoured fusion and 55 favoured
+the last layer; one gain among 96 intervals is fewer than expected by chance at this
+interval level.}}
 
 \begin{table}[ht]
 \centering
@@ -749,8 +757,8 @@ representations. Under leakage-free evaluation, performance rises substantially 
 depth, the best layers are the last few (layers 27--32), the final layer is within
 \rthree{$\Delta\rho = 0.019$ of the best layer (point estimates; 90\% upper bounds up to
 0.036)}, and structure tokens deliver a measurable benefit (\rthree{$+0.06$ to $+0.13$}).
-No multi-scale pooling strategy \rthree{significantly} improved on the final layer under leakage-free
-evaluation. The practical conclusion is therefore not that multi-scale embeddings are
+\rthree{Multi-scale pooling did not reliably improve on the final layer under leakage-free
+evaluation (1 of 96 comparisons significantly better).} The practical conclusion is therefore not that multi-scale embeddings are
 never useful, but that for mutation effect prediction with these 650M models depth
 matters and the final layer is a sufficient choice.}
 
@@ -837,8 +845,8 @@ model type, readout choice, and split protocol.
 
 \rtwo{For researchers using protein language model embeddings for mutation effect
 prediction, our results support a single default for both model types: extract the
-final layer. Multi-scale fusion provided no \rthree{significant} benefit over the final layer for either
-model under leakage-free evaluation, and 1280 dimensions sufficed for both linear and
+final layer. Multi-scale fusion \rthree{did not reliably improve on} the final layer for either
+model under leakage-free evaluation \rthree{(one significant gain in 96 comparisons)}, and 1280 dimensions sufficed for both linear and
 nonlinear readouts; this reduces storage and computational costs by a factor of 5--10
 compared with concatenating 6--8 layers (up to 10,240 dimensions). Where additional
 effort is available, it is better spent on the readout than on fusion, at least for
@@ -854,7 +862,7 @@ readout fitting separately from embedding extraction: the end-to-end time per da
 is dominated by extraction, which requires one forward pass with all 33 layers
 collected for every strategy, and is therefore similar across strategies.} Concat~5L
 offered no \rthree{significant} benefit on
-\revised{either model} in our benchmark \revised{and was matched or exceeded on
+\revised{either model} in our \rthree{mutant-arm} benchmark \revised{and was matched or exceeded on
 ESM-2 by switching from Ridge to LightGBM on a single layer}. Storing Concat~5L embeddings for a typical DMS
 benchmark ($\sim$10,000 variants) requires 258~MB versus 53~MB for a single
 layer, a gap that widens linearly with dataset size and becomes substantial
@@ -952,8 +960,8 @@ the interval method}.}
 matters: under leakage-free evaluation, predictive performance rises with depth and the
 best layers are the last few. The final layer is a sufficient choice---within
 \rthree{$\Delta\rho = 0.019$ of the best layer (point estimates; 90\% upper bounds up to
-0.036), a small deficit relative to the variation across datasets}---and no multi-scale
-pooling strategy \rthree{significantly} improved on it under leakage-free
+0.036), a small deficit relative to the variation across datasets}---and \rthree{multi-scale
+pooling did not reliably improve on it} under leakage-free
 evaluation. Under the standard random split, by contrast, near-flat layer profiles are
 reproduced by a position lookup table with no sequence information, so random-split
 layer interchangeability is a property of the evaluation, not of the representations.
@@ -979,7 +987,7 @@ the Health Research Board (ILP-PHR-2024-014).}
 Code and results are available at \url{https://github.com/schwarzeteeguo-creator/esm2-layer-invariance}.
 \revised{An archived snapshot of the code, per-dataset results, and extracted
 structure tokens for this revision is deposited at Zenodo (concept DOI
-10.5281/zenodo.22844290; archived version \rthree{v3.1.0, DOI 10.5281/zenodo.23877179}).}
+10.5281/zenodo.22844290; archived version \rthree{v3.1.1, DOI 10.5281/zenodo.23878920}).}
 Raw ProteinGym data: \url{https://github.com/OATML-Markslab/ProteinGym}.
 
 \newpage

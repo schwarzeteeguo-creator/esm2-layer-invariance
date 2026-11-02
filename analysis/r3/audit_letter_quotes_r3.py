@@ -33,8 +33,13 @@ PRESENT = [
     '0.492 versus 0.484 and 0.500',
     'did not outperform the wild-type context embedding combined with the auxiliary substitution features',
     'alt text:',
-    'multi-scale pooling does not significantly improve on the final layer under a leakage-free protocol',
-    'concat 5l offered no significant benefit',
+    'multi-scale pooling does not reliably improve on the final layer under a leakage-free protocol',
+    'multi-scale pooling did not reliably improve on the final layer under leakage-free evaluation (1 of 96 comparisons significantly better, 55 worse)',
+    '1 of 96 strategy-readout comparisons favoured fusion and 55 favoured the last layer',
+    'concat 5l with ridge, modulo split, +0.020, 90% ci +0.006 to +0.034',
+    'no strategy-readout combination significantly improved on the last layer',
+    'offered no significant benefit on either model in our mutant-arm benchmark',
+    'concat 5l offered no significant benefit on either model in our mutant-arm benchmark',
     '0.24-0.47', '0.44 versus up to 0.49', '0.35-0.49',
     '49,131 analyzed rows (23.0%) come from multi-site variants',
     '15,624 of the 213,393 analyzed rows (7.3%)',
@@ -51,7 +56,7 @@ PRESENT = [
     'three of the seven equivalence verdicts nevertheless lie at the margin',
     '3 comparisons are equivalent, 20 inconclusive',
     # minors
-    'v3.1.0',
+    'v3.1.1', 'zenodo.23878920',
     'under the random split, by contrast, some fusion strategies did exceed the last layer',
     '(+0.009 to +0.012, 90% cis excluding zero)', '10 of 12 strategy-readout combinations for saprot (+0.010 to +0.064)',
     'under leakage-free evaluation',
@@ -63,7 +68,7 @@ PRESENT = [
     'the difference is one of degree',
     'therefore a hypothesis',
     'reaches 0.407 (esm-2) and 0.469 (saprot with real 3di) under the modulo split',
-    'significantly improved on the final layer under leakage-free evaluation',
+    'did not reliably improve on the final layer under leakage-free evaluation',
     'which does not exclude a gain of that size',
 ]
 ABSENT = [
