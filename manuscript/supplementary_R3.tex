@@ -1,0 +1,539 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage[margin=2cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\captionsetup{font=small}
+\renewcommand{\thetable}{S\arabic{table}}
+\title{Supplementary Information for\\ ``Leakage-Free Evaluation of Layer Choice in Protein Language
+Models for Mutation Effect Prediction''}
+\date{}
+\begin{document}
+\maketitle
+\noindent Supplementary Tables S1--S11 are numbered in the order in which they are first cited
+in the main text. Throughout, the primary analysis uses the full data for the wild-type
+arms and, under the position-based splits (modulo, contiguous, position-grouped), only
+single-substitution variants for the mutant arm, whose rows of a multi-site variant would
+share one embedding and one label across folds (main text, Section 2.2).
+
+\section*{Assay provenance and per-dataset summary}
+All experiments use the 63-assay substitution snapshot distributed as LMDB files with the
+SaProt repository. Of these 63 assay identifiers, 46 are unchanged in ProteinGym v1.3, 13
+correspond to renamed or reprocessed v1.3 assays, and 4 are no longer part of v1.3. The
+renamed assays and their v1.3 identifiers are listed below. Table~S1 gives, for every
+dataset, its v1.3 status, whether the 10,000-variant cap applied, the number of analyzed
+rows (5,000-row ceiling), the number of analyzed rows that come from multi-site variants
+(whether or not other rows of the same variant survived the row subsample), the number of
+test rows under the modulo split whose variant also has a row in the training folds, and
+the mutant-arm probing result on single-substitution variants under the modulo split. In
+total, 11 datasets were variant-capped, 26 reach the row ceiling, and multi-site variants
+occur in 10 datasets, contributing 49,131 of the 213,393 analyzed rows (23.0\%).
+\begin{center}\footnotesize\begin{tabular}{ll}
+\toprule
+Snapshot identifier & ProteinGym v1.3 identifier \\
+\midrule
+A4\_HUMAN\_Seuma\_2021 & A4\_HUMAN\_Seuma\_2022 \\
+CP2C9\_HUMAN\_Amorosi\_abundance\_2021 & CP2C9\_HUMAN\_Amorosi\_2021\_abundance \\
+CP2C9\_HUMAN\_Amorosi\_activity\_2021 & CP2C9\_HUMAN\_Amorosi\_2021\_activity \\
+DYR\_ECOLI\_Thompson\_plusLon\_2019 & DYR\_ECOLI\_Thompson\_2019 \\
+GCN4\_YEAST\_Staller\_induction\_2018 & GCN4\_YEAST\_Staller\_2018 \\
+MTH3\_HAEAE\_Rockah-Shmuel\_2015 & MTH3\_HAEAE\_RockahShmuel\_2015 \\
+P53\_HUMAN\_Giacomelli\_NULL\_Etoposide\_2018 & P53\_HUMAN\_Giacomelli\_2018\_Null\_Etoposide \\
+P53\_HUMAN\_Giacomelli\_NULL\_Nutlin\_2018 & P53\_HUMAN\_Giacomelli\_2018\_Null\_Nutlin \\
+P53\_HUMAN\_Giacomelli\_WT\_Nutlin\_2018 & P53\_HUMAN\_Giacomelli\_2018\_WT\_Nutlin \\
+SRC\_HUMAN\_Ahler\_CD\_2019 & SRC\_HUMAN\_Ahler\_2019 \\
+TPOR\_HUMAN\_Bridgford\_S505N\_2020 & TPOR\_HUMAN\_Bridgford\_2020 \\
+VKOR1\_HUMAN\_Chiasson\_abundance\_2020 & VKOR1\_HUMAN\_Chiasson\_2020\_abundance \\
+VKOR1\_HUMAN\_Chiasson\_activity\_2020 & VKOR1\_HUMAN\_Chiasson\_2020\_activity \\
+\bottomrule
+\end{tabular}\end{center}
+\begin{landscape}\footnotesize
+\begin{longtable}{llcrrrrrrrrrr}
+\caption{Per-dataset provenance, caps, multi-site rows, and mutant-arm probing on single-substitution variants (modulo split, combined features): best layer, best-layer $\rho$, and final-layer (L32) $\rho$. \emph{Shared} counts test rows under the modulo split whose variant also has a row in the training folds; \emph{Single rows} is the number of single-substitution rows analyzed.}\label{tab:S1}\\
+\toprule
+Dataset & v1.3 & Var.\ cap & Rows & Multi-site & Shared & Single & \multicolumn{3}{c}{ESM-2} & \multicolumn{3}{c}{SaProt (3Di)} \\
+ & & & & rows & (modulo) & rows & best L & best $\rho$ & L32 $\rho$ & best L & best $\rho$ & L32 $\rho$ \\
+\midrule\endfirsthead
+\toprule
+Dataset & v1.3 & Var.\ cap & Rows & Multi-site & Shared & Single & \multicolumn{3}{c}{ESM-2} & \multicolumn{3}{c}{SaProt (3Di)} \\
+ & & & & rows & (modulo) & rows & best L & best $\rho$ & L32 $\rho$ & best L & best $\rho$ & L32 $\rho$ \\
+\midrule\endhead
+\bottomrule\endfoot
+A0A1I9GEU1\_NEIME\_Kennouche\_2019 & same & no & 922 & 0 & 0 & 922 & 0 & 0.087 & -0.077 & 3 & 0.004 & -0.006 \\
+A0A2Z5U3Z0\_9INFA\_Doud\_2016 & same & yes & 5000 & 0 & 0 & 5000 & 0 & 0.442 & 0.415 & 23 & 0.457 & 0.361 \\
+A4GRB6\_PSEAI\_Chen\_2020 & same & no & 5000 & 0 & 0 & 5000 & 32 & 0.548 & 0.548 & 31 & 0.751 & 0.677 \\
+A4\_HUMAN\_Seuma\_2021 & renamed & yes & 5000 & 4917 & 1004 & 468 & 26 & 0.565 & 0.475 & 0 & 0.508 & 0.465 \\
+AACC1\_PSEAI\_Dandage\_2018 & same & no & 1801 & 0 & 0 & 1801 & 29 & 0.470 & 0.426 & 32 & 0.549 & 0.549 \\
+ADRB2\_HUMAN\_Jones\_2020 & same & no & 5000 & 0 & 0 & 5000 & 31 & 0.507 & 0.506 & 31 & 0.527 & 0.526 \\
+AMIE\_PSEAE\_Wrenbeck\_2017 & same & no & 5000 & 0 & 0 & 5000 & 31 & 0.574 & 0.519 & 31 & 0.640 & 0.631 \\
+B3VI55\_LIPST\_Klesmith\_2015 & removed & no & 5000 & 0 & 0 & 5000 & 31 & 0.562 & 0.477 & 32 & 0.592 & 0.592 \\
+BLAT\_ECOLX\_Deng\_2012 & same & no & 4996 & 0 & 0 & 4996 & 29 & 0.417 & 0.338 & 29 & 0.551 & 0.544 \\
+BLAT\_ECOLX\_Firnberg\_2014 & same & no & 4783 & 0 & 0 & 4783 & 31 & 0.656 & 0.600 & 30 & 0.799 & 0.768 \\
+BLAT\_ECOLX\_Jacquier\_2013 & same & no & 989 & 0 & 0 & 989 & 31 & 0.581 & 0.559 & 29 & 0.739 & 0.729 \\
+BLAT\_ECOLX\_Stiffler\_2015 & same & no & 4996 & 0 & 0 & 4996 & 31 & 0.668 & 0.630 & 31 & 0.783 & 0.720 \\
+CALM1\_HUMAN\_Weile\_2017 & same & no & 1813 & 0 & 0 & 1813 & 30 & 0.154 & 0.132 & 6 & 0.141 & 0.126 \\
+CCDB\_ECOLI\_Adkar\_2012 & same & no & 1176 & 0 & 0 & 1176 & 30 & 0.613 & 0.580 & 30 & 0.694 & 0.639 \\
+CCDB\_ECOLI\_Tripathi\_2016 & same & no & 1663 & 0 & 0 & 1663 & 30 & 0.459 & 0.443 & 30 & 0.546 & 0.442 \\
+CP2C9\_HUMAN\_Amorosi\_abundance\_2021 & renamed & no & 5000 & 0 & 0 & 5000 & 32 & 0.555 & 0.555 & 32 & 0.671 & 0.671 \\
+CP2C9\_HUMAN\_Amorosi\_activity\_2021 & renamed & no & 5000 & 0 & 0 & 5000 & 31 & 0.598 & 0.583 & 29 & 0.631 & 0.601 \\
+DLG4\_HUMAN\_Faure\_2021 & same & no & 5000 & 4489 & 1454 & 1280 & 30 & 0.501 & 0.400 & 32 & 0.618 & 0.618 \\
+DLG4\_RAT\_McLaughlin\_2012 & same & no & 1576 & 0 & 0 & 1576 & 29 & 0.471 & 0.404 & 14 & 0.530 & 0.503 \\
+DYR\_ECOLI\_Thompson\_plusLon\_2019 & renamed & no & 2363 & 0 & 0 & 2363 & 30 & 0.371 & 0.342 & 25 & 0.455 & 0.407 \\
+ESTA\_BACSU\_Nutschel\_2020 & same & no & 2172 & 0 & 0 & 2172 & 17 & 0.349 & 0.320 & 32 & 0.478 & 0.478 \\
+F7YBW8\_MESOW\_Aakre\_2015 & same & no & 5000 & 4995 & 1499 & 37 & 14 & -0.464 & -0.692 & 16 & -0.482 & -0.629 \\
+GAL4\_YEAST\_Kitzman\_2015 & same & no & 1195 & 0 & 0 & 1195 & 30 & 0.471 & 0.451 & 32 & 0.448 & 0.448 \\
+GCN4\_YEAST\_Staller\_induction\_2018 & renamed & no & 5000 & 4997 & 4312 & 33 & 25 & 0.555 & 0.417 & 4 & 0.399 & 0.308 \\
+GFP\_AEQVI\_Sarkisyan\_2016 & same & yes & 5000 & 4970 & 1571 & 1084 & 18 & 0.337 & 0.229 & 29 & 0.518 & 0.442 \\
+GRB2\_HUMAN\_Faure\_2021 & same & yes & 5000 & 4958 & 1020 & 1034 & 31 & 0.579 & 0.495 & 32 & 0.648 & 0.648 \\
+HIS7\_YEAST\_Pokusaeva\_2019 & same & yes & 5000 & 5000 & 1600 & 168 & 0 & 0.120 & 0.040 & 0 & 0.120 & 0.071 \\
+HSP82\_YEAST\_Flynn\_2019 & same & yes & 5000 & 0 & 0 & 5000 & 29 & 0.453 & 0.449 & 23 & 0.476 & 0.439 \\
+HSP82\_YEAST\_Mishra\_2016 & same & no & 4323 & 0 & 0 & 4323 & 27 & 0.507 & 0.465 & 31 & 0.501 & 0.486 \\
+IF1\_ECOLI\_Kelsic\_2016 & same & no & 1367 & 0 & 0 & 1367 & 31 & 0.334 & 0.316 & 17 & 0.485 & 0.245 \\
+KKA2\_KLEPN\_Melnikov\_2014 & same & no & 4960 & 0 & 0 & 4960 & 32 & 0.640 & 0.640 & 23 & 0.654 & 0.651 \\
+MK01\_HUMAN\_Brenan\_2016 & same & no & 5000 & 0 & 0 & 5000 & 0 & 0.517 & 0.360 & 10 & 0.353 & 0.342 \\
+MSH2\_HUMAN\_Jia\_2020 & same & yes & 5000 & 0 & 0 & 5000 & 31 & 0.521 & 0.519 & 22 & 0.468 & 0.446 \\
+MTH3\_HAEAE\_Rockah-Shmuel\_2015 & renamed & no & 1777 & 0 & 0 & 1777 & 31 & 0.627 & 0.618 & 31 & 0.667 & 0.665 \\
+NUD15\_HUMAN\_Suiter\_2020 & same & no & 2844 & 0 & 0 & 2844 & 27 & 0.448 & 0.386 & 31 & 0.674 & 0.651 \\
+P53\_HUMAN\_Giacomelli\_NULL\_Etoposide\_2018 & renamed & no & 5000 & 0 & 0 & 5000 & 0 & 0.597 & 0.471 & 32 & 0.611 & 0.611 \\
+P53\_HUMAN\_Giacomelli\_NULL\_Nutlin\_2018 & renamed & no & 5000 & 0 & 0 & 5000 & 31 & 0.637 & 0.634 & 14 & 0.618 & 0.613 \\
+P53\_HUMAN\_Giacomelli\_WT\_Nutlin\_2018 & renamed & no & 5000 & 0 & 0 & 5000 & 31 & 0.812 & 0.810 & 28 & 0.830 & 0.826 \\
+P53\_HUMAN\_Kotler\_2018 & same & no & 1048 & 0 & 0 & 1048 & 31 & 0.684 & 0.594 & 30 & 0.693 & 0.675 \\
+P84126\_THETH\_Chan\_2017 & same & no & 1519 & 0 & 0 & 1519 & 32 & 0.497 & 0.497 & 31 & 0.457 & 0.448 \\
+PABP\_YEAST\_Melamed\_2013 & same & yes & 5000 & 4906 & 1022 & 1187 & 30 & 0.525 & 0.493 & 20 & 0.630 & 0.553 \\
+PTEN\_HUMAN\_Matreyek\_2021 & same & no & 5000 & 0 & 0 & 5000 & 30 & 0.559 & 0.553 & 27 & 0.597 & 0.575 \\
+PTEN\_HUMAN\_Mighell\_2018 & same & no & 5000 & 0 & 0 & 5000 & 30 & 0.536 & 0.510 & 31 & 0.539 & 0.529 \\
+Q59976\_STRSQ\_Romero\_2015 & same & no & 2999 & 0 & 0 & 2999 & 30 & 0.622 & 0.597 & 32 & 0.665 & 0.665 \\
+RASH\_HUMAN\_Bandaru\_2017 & same & no & 3134 & 0 & 0 & 3134 & 19 & 0.494 & 0.448 & 26 & 0.583 & 0.524 \\
+RL401\_YEAST\_Mavor\_2016 & removed & no & 1253 & 0 & 0 & 1253 & 13 & 0.520 & 0.448 & 22 & 0.601 & 0.513 \\
+RL401\_YEAST\_Roscoe\_2013 & removed & no & 1195 & 0 & 0 & 1195 & 30 & 0.603 & 0.532 & 17 & 0.629 & 0.484 \\
+RL401\_YEAST\_Roscoe\_2014 & removed & no & 1380 & 0 & 0 & 1380 & 0 & 0.382 & 0.317 & 24 & 0.532 & 0.448 \\
+SC6A4\_HUMAN\_Young\_2021 & same & yes & 5000 & 0 & 0 & 5000 & 30 & 0.569 & 0.552 & 32 & 0.569 & 0.569 \\
+SPG1\_STRSG\_Olson\_2014 & same & yes & 5000 & 4993 & 1032 & 1045 & 12 & 0.508 & 0.470 & 11 & 0.614 & 0.497 \\
+SRC\_HUMAN\_Ahler\_CD\_2019 & renamed & no & 3372 & 0 & 0 & 3372 & 30 & 0.504 & 0.417 & 32 & 0.573 & 0.573 \\
+SUMO1\_HUMAN\_Weile\_2017 & same & no & 1700 & 0 & 0 & 1700 & 30 & 0.414 & 0.414 & 32 & 0.447 & 0.447 \\
+SYUA\_HUMAN\_Newberry\_2020 & same & no & 2497 & 0 & 0 & 2497 & 13 & 0.537 & 0.503 & 10 & 0.546 & 0.538 \\
+TADBP\_HUMAN\_Bolognesi\_2019 & same & no & 1196 & 0 & 0 & 1196 & 0 & 0.712 & 0.582 & 0 & 0.689 & 0.679 \\
+TPK1\_HUMAN\_Weile\_2017 & same & no & 3181 & 0 & 0 & 3181 & 32 & 0.251 & 0.251 & 19 & 0.220 & 0.199 \\
+TPMT\_HUMAN\_Matreyek\_2018 & same & no & 3648 & 0 & 0 & 3648 & 30 & 0.552 & 0.502 & 23 & 0.541 & 0.518 \\
+TPOR\_HUMAN\_Bridgford\_S505N\_2020 & renamed & no & 562 & 0 & 0 & 562 & 7 & 0.400 & 0.236 & 12 & 0.481 & 0.387 \\
+TRPC\_SACS2\_Chan\_2017 & same & no & 1519 & 0 & 0 & 1519 & 32 & 0.542 & 0.542 & 31 & 0.560 & 0.530 \\
+TRPC\_THEMA\_Chan\_2017 & same & no & 1519 & 0 & 0 & 1519 & 32 & 0.358 & 0.358 & 7 & 0.372 & 0.279 \\
+UBC9\_HUMAN\_Weile\_2017 & same & no & 2563 & 0 & 0 & 2563 & 30 & 0.392 & 0.360 & 31 & 0.451 & 0.448 \\
+VKOR1\_HUMAN\_Chiasson\_abundance\_2020 & renamed & no & 2695 & 0 & 0 & 2695 & 30 & 0.498 & 0.463 & 30 & 0.511 & 0.462 \\
+VKOR1\_HUMAN\_Chiasson\_activity\_2020 & renamed & no & 697 & 0 & 0 & 697 & 32 & 0.418 & 0.418 & 9 & 0.441 & 0.392 \\
+YAP1\_HUMAN\_Araya\_2012 & same & yes & 5000 & 4906 & 1110 & 362 & 30 & 0.360 & 0.087 & 32 & 0.366 & 0.366 \\
+\end{longtable}\end{landscape}
+\section*{Foldseek 3Di token preparation}
+For each dataset, the wild-type sequence was aligned to its AlphaFold Protein Structure
+Database entry and each residue was assigned the Foldseek 3Di state of its aligned
+structural residue. Structures were obtained for 62 of 63 datasets. Two alignments were
+truncated at the C terminus and missing residues were padded with the Foldseek gap state
+(UBC9: 1 residue; Q59976: 22 residues). The influenza nucleoprotein dataset has no AFDB
+entry and was evaluated with structure-masked tokens in all SaProt analyses.
+\begin{table}[H]\centering\scriptsize
+\caption{3Di files (62 datasets): token length and gap-padded residue count.}\label{tab:S2}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrlrr}
+\toprule
+Dataset & Length & Gaps & Dataset & Length & Gaps \\
+\midrule
+A0A1I9GEU1\_NEIME\_Kennouche\_2019 & 161 & 0 & MSH2\_HUMAN\_Jia\_2020 & 934 & 0 \\
+A4GRB6\_PSEAI\_Chen\_2020 & 266 & 0 & MTH3\_HAEAE\_Rockah-Shmuel\_2015 & 330 & 0 \\
+A4\_HUMAN\_Seuma\_2021 & 770 & 0 & NUD15\_HUMAN\_Suiter\_2020 & 164 & 0 \\
+AACC1\_PSEAI\_Dandage\_2018 & 177 & 0 & P53\_HUMAN\_Giacomelli\_NULL\_Etoposide\_2018 & 393 & 0 \\
+ADRB2\_HUMAN\_Jones\_2020 & 413 & 0 & P53\_HUMAN\_Giacomelli\_NULL\_Nutlin\_2018 & 393 & 0 \\
+AMIE\_PSEAE\_Wrenbeck\_2017 & 346 & 0 & P53\_HUMAN\_Giacomelli\_WT\_Nutlin\_2018 & 393 & 0 \\
+B3VI55\_LIPST\_Klesmith\_2015 & 439 & 0 & P53\_HUMAN\_Kotler\_2018 & 393 & 0 \\
+BLAT\_ECOLX\_Deng\_2012 & 286 & 0 & P84126\_THETH\_Chan\_2017 & 254 & 0 \\
+BLAT\_ECOLX\_Firnberg\_2014 & 286 & 0 & PABP\_YEAST\_Melamed\_2013 & 577 & 0 \\
+BLAT\_ECOLX\_Jacquier\_2013 & 286 & 0 & PTEN\_HUMAN\_Matreyek\_2021 & 403 & 0 \\
+BLAT\_ECOLX\_Stiffler\_2015 & 286 & 0 & PTEN\_HUMAN\_Mighell\_2018 & 403 & 0 \\
+CALM1\_HUMAN\_Weile\_2017 & 149 & 0 & Q59976\_STRSQ\_Romero\_2015 & 501 & 22 \\
+CCDB\_ECOLI\_Adkar\_2012 & 101 & 0 & RASH\_HUMAN\_Bandaru\_2017 & 189 & 0 \\
+CCDB\_ECOLI\_Tripathi\_2016 & 101 & 0 & RL401\_YEAST\_Mavor\_2016 & 128 & 0 \\
+CP2C9\_HUMAN\_Amorosi\_abundance\_2021 & 490 & 0 & RL401\_YEAST\_Roscoe\_2013 & 128 & 0 \\
+CP2C9\_HUMAN\_Amorosi\_activity\_2021 & 490 & 0 & RL401\_YEAST\_Roscoe\_2014 & 128 & 0 \\
+DLG4\_HUMAN\_Faure\_2021 & 724 & 0 & SC6A4\_HUMAN\_Young\_2021 & 630 & 0 \\
+DLG4\_RAT\_McLaughlin\_2012 & 724 & 0 & SPG1\_STRSG\_Olson\_2014 & 448 & 0 \\
+DYR\_ECOLI\_Thompson\_plusLon\_2019 & 159 & 0 & SRC\_HUMAN\_Ahler\_CD\_2019 & 536 & 0 \\
+ESTA\_BACSU\_Nutschel\_2020 & 212 & 0 & SUMO1\_HUMAN\_Weile\_2017 & 101 & 0 \\
+F7YBW8\_MESOW\_Aakre\_2015 & 93 & 0 & SYUA\_HUMAN\_Newberry\_2020 & 140 & 0 \\
+GAL4\_YEAST\_Kitzman\_2015 & 881 & 0 & TADBP\_HUMAN\_Bolognesi\_2019 & 414 & 0 \\
+GCN4\_YEAST\_Staller\_induction\_2018 & 281 & 0 & TPK1\_HUMAN\_Weile\_2017 & 243 & 0 \\
+GFP\_AEQVI\_Sarkisyan\_2016 & 238 & 0 & TPMT\_HUMAN\_Matreyek\_2018 & 245 & 0 \\
+GRB2\_HUMAN\_Faure\_2021 & 217 & 0 & TPOR\_HUMAN\_Bridgford\_S505N\_2020 & 635 & 0 \\
+HIS7\_YEAST\_Pokusaeva\_2019 & 220 & 0 & TRPC\_SACS2\_Chan\_2017 & 248 & 0 \\
+HSP82\_YEAST\_Flynn\_2019 & 709 & 0 & TRPC\_THEMA\_Chan\_2017 & 252 & 0 \\
+HSP82\_YEAST\_Mishra\_2016 & 709 & 0 & UBC9\_HUMAN\_Weile\_2017 & 159 & 1 \\
+IF1\_ECOLI\_Kelsic\_2016 & 72 & 0 & VKOR1\_HUMAN\_Chiasson\_abundance\_2020 & 163 & 0 \\
+KKA2\_KLEPN\_Melnikov\_2014 & 264 & 0 & VKOR1\_HUMAN\_Chiasson\_activity\_2020 & 163 & 0 \\
+MK01\_HUMAN\_Brenan\_2016 & 360 & 0 & YAP1\_HUMAN\_Araya\_2012 & 504 & 0 \\
+\bottomrule
+\end{tabular}}\end{table}
+\section*{Layer similarity: sample size and CKA estimators}
+Cosine similarity and linear CKA of per-layer hidden states, averaged over 10 datasets,
+with 200 (primary; main-text Figures 2 and 3c) or 50 randomly sampled residue positions
+per dataset. The standard linear CKA estimator is biased upward when the number of
+positions is small relative to the hidden dimension (1280); the 200-position values
+reduce this bias. The debiased (unbiased-HSIC) estimator is not estimable at either
+sample size: with fewer positions than hidden dimensions its values exceed 1, and it is
+listed for completeness only.
+\begin{table}[H]\centering\small
+\caption{Layer-similarity summaries.}\label{tab:S3}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{2}{c}{Adjacent layers} & \multicolumn{2}{c}{Layer 0 vs 32} & \multicolumn{2}{c}{Pearson $r$ vs distance} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Model (positions) & cos & CKA & cos & CKA & cos & CKA \\
+\midrule
+ESM-2 (200) & 0.962 & 0.953 & +0.542 & 0.409 & -0.93 & -0.66 \\
+ESM-2 (50) & 0.962 & 0.967 & +0.558 & 0.554 & -0.93 & -0.60 \\
+\quad debiased CKA (200; not estimable) & -- & 1.002 & -- & 0.963 & -- & -- \\
+\midrule
+SaProt (200) & 0.979 & 0.969 & -0.008 & 0.779 & -0.50 & -0.70 \\
+SaProt (50) & 0.979 & 0.979 & -0.009 & 0.808 & -0.50 & -0.68 \\
+\quad debiased CKA (200; not estimable) & -- & 1.001 & -- & 1.112 & -- & -- \\
+\bottomrule
+\end{tabular}\end{table}
+\section*{Best-layer versus final-layer equivalence}
+For each model, arm, and leakage-free split, the per-dataset paired difference between
+the best layer and layer 32 was computed (mutant arm on single-substitution variants;
+column ``Data''). The best layer is the argmax of the layer-mean curve on the same
+per-dataset results, so selection favours finding a difference and equivalence verdicts
+are conservative. Verdict rule: \emph{Equivalent} when the bootstrap 90\% confidence
+interval of the mean paired difference (10,000 resamples, percentile method, 5th and 95th
+percentiles, seed 42) lies within $\pm 0.01$; \emph{Difference} when it lies entirely
+outside; \emph{Inconclusive} otherwise. The $t$-based 90\% interval and its verdict, the
+TOST $p$-value (margin 0.01), and Cohen's $d_z$ are given for information: the $t$-based
+rule classifies 6 comparisons as equivalent and TOST at $\alpha = 0.05$ classifies 6,
+against 7 for the bootstrap rule, because several upper bounds lie close to the margin.
+In 6 further model--arm--split combinations the best layer is layer 32 itself (no test
+defined): ESM-2 masked\_wt (Modulo); ESM-2 masked\_wt (Contiguous); ESM-2 masked\_wt (Pos.-grouped); ESM-2 unmasked\_wt (Modulo); ESM-2 unmasked\_wt (Contiguous); ESM-2 unmasked\_wt (Pos.-grouped).
+\begin{landscape}\begin{table}[p]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{Best-versus-final-layer comparisons, primary analysis (21 tests): 7 equivalent, 14 inconclusive, 0 difference.}\label{tab:S4}
+\begin{tabular}{llllrrrllrrll}
+\toprule
+Model & Arm & Split & Data & Best & $n$ & Mean $\Delta$ & Bootstrap 90\% CI & $t$-based 90\% CI & TOST $p$ & $d_z$ & Verdict & $t$ verdict \\
+\midrule
+ESM-2 & mutant & Modulo & single & L30 & 63 & +0.0159 & [+0.0057, +0.0269] & [+0.0050, +0.0267] & 0.815 & 0.31 & Inconclusive & Inconclusive \\
+ESM-2 & mutant & Contiguous & single & L31 & 57 & +0.0071 & [-0.0035, +0.0180] & [-0.0039, +0.0181] & 0.331 & 0.14 & Inconclusive & Inconclusive \\
+ESM-2 & mutant & Pos.-grouped & single & L30 & 63 & +0.0187 & [+0.0036, +0.0357] & [+0.0024, +0.0350] & 0.812 & 0.24 & Inconclusive & Inconclusive \\
+SaProt (mask) & masked\_wt & Modulo & full & L30 & 63 & +0.0054 & [+0.0011, +0.0098] & [+0.0009, +0.0099] & 0.045 & 0.25 & Equivalent & Equivalent \\
+SaProt (mask) & masked\_wt & Contiguous & full & L31 & 57 & +0.0077 & [+0.0034, +0.0119] & [+0.0034, +0.0120] & 0.188 & 0.39 & Inconclusive & Inconclusive \\
+SaProt (mask) & masked\_wt & Pos.-grouped & full & L31 & 63 & +0.0035 & [+0.0003, +0.0066] & [+0.0002, +0.0067] & 0.001 & 0.22 & Equivalent & Equivalent \\
+SaProt (mask) & unmasked\_wt & Modulo & full & L30 & 63 & +0.0063 & [+0.0010, +0.0118] & [+0.0007, +0.0119] & 0.136 & 0.24 & Inconclusive & Inconclusive \\
+SaProt (mask) & unmasked\_wt & Contiguous & full & L31 & 57 & +0.0041 & [-0.0013, +0.0096] & [-0.0015, +0.0097] & 0.041 & 0.16 & Equivalent & Equivalent \\
+SaProt (mask) & unmasked\_wt & Pos.-grouped & full & L27 & 63 & +0.0031 & [-0.0038, +0.0099] & [-0.0038, +0.0101] & 0.052 & 0.09 & Equivalent & Inconclusive \\
+SaProt (mask) & mutant & Modulo & single & L30 & 63 & +0.0050 & [-0.0027, +0.0126] & [-0.0029, +0.0130] & 0.150 & 0.13 & Inconclusive & Inconclusive \\
+SaProt (mask) & mutant & Contiguous & single & L30 & 57 & +0.0031 & [-0.0069, +0.0135] & [-0.0073, +0.0134] & 0.134 & 0.07 & Inconclusive & Inconclusive \\
+SaProt (mask) & mutant & Pos.-grouped & single & L30 & 63 & +0.0057 & [-0.0044, +0.0161] & [-0.0047, +0.0161] & 0.246 & 0.11 & Inconclusive & Inconclusive \\
+SaProt (3Di) & masked\_wt & Modulo & full & L31 & 63 & +0.0017 & [-0.0010, +0.0046] & [-0.0012, +0.0047] & 0.000 & 0.13 & Equivalent & Equivalent \\
+SaProt (3Di) & masked\_wt & Contiguous & full & L31 & 57 & +0.0009 & [-0.0039, +0.0057] & [-0.0040, +0.0057] & 0.001 & 0.04 & Equivalent & Equivalent \\
+SaProt (3Di) & masked\_wt & Pos.-grouped & full & L31 & 63 & +0.0016 & [-0.0011, +0.0043] & [-0.0012, +0.0043] & 0.000 & 0.12 & Equivalent & Equivalent \\
+SaProt (3Di) & unmasked\_wt & Modulo & full & L31 & 63 & +0.0071 & [+0.0039, +0.0106] & [+0.0037, +0.0105] & 0.081 & 0.44 & Inconclusive & Inconclusive \\
+SaProt (3Di) & unmasked\_wt & Contiguous & full & L31 & 57 & +0.0086 & [+0.0036, +0.0138] & [+0.0033, +0.0139] & 0.328 & 0.36 & Inconclusive & Inconclusive \\
+SaProt (3Di) & unmasked\_wt & Pos.-grouped & full & L31 & 63 & +0.0083 & [+0.0045, +0.0126] & [+0.0042, +0.0125] & 0.254 & 0.42 & Inconclusive & Inconclusive \\
+SaProt (3Di) & mutant & Modulo & single & L30 & 63 & +0.0060 & [-0.0013, +0.0133] & [-0.0016, +0.0136] & 0.190 & 0.17 & Inconclusive & Inconclusive \\
+SaProt (3Di) & mutant & Contiguous & single & L31 & 57 & +0.0100 & [+0.0019, +0.0187] & [+0.0013, +0.0187] & 0.501 & 0.26 & Inconclusive & Inconclusive \\
+SaProt (3Di) & mutant & Pos.-grouped & single & L31 & 63 & +0.0088 & [+0.0031, +0.0146] & [+0.0029, +0.0147] & 0.368 & 0.32 & Inconclusive & Inconclusive \\
+\bottomrule
+\end{tabular}\end{table}\end{landscape}
+\section*{Full 33-layer probing curves}
+Mean Spearman $\rho$ per layer (combined features) for every arm and split; best layer per
+column in bold. $n = 63$ datasets ($n = 57$ for the contiguous split). Columns marked
+$^{\dagger}$ (mutant arm, leakage-free splits) are computed on single-substitution variants.
+\begin{landscape}\begin{table}[p]\centering\footnotesize
+\caption{ESM-2 650M: per-layer mean $\rho$ by arm and split.}\label{tab:S5}
+\begin{tabular}{rcccccccccccc}
+\toprule
+& \multicolumn{4}{c}{masked\_wt} & \multicolumn{4}{c}{unmasked\_wt} & \multicolumn{4}{c}{mutant} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-13}
+Layer & Random & Modulo & Contig. & Pos.-gr. & Random & Modulo & Contig. & Pos.-gr. & Random & Modulo$^{\dagger}$ & Contig.$^{\dagger}$ & Pos.-gr.$^{\dagger}$ \\
+\midrule
+0 & 0.601 & 0.232 & 0.067 & 0.224 & 0.601 & 0.191 & 0.046 & 0.188 & 0.510 & 0.356 & 0.189 & 0.349 \\
+1 & 0.601 & 0.235 & 0.129 & 0.219 & 0.602 & 0.257 & 0.167 & 0.244 & 0.615 & 0.245 & 0.150 & 0.224 \\
+2 & 0.602 & 0.262 & 0.148 & 0.252 & 0.602 & 0.289 & 0.197 & 0.281 & 0.630 & 0.253 & 0.146 & 0.243 \\
+3 & 0.602 & 0.275 & 0.155 & 0.267 & 0.603 & 0.306 & 0.197 & 0.299 & 0.639 & 0.256 & 0.154 & 0.251 \\
+4 & 0.603 & 0.285 & 0.159 & 0.276 & 0.603 & 0.316 & 0.199 & 0.305 & 0.645 & 0.258 & 0.158 & 0.248 \\
+5 & 0.602 & 0.301 & 0.165 & 0.290 & 0.603 & 0.331 & 0.208 & 0.319 & 0.647 & 0.272 & 0.160 & 0.265 \\
+6 & 0.603 & 0.307 & 0.167 & 0.298 & 0.603 & 0.334 & 0.205 & 0.323 & 0.650 & 0.288 & 0.154 & 0.274 \\
+7 & 0.603 & 0.312 & 0.169 & 0.303 & 0.603 & 0.336 & 0.208 & 0.325 & 0.649 & 0.304 & 0.159 & 0.291 \\
+\midrule
+8 & 0.603 & 0.316 & 0.174 & 0.306 & 0.603 & 0.342 & 0.218 & 0.329 & 0.650 & 0.308 & 0.169 & 0.295 \\
+9 & 0.603 & 0.322 & 0.180 & 0.308 & 0.603 & 0.343 & 0.211 & 0.328 & 0.649 & 0.312 & 0.162 & 0.294 \\
+10 & 0.603 & 0.324 & 0.195 & 0.315 & 0.604 & 0.346 & 0.225 & 0.335 & 0.652 & 0.325 & 0.169 & 0.308 \\
+11 & 0.603 & 0.334 & 0.198 & 0.323 & 0.604 & 0.349 & 0.221 & 0.337 & 0.652 & 0.339 & 0.186 & 0.324 \\
+12 & 0.603 & 0.332 & 0.201 & 0.326 & 0.604 & 0.349 & 0.217 & 0.338 & 0.656 & 0.330 & 0.188 & 0.320 \\
+13 & 0.603 & 0.339 & 0.204 & 0.327 & 0.603 & 0.350 & 0.218 & 0.337 & 0.659 & 0.313 & 0.163 & 0.312 \\
+14 & 0.603 & 0.336 & 0.205 & 0.328 & 0.603 & 0.345 & 0.224 & 0.338 & 0.658 & 0.296 & 0.149 & 0.296 \\
+15 & 0.603 & 0.340 & 0.203 & 0.331 & 0.603 & 0.351 & 0.220 & 0.342 & 0.658 & 0.292 & 0.129 & 0.295 \\
+\midrule
+16 & 0.603 & 0.344 & 0.199 & 0.333 & 0.604 & 0.356 & 0.218 & 0.347 & 0.660 & 0.299 & 0.131 & 0.292 \\
+17 & 0.604 & 0.348 & 0.196 & 0.341 & 0.604 & 0.361 & 0.211 & 0.354 & 0.660 & 0.307 & 0.132 & 0.296 \\
+18 & 0.604 & 0.347 & 0.190 & 0.339 & 0.604 & 0.359 & 0.205 & 0.351 & 0.660 & 0.307 & 0.132 & 0.295 \\
+19 & 0.604 & 0.350 & 0.206 & 0.341 & 0.604 & 0.361 & 0.218 & 0.354 & 0.660 & 0.308 & 0.144 & 0.295 \\
+20 & 0.604 & 0.359 & 0.210 & 0.352 & 0.604 & 0.368 & 0.228 & 0.363 & 0.660 & 0.306 & 0.133 & 0.300 \\
+21 & 0.604 & 0.364 & 0.213 & 0.354 & 0.604 & 0.374 & 0.230 & 0.365 & 0.660 & 0.300 & 0.132 & 0.290 \\
+22 & 0.604 & 0.364 & 0.215 & 0.355 & 0.604 & 0.374 & 0.235 & 0.367 & 0.661 & 0.294 & 0.147 & 0.283 \\
+23 & 0.604 & 0.368 & 0.228 & 0.361 & 0.604 & 0.381 & 0.247 & 0.372 & 0.662 & 0.302 & 0.162 & 0.291 \\
+\midrule
+24 & 0.604 & 0.377 & 0.236 & 0.369 & 0.604 & 0.390 & 0.256 & 0.380 & 0.662 & 0.310 & 0.152 & 0.294 \\
+25 & 0.604 & 0.387 & 0.248 & 0.378 & 0.604 & 0.398 & 0.264 & 0.389 & 0.664 & 0.314 & 0.150 & 0.302 \\
+26 & 0.604 & 0.398 & 0.268 & 0.389 & 0.605 & 0.412 & 0.285 & 0.403 & 0.666 & 0.327 & 0.170 & 0.323 \\
+27 & 0.605 & 0.406 & 0.281 & 0.399 & 0.605 & 0.422 & 0.300 & 0.414 & 0.670 & 0.350 & 0.200 & 0.349 \\
+28 & 0.605 & 0.424 & 0.313 & 0.414 & 0.605 & 0.437 & 0.329 & 0.428 & 0.673 & 0.378 & 0.247 & 0.376 \\
+29 & 0.605 & 0.435 & 0.327 & 0.426 & 0.606 & 0.448 & 0.345 & 0.440 & 0.676 & 0.408 & 0.282 & 0.409 \\
+30 & \textbf{0.606} & 0.449 & 0.350 & 0.440 & \textbf{0.606} & 0.463 & 0.365 & 0.453 & 0.679 & \textbf{0.443} & 0.336 & \textbf{0.444} \\
+31 & \textbf{0.606} & 0.453 & 0.365 & 0.446 & \textbf{0.606} & 0.465 & 0.376 & 0.457 & 0.679 & 0.439 & \textbf{0.353} & 0.435 \\
+32 & \textbf{0.606} & \textbf{0.459} & \textbf{0.370} & \textbf{0.450} & \textbf{0.606} & \textbf{0.470} & \textbf{0.388} & \textbf{0.461} & \textbf{0.681} & 0.427 & 0.346 & 0.425 \\
+\bottomrule
+\end{tabular}\end{table}\end{landscape}
+\begin{landscape}\begin{table}[p]\centering\footnotesize
+\caption{SaProt (structure-masked): per-layer mean $\rho$ by arm and split.}\label{tab:S6}
+\begin{tabular}{rcccccccccccc}
+\toprule
+& \multicolumn{4}{c}{masked\_wt} & \multicolumn{4}{c}{unmasked\_wt} & \multicolumn{4}{c}{mutant} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-13}
+Layer & Random & Modulo & Contig. & Pos.-gr. & Random & Modulo & Contig. & Pos.-gr. & Random & Modulo$^{\dagger}$ & Contig.$^{\dagger}$ & Pos.-gr.$^{\dagger}$ \\
+\midrule
+0 & 0.600 & 0.241 & 0.048 & 0.229 & 0.601 & 0.234 & 0.119 & 0.227 & 0.537 & 0.339 & 0.175 & 0.322 \\
+1 & 0.602 & 0.230 & 0.137 & 0.221 & 0.602 & 0.262 & 0.191 & 0.250 & 0.611 & 0.254 & 0.172 & 0.245 \\
+2 & 0.602 & 0.250 & 0.151 & 0.246 & 0.602 & 0.292 & 0.205 & 0.286 & 0.617 & 0.274 & 0.171 & 0.263 \\
+3 & 0.602 & 0.262 & 0.166 & 0.255 & 0.602 & 0.307 & 0.218 & 0.303 & 0.620 & 0.276 & 0.175 & 0.263 \\
+4 & 0.602 & 0.285 & 0.176 & 0.275 & 0.602 & 0.328 & 0.219 & 0.319 & 0.628 & 0.289 & 0.166 & 0.276 \\
+5 & 0.602 & 0.292 & 0.172 & 0.285 & 0.603 & 0.329 & 0.222 & 0.322 & 0.630 & 0.294 & 0.175 & 0.284 \\
+6 & 0.602 & 0.307 & 0.174 & 0.300 & 0.603 & 0.339 & 0.224 & 0.332 & 0.636 & 0.309 & 0.184 & 0.299 \\
+7 & \textbf{0.603} & 0.317 & 0.178 & 0.311 & 0.603 & 0.349 & 0.231 & 0.343 & 0.637 & 0.318 & 0.184 & 0.304 \\
+\midrule
+8 & \textbf{0.603} & 0.335 & 0.197 & 0.327 & 0.603 & 0.362 & 0.233 & 0.356 & 0.642 & 0.342 & 0.195 & 0.330 \\
+9 & \textbf{0.603} & 0.339 & 0.200 & 0.332 & 0.603 & 0.368 & 0.239 & 0.362 & 0.646 & 0.349 & 0.197 & 0.338 \\
+10 & 0.603 & 0.342 & 0.193 & 0.335 & 0.603 & 0.369 & 0.234 & 0.363 & 0.647 & 0.350 & 0.198 & 0.338 \\
+11 & 0.603 & 0.352 & 0.205 & 0.344 & 0.603 & 0.374 & 0.243 & 0.368 & 0.648 & 0.360 & 0.211 & 0.349 \\
+12 & 0.602 & 0.358 & 0.212 & 0.350 & 0.603 & 0.383 & 0.253 & 0.375 & 0.647 & 0.368 & 0.213 & 0.356 \\
+13 & 0.602 & 0.359 & 0.219 & 0.353 & 0.603 & 0.386 & 0.260 & 0.379 & 0.648 & 0.372 & 0.232 & 0.359 \\
+14 & 0.602 & 0.364 & 0.229 & 0.360 & 0.603 & 0.391 & 0.266 & 0.383 & 0.649 & 0.378 & 0.247 & 0.368 \\
+15 & 0.602 & 0.366 & 0.233 & 0.362 & 0.603 & 0.396 & 0.273 & 0.387 & 0.649 & 0.385 & 0.244 & 0.373 \\
+\midrule
+16 & 0.602 & 0.370 & 0.234 & 0.364 & 0.603 & 0.397 & 0.270 & 0.386 & 0.650 & 0.389 & 0.253 & 0.375 \\
+17 & 0.602 & 0.371 & 0.240 & 0.367 & 0.603 & 0.400 & 0.274 & 0.389 & 0.650 & 0.393 & 0.262 & 0.379 \\
+18 & 0.603 & 0.374 & 0.247 & 0.368 & 0.603 & 0.401 & 0.280 & 0.389 & 0.649 & 0.401 & 0.264 & 0.384 \\
+19 & 0.602 & 0.374 & 0.250 & 0.368 & 0.603 & 0.401 & 0.281 & 0.389 & 0.649 & 0.400 & 0.267 & 0.389 \\
+20 & 0.602 & 0.374 & 0.249 & 0.370 & 0.603 & 0.403 & 0.282 & 0.392 & 0.649 & 0.398 & 0.272 & 0.390 \\
+21 & 0.602 & 0.374 & 0.244 & 0.370 & 0.603 & 0.405 & 0.288 & 0.395 & 0.650 & 0.404 & 0.273 & 0.394 \\
+22 & 0.602 & 0.377 & 0.249 & 0.373 & 0.603 & 0.408 & 0.291 & 0.398 & 0.651 & 0.411 & 0.278 & 0.403 \\
+23 & 0.602 & 0.381 & 0.253 & 0.377 & \textbf{0.603} & 0.409 & 0.290 & 0.400 & \textbf{0.652} & 0.418 & 0.283 & 0.409 \\
+\midrule
+24 & 0.602 & 0.379 & 0.254 & 0.376 & \textbf{0.603} & 0.406 & 0.292 & 0.399 & 0.650 & 0.417 & 0.283 & 0.413 \\
+25 & 0.602 & 0.378 & 0.252 & 0.374 & \textbf{0.603} & 0.408 & 0.298 & 0.400 & 0.650 & 0.412 & 0.284 & 0.405 \\
+26 & 0.602 & 0.383 & 0.256 & 0.379 & \textbf{0.603} & 0.410 & 0.302 & 0.402 & 0.651 & 0.419 & 0.288 & 0.411 \\
+27 & 0.603 & 0.387 & 0.261 & 0.384 & \textbf{0.604} & 0.411 & 0.305 & \textbf{0.403} & 0.650 & 0.423 & 0.296 & 0.418 \\
+28 & 0.603 & 0.389 & 0.266 & 0.383 & \textbf{0.604} & 0.411 & 0.309 & 0.401 & 0.650 & 0.430 & 0.300 & 0.423 \\
+29 & \textbf{0.603} & 0.388 & 0.271 & 0.383 & \textbf{0.604} & \textbf{0.412} & 0.311 & 0.401 & 0.650 & 0.428 & 0.304 & 0.424 \\
+30 & \textbf{0.603} & \textbf{0.391} & 0.277 & 0.383 & \textbf{0.604} & \textbf{0.412} & 0.317 & 0.401 & 0.650 & \textbf{0.434} & \textbf{0.310} & \textbf{0.429} \\
+31 & \textbf{0.603} & 0.391 & \textbf{0.282} & \textbf{0.385} & \textbf{0.604} & 0.411 & \textbf{0.324} & \textbf{0.403} & 0.650 & 0.429 & 0.309 & 0.425 \\
+32 & \textbf{0.603} & 0.386 & 0.274 & 0.382 & \textbf{0.604} & 0.406 & 0.320 & 0.400 & 0.651 & 0.428 & 0.307 & 0.423 \\
+\bottomrule
+\end{tabular}\end{table}\end{landscape}
+\begin{landscape}\begin{table}[p]\centering\footnotesize
+\caption{SaProt (real 3Di): per-layer mean $\rho$ by arm and split.}\label{tab:S7}
+\begin{tabular}{rcccccccccccc}
+\toprule
+& \multicolumn{4}{c}{masked\_wt} & \multicolumn{4}{c}{unmasked\_wt} & \multicolumn{4}{c}{mutant} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-13}
+Layer & Random & Modulo & Contig. & Pos.-gr. & Random & Modulo & Contig. & Pos.-gr. & Random & Modulo$^{\dagger}$ & Contig.$^{\dagger}$ & Pos.-gr.$^{\dagger}$ \\
+\midrule
+0 & 0.601 & 0.274 & 0.112 & 0.251 & 0.602 & 0.276 & 0.191 & 0.263 & 0.578 & 0.317 & 0.206 & 0.314 \\
+1 & 0.603 & 0.299 & 0.188 & 0.289 & 0.603 & 0.333 & 0.238 & 0.314 & 0.629 & 0.329 & 0.226 & 0.319 \\
+2 & 0.603 & 0.337 & 0.221 & 0.326 & 0.604 & 0.362 & 0.255 & 0.346 & 0.640 & 0.352 & 0.251 & 0.347 \\
+3 & 0.603 & 0.346 & 0.233 & 0.336 & 0.604 & 0.376 & 0.268 & 0.361 & 0.649 & 0.365 & 0.253 & 0.357 \\
+4 & 0.603 & 0.364 & 0.250 & 0.357 & 0.604 & 0.384 & 0.276 & 0.373 & 0.653 & 0.370 & 0.254 & 0.364 \\
+5 & 0.604 & 0.372 & 0.264 & 0.365 & 0.604 & 0.393 & 0.291 & 0.383 & 0.656 & 0.374 & 0.273 & 0.368 \\
+6 & 0.604 & 0.379 & 0.271 & 0.372 & 0.604 & 0.396 & 0.294 & 0.385 & 0.660 & 0.380 & 0.277 & 0.375 \\
+7 & 0.604 & 0.387 & 0.272 & 0.378 & 0.604 & 0.402 & 0.295 & 0.393 & 0.662 & 0.380 & 0.271 & 0.372 \\
+\midrule
+8 & 0.604 & 0.398 & 0.284 & 0.390 & 0.604 & 0.410 & 0.295 & 0.401 & 0.665 & 0.395 & 0.264 & 0.382 \\
+9 & 0.604 & 0.398 & 0.290 & 0.392 & 0.604 & 0.413 & 0.301 & 0.404 & 0.667 & 0.398 & 0.268 & 0.388 \\
+10 & 0.604 & 0.399 & 0.288 & 0.393 & 0.605 & 0.415 & 0.303 & 0.406 & 0.669 & 0.391 & 0.269 & 0.380 \\
+11 & 0.604 & 0.407 & 0.298 & 0.399 & 0.605 & 0.422 & 0.312 & 0.412 & 0.671 & 0.403 & 0.273 & 0.392 \\
+12 & 0.605 & 0.411 & 0.306 & 0.404 & 0.605 & 0.427 & 0.321 & 0.417 & 0.671 & 0.408 & 0.290 & 0.396 \\
+13 & 0.604 & 0.416 & 0.311 & 0.408 & 0.605 & 0.431 & 0.325 & 0.422 & 0.671 & 0.410 & 0.297 & 0.394 \\
+14 & 0.605 & 0.420 & 0.317 & 0.413 & 0.605 & 0.436 & 0.335 & 0.428 & 0.671 & 0.415 & 0.306 & 0.402 \\
+15 & 0.605 & 0.421 & 0.321 & 0.414 & 0.605 & 0.439 & 0.341 & 0.430 & 0.672 & 0.422 & 0.315 & 0.410 \\
+\midrule
+16 & 0.605 & 0.424 & 0.326 & 0.417 & 0.605 & 0.443 & 0.348 & 0.435 & 0.672 & 0.430 & 0.327 & 0.419 \\
+17 & 0.605 & 0.426 & 0.332 & 0.420 & 0.605 & 0.444 & 0.352 & 0.436 & 0.674 & 0.432 & 0.327 & 0.424 \\
+18 & 0.605 & 0.427 & 0.335 & 0.421 & 0.605 & 0.447 & 0.358 & 0.439 & 0.674 & 0.430 & 0.332 & 0.427 \\
+19 & 0.605 & 0.428 & 0.336 & 0.422 & \textbf{0.605} & 0.448 & 0.360 & 0.440 & 0.675 & 0.434 & 0.341 & 0.427 \\
+20 & 0.605 & 0.431 & 0.343 & 0.425 & \textbf{0.605} & 0.451 & 0.367 & 0.443 & 0.677 & 0.439 & 0.355 & 0.433 \\
+21 & 0.605 & 0.433 & 0.345 & 0.429 & \textbf{0.605} & 0.454 & 0.370 & 0.446 & 0.678 & 0.440 & 0.357 & 0.437 \\
+22 & \textbf{0.605} & 0.436 & 0.352 & 0.432 & \textbf{0.606} & 0.456 & 0.376 & 0.449 & 0.679 & 0.458 & 0.371 & 0.448 \\
+23 & \textbf{0.605} & 0.439 & 0.358 & 0.434 & \textbf{0.606} & 0.458 & 0.382 & 0.451 & 0.681 & 0.459 & 0.373 & 0.448 \\
+\midrule
+24 & \textbf{0.605} & 0.442 & 0.365 & 0.437 & \textbf{0.606} & 0.460 & 0.386 & 0.453 & 0.682 & 0.461 & 0.377 & 0.454 \\
+25 & \textbf{0.605} & 0.443 & 0.365 & 0.438 & \textbf{0.606} & 0.462 & 0.387 & 0.454 & 0.683 & 0.464 & 0.380 & 0.457 \\
+26 & \textbf{0.605} & 0.447 & 0.369 & 0.441 & \textbf{0.606} & 0.464 & 0.392 & 0.457 & \textbf{0.684} & 0.468 & 0.391 & 0.466 \\
+27 & \textbf{0.605} & 0.452 & 0.375 & 0.445 & \textbf{0.606} & 0.468 & 0.398 & 0.460 & \textbf{0.684} & 0.470 & 0.399 & 0.470 \\
+28 & \textbf{0.605} & 0.455 & 0.379 & 0.448 & \textbf{0.606} & 0.469 & 0.399 & 0.461 & \textbf{0.684} & 0.482 & 0.422 & 0.482 \\
+29 & \textbf{0.605} & 0.456 & 0.385 & 0.450 & \textbf{0.605} & 0.469 & 0.403 & 0.463 & \textbf{0.684} & 0.483 & 0.423 & 0.481 \\
+30 & \textbf{0.605} & 0.459 & 0.392 & \textbf{0.454} & \textbf{0.605} & 0.471 & 0.410 & \textbf{0.467} & 0.682 & \textbf{0.492} & 0.445 & \textbf{0.490} \\
+31 & \textbf{0.606} & \textbf{0.461} & \textbf{0.394} & \textbf{0.454} & \textbf{0.605} & \textbf{0.473} & \textbf{0.415} & \textbf{0.467} & 0.684 & 0.491 & \textbf{0.449} & \textbf{0.490} \\
+32 & \textbf{0.606} & 0.460 & 0.394 & 0.453 & \textbf{0.605} & 0.466 & 0.406 & 0.459 & 0.683 & 0.486 & 0.439 & 0.481 \\
+\bottomrule
+\end{tabular}\end{table}\end{landscape}
+\section*{Single-substitution analysis of all arms}
+Probing repeated for all three model configurations on single-substitution variants only
+(one row per variant; variant cap applied after filtering) under the leakage-free splits,
+with the same folds and readout. For comparison, the last two columns give the best-layer
+$\rho$ on the full data, in which rows of a multi-site variant can share a label (all
+arms) and an embedding (mutant arm) across folds. $\Delta$ is the mean per-dataset
+difference between the best layer and layer 32 on single substitutions, with its
+bootstrap 90\% confidence interval and the verdict under the rule of Table~S4 (no test
+when the best layer is layer 32). On single substitutions, 3 comparisons are equivalent,
+20 inconclusive, and 0 indicate a difference beyond the margin; the largest point
+estimate is 0.019 and the largest 90\% upper bound 0.036. Two datasets retain fewer than 50
+single-substitution variants (F7YBW8\_MESOW\_Aakre\_2015, 37; GCN4\_YEAST\_Staller\_induction\_2018,
+33; Table~S1); excluding them, the best layer remains in layers 30--32 in every column and the
+largest point estimate and 90\% upper bound become 0.014 and 0.025.
+\begin{table}[H]\centering\footnotesize
+\caption{Single-substitution probing versus full data, leakage-free splits (combined features).}\label{tab:S8}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllrrrrlllr}
+\toprule
+& & & \multicolumn{6}{c}{Single substitutions} & \multicolumn{2}{c}{Full data} \\
+\cmidrule(lr){4-9}\cmidrule(lr){10-11}
+Model & Arm & Split & $n$ & Best & Best $\rho$ & L32 $\rho$ & $\Delta$ (90\% CI) & Verdict & Best & Best $\rho$ \\
+\midrule
+ESM-2 & masked\_wt & Modulo & 63 & L31 & 0.476 & 0.473 & +0.0024 [-0.010, +0.022] & Inconclusive & L32 & 0.459 \\
+ESM-2 & masked\_wt & Contiguous & 57 & L32 & 0.386 & 0.386 & -- & -- & L32 & 0.370 \\
+ESM-2 & masked\_wt & Pos.-grouped & 63 & L32 & 0.466 & 0.466 & -- & -- & L32 & 0.450 \\
+ESM-2 & unmasked\_wt & Modulo & 63 & L31 & 0.492 & 0.486 & +0.0060 [-0.008, +0.029] & Inconclusive & L32 & 0.470 \\
+ESM-2 & unmasked\_wt & Contiguous & 57 & L32 & 0.404 & 0.404 & -- & -- & L32 & 0.388 \\
+ESM-2 & unmasked\_wt & Pos.-grouped & 63 & L32 & 0.475 & 0.475 & -- & -- & L32 & 0.461 \\
+ESM-2 & mutant & Modulo & 63 & L30 & 0.443 & 0.427 & +0.0159 [+0.006, +0.027] & Inconclusive & L31 & 0.483 \\
+ESM-2 & mutant & Contiguous & 57 & L31 & 0.353 & 0.346 & +0.0071 [-0.003, +0.018] & Inconclusive & L31 & 0.365 \\
+ESM-2 & mutant & Pos.-grouped & 63 & L30 & 0.444 & 0.425 & +0.0187 [+0.004, +0.036] & Inconclusive & L31 & 0.477 \\
+SaProt (mask) & masked\_wt & Modulo & 63 & L31 & 0.417 & 0.412 & +0.0045 [+0.000, +0.009] & Equivalent & L30 & 0.391 \\
+SaProt (mask) & masked\_wt & Contiguous & 57 & L31 & 0.290 & 0.283 & +0.0069 [+0.002, +0.011] & Inconclusive & L31 & 0.282 \\
+SaProt (mask) & masked\_wt & Pos.-grouped & 63 & L31 & 0.401 & 0.398 & +0.0027 [-0.001, +0.006] & Equivalent & L31 & 0.385 \\
+SaProt (mask) & unmasked\_wt & Modulo & 63 & L30 & 0.438 & 0.429 & +0.0083 [+0.001, +0.016] & Inconclusive & L30 & 0.412 \\
+SaProt (mask) & unmasked\_wt & Contiguous & 57 & L31 & 0.339 & 0.333 & +0.0054 [+0.000, +0.011] & Inconclusive & L31 & 0.324 \\
+SaProt (mask) & unmasked\_wt & Pos.-grouped & 63 & L27 & 0.426 & 0.417 & +0.0090 [-0.003, +0.024] & Inconclusive & L27 & 0.403 \\
+SaProt (mask) & mutant & Modulo & 63 & L30 & 0.434 & 0.428 & +0.0050 [-0.003, +0.013] & Inconclusive & L30 & 0.465 \\
+SaProt (mask) & mutant & Contiguous & 57 & L30 & 0.310 & 0.307 & +0.0031 [-0.007, +0.013] & Inconclusive & L32 & 0.323 \\
+SaProt (mask) & mutant & Pos.-grouped & 63 & L30 & 0.429 & 0.423 & +0.0057 [-0.004, +0.016] & Inconclusive & L30 & 0.461 \\
+SaProt (3Di) & masked\_wt & Modulo & 63 & L31 & 0.484 & 0.475 & +0.0096 [-0.002, +0.029] & Inconclusive & L31 & 0.461 \\
+SaProt (3Di) & masked\_wt & Contiguous & 57 & L30 & 0.406 & 0.404 & +0.0017 [-0.006, +0.011] & Inconclusive & L31 & 0.394 \\
+SaProt (3Di) & masked\_wt & Pos.-grouped & 63 & L31 & 0.470 & 0.470 & +0.0001 [-0.004, +0.004] & Equivalent & L31 & 0.454 \\
+SaProt (3Di) & unmasked\_wt & Modulo & 63 & L31 & 0.500 & 0.493 & +0.0067 [+0.003, +0.010] & Inconclusive & L31 & 0.473 \\
+SaProt (3Di) & unmasked\_wt & Contiguous & 57 & L31 & 0.431 & 0.423 & +0.0075 [+0.002, +0.013] & Inconclusive & L31 & 0.415 \\
+SaProt (3Di) & unmasked\_wt & Pos.-grouped & 63 & L30 & 0.491 & 0.479 & +0.0123 [+0.004, +0.024] & Inconclusive & L31 & 0.467 \\
+SaProt (3Di) & mutant & Modulo & 63 & L30 & 0.492 & 0.486 & +0.0060 [-0.001, +0.013] & Inconclusive & L31 & 0.531 \\
+SaProt (3Di) & mutant & Contiguous & 57 & L31 & 0.449 & 0.439 & +0.0100 [+0.002, +0.019] & Inconclusive & L31 & 0.451 \\
+SaProt (3Di) & mutant & Pos.-grouped & 63 & L31 & 0.490 & 0.481 & +0.0088 [+0.003, +0.015] & Inconclusive & L31 & 0.532 \\
+\bottomrule
+\end{tabular}}\end{table}
+\section*{Multi-scale pooling: paired comparisons}
+Paired per-dataset differences (strategy minus last layer) for the pooling benchmark of
+main Table 3 (mutant arm, combined features, 20 datasets per model; SaProt with
+structure-masked inputs) under the modulo split, under the random split, and under the
+modulo split after excluding the two datasets that contain multi-site variants
+(A4\_HUMAN\_Seuma\_2021, DLG4\_HUMAN\_Faure\_2021; 18 datasets). Entries give the mean
+difference with its bootstrap 90\% confidence interval; $^{\dagger}$ marks intervals excluding zero.
+Under the modulo split no combination significantly improves on the last layer, with or
+without the two multi-site datasets; under the random split several fusion strategies do.
+\begin{landscape}\begin{table}[p]\centering\footnotesize\setlength{\tabcolsep}{2pt}
+\caption{Paired fusion-minus-last-layer differences, $\Delta\rho$ (90\% CI).}\label{tab:S9}
+\begin{tabular}{llcccccc}
+\toprule
+& & \multicolumn{3}{c}{ESM-2} & \multicolumn{3}{c}{SaProt} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+Readout & Strategy & Modulo & Random & Modulo, excl. & Modulo & Random & Modulo, excl. \\
+\midrule
+Ridge & Mean L20--33 & +0.010 (-0.001, +0.023) & -0.001 (-0.004, +0.002) & +0.011 (-0.001, +0.025) & +0.001 (-0.012, +0.014) & +0.003 (-0.001, +0.007) & +0.001 (-0.013, +0.015) \\
+Ridge & Concat 5L & +0.018 (-0.008, +0.044) & +0.012 (+0.005, +0.021)$^{\dagger}$ & +0.009 (-0.017, +0.035) & +0.003 (-0.016, +0.021) & +0.030 (+0.020, +0.039)$^{\dagger}$ & -0.004 (-0.023, +0.016) \\
+Ridge & Attention & -0.024 (-0.053, +0.002) & -0.002 (-0.011, +0.007) & -0.033 (-0.063, -0.006)$^{\dagger}$ & -0.002 (-0.012, +0.007) & +0.010 (+0.004, +0.016)$^{\dagger}$ & -0.004 (-0.014, +0.007) \\
+\midrule
+RF & Mean L20--33 & -0.056 (-0.070, -0.042)$^{\dagger}$ & -0.002 (-0.007, +0.004) & -0.060 (-0.074, -0.046)$^{\dagger}$ & +0.000 (-0.009, +0.011) & +0.038 (+0.023, +0.053)$^{\dagger}$ & +0.002 (-0.009, +0.013) \\
+RF & Concat 5L & -0.023 (-0.031, -0.016)$^{\dagger}$ & +0.009 (+0.005, +0.013)$^{\dagger}$ & -0.025 (-0.033, -0.017)$^{\dagger}$ & -0.008 (-0.016, +0.000) & +0.064 (+0.041, +0.089)$^{\dagger}$ & -0.010 (-0.018, -0.001)$^{\dagger}$ \\
+RF & Attention & -0.057 (-0.099, -0.023)$^{\dagger}$ & -0.006 (-0.018, +0.005) & -0.061 (-0.106, -0.024)$^{\dagger}$ & -0.009 (-0.019, +0.001) & +0.059 (+0.036, +0.084)$^{\dagger}$ & -0.010 (-0.021, +0.002) \\
+\midrule
+MLP & Mean L20--33 & -0.044 (-0.064, -0.024)$^{\dagger}$ & -0.004 (-0.010, +0.002) & -0.050 (-0.072, -0.029)$^{\dagger}$ & -0.016 (-0.029, -0.003)$^{\dagger}$ & +0.017 (+0.009, +0.025)$^{\dagger}$ & -0.018 (-0.031, -0.005)$^{\dagger}$ \\
+MLP & Concat 5L & -0.045 (-0.069, -0.020)$^{\dagger}$ & -0.019 (-0.030, -0.008)$^{\dagger}$ & -0.054 (-0.078, -0.027)$^{\dagger}$ & -0.039 (-0.057, -0.022)$^{\dagger}$ & +0.002 (-0.013, +0.015) & -0.043 (-0.061, -0.026)$^{\dagger}$ \\
+MLP & Attention & -0.040 (-0.064, -0.015)$^{\dagger}$ & +0.007 (-0.008, +0.023) & -0.055 (-0.075, -0.036)$^{\dagger}$ & -0.019 (-0.029, -0.009)$^{\dagger}$ & +0.026 (+0.017, +0.035)$^{\dagger}$ & -0.022 (-0.032, -0.011)$^{\dagger}$ \\
+\midrule
+LightGBM & Mean L20--33 & -0.050 (-0.065, -0.035)$^{\dagger}$ & -0.002 (-0.005, +0.002) & -0.055 (-0.070, -0.038)$^{\dagger}$ & -0.009 (-0.018, +0.001) & +0.030 (+0.019, +0.040)$^{\dagger}$ & -0.010 (-0.021, -0.000)$^{\dagger}$ \\
+LightGBM & Concat 5L & -0.013 (-0.025, -0.002)$^{\dagger}$ & +0.009 (+0.005, +0.012)$^{\dagger}$ & -0.017 (-0.030, -0.006)$^{\dagger}$ & -0.012 (-0.018, -0.006)$^{\dagger}$ & +0.050 (+0.033, +0.067)$^{\dagger}$ & -0.014 (-0.020, -0.009)$^{\dagger}$ \\
+LightGBM & Attention & -0.045 (-0.086, -0.011)$^{\dagger}$ & -0.002 (-0.010, +0.005) & -0.051 (-0.094, -0.014)$^{\dagger}$ & -0.014 (-0.027, -0.002)$^{\dagger}$ & +0.046 (+0.029, +0.063)$^{\dagger}$ & -0.018 (-0.032, -0.005)$^{\dagger}$ \\
+\bottomrule
+\end{tabular}\end{table}\end{landscape}
+\section*{Last-layer readout contrast by split}
+Paired last-layer LightGBM minus Ridge difference over the 20 pooling datasets.
+\begin{table}[H]\centering\small
+\caption{Last-layer readout contrast, LightGBM minus Ridge.}\label{tab:S10}
+\begin{tabular}{llrlr}
+\toprule
+Model & Split & Mean $\Delta\rho$ & 90\% CI & Wilcoxon $p$ \\
+\midrule
+ESM-2 & Random & -0.035 & (-0.044, -0.027) & 1.3e-05 \\
+ESM-2 & Modulo & +0.045 & (+0.021, +0.068) & 0.011 \\
+ESM-2 & Contiguous & +0.058 & (+0.026, +0.090) & 0.013 \\
+\midrule
+SaProt & Random & -0.065 & (-0.080, -0.050) & 9.5e-06 \\
+SaProt & Modulo & +0.016 & (-0.016, +0.048) & 0.57 \\
+SaProt & Contiguous & +0.053 & (+0.006, +0.102) & 0.12 \\
+\bottomrule
+\end{tabular}\end{table}
+\section*{Published ProteinGym anchors}
+Published v1.3 results recomputed on the 46 assays shared with this work: zero-shot values
+are the per-assay Spearman correlations of the official v1.3 zero-shot benchmark table;
+supervised values are computed from the out-of-fold predictions that the v1.3 release
+provides for published supervised models under its official fold schemes. Of the shared
+assays, 38 contain single substitutions only; on these the final-layer logit lens
+reproduces the published values, and the residual differences on the full set arise in
+multi-site assays, where the lens scores each substitution of a variant separately rather
+than summing over the variant.
+\begin{table}[H]\centering\small
+\caption{Published ProteinGym v1.3 results recomputed on the 46 assays shared with this work. (A) Zero-shot: mean per-assay Spearman $\rho$ on all shared assays and on the 38 shared assays containing single substitutions only. (B) Supervised: official out-of-fold predictions under the v1.3 fold schemes; our rows give the final-layer mutant-arm probing (combined features) on single-substitution variants of the same assays, computed on the capped snapshot data ($n = 41$ for the contiguous split).}\label{tab:S11}
+\begin{tabular}{lrr}
+\toprule
+\multicolumn{3}{l}{\textbf{A. Zero-shot}} \\
+Method & All shared ($n=46$) & Single-substitution ($n=38$) \\
+\midrule
+ESM-2 650M (published) & 0.472 & 0.476 \\
+SaProt 650M (published) & 0.481 & 0.477 \\
+ESM-2 150M (published) & 0.421 & 0.422 \\
+ESM-2 3B (published) & 0.448 & 0.454 \\
+ESM-1v single (published) & 0.445 & 0.458 \\
+MSA Transformer single (published) & 0.447 & 0.457 \\
+GEMME (published) & 0.474 & 0.468 \\
+EVE single (published) & 0.478 & 0.470 \\
+\midrule
+This work: lens, ESM-2 final layer & 0.438 & 0.475 \\
+This work: lens, SaProt (3Di) final layer & 0.440 & 0.473 \\
+This work: SaProt zero-shot reproduction & 0.484 & 0.478 \\
+\bottomrule
+\end{tabular}
+\vspace{6pt}
+\begin{tabular}{lrrr}
+\toprule
+\multicolumn{4}{l}{\textbf{B. Supervised} ($n=46$)} \\
+Method & Random & Modulo & Contiguous \\
+\midrule
+Kermut & 0.711 & 0.605 & 0.561 \\
+ProteinNPT & 0.697 & 0.566 & 0.525 \\
+Emb.-aug.\ MSA Transformer & 0.640 & 0.572 & 0.536 \\
+Emb.-aug.\ ESM-1v & 0.612 & 0.539 & 0.504 \\
+OHE-aug.\ MSA Transformer & 0.546 & 0.459 & 0.456 \\
+OHE, not augmented & 0.570 & -0.003 & 0.027 \\
+\midrule
+This work: ESM-2 final layer & 0.676 & 0.407 & 0.338 \\
+This work: SaProt (3Di) final layer & 0.680 & 0.469 & 0.431 \\
+\bottomrule
+\end{tabular}\end{table}
+\end{document}
