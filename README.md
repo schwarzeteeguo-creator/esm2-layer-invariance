@@ -1,4 +1,4 @@
-# Depth Matters but the Final Layer Suffices: Leakage-Free Evaluation of Layer Choice in Protein Language Models for Mutation Effect Prediction
+# Leakage-Free Evaluation of Layer Choice in Protein Language Models for Mutation Effect Prediction
 
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)]
@@ -10,6 +10,46 @@ the revised resubmission; the earlier history (directories `code/`, `analysis/`,
 and the root `results/` and `manuscript/` files dated before September 2026)
 corresponds to the originally submitted version and is retained unchanged as the
 record of what was withdrawn and why.
+
+## What v3.1.0 (third revision) adds
+
+Release v3.1.0 matches the third-revision manuscript and Supplementary
+Information (`manuscript/manuscript_revised_R3_clean.*`,
+`manuscript/manuscript_revised_R3_oup_clean.*`, `manuscript/supplementary_R3.*`).
+
+- **Mutant arm on single substitutions under position-based splits.** Rows of a
+  multi-site variant share one averaged mutant-arm embedding and one label, and
+  the modulo, contiguous and position-grouped splits assign rows by position, so
+  such a variant can sit in both training and test folds (15,624 of 213,393
+  analyzed rows under the modulo split). The primary mutant-arm analysis under
+  these splits now uses single-substitution variants only; the wild-type arms
+  use the full data (`analysis/r3/compute_r3_numbers.py`,
+  `results/r3/r3_numbers.json`, `results/r3/multisite_share_r3.json`).
+- **Corrected multi-site share.** 49,131 of the 213,393 analyzed rows (23.0%)
+  come from multi-site variants, in 10 of 63 datasets. The 84.6% / 95.8% figures
+  quoted for v3.0.0 below describe the uncapped LMDB snapshot, not the analyzed
+  rows.
+- **Equivalence analysis, primary.** 21 best-versus-final comparisons: 7
+  equivalent, 14 inconclusive, 0 beyond the 0.01 margin; largest point estimate
+  0.019, largest 90% upper bound 0.036. The previous table's intervals were 95%
+  percentile intervals labelled as 90% (`analysis/r3/equivalence_check_r3.py`).
+- **Sensitivity analyses:** single-substitution probing of all arms
+  (`results/r2/probing_v4_single_*`), exclusion of the two datasets with fewer
+  than 50 single substitutions (`analysis/r3/single_site_excl_small_r3.py`),
+  pooling without the two multi-site pooling datasets
+  (`analysis/r3/pooling_excl_multisite_r3.py`), and leakage-free probing on the
+  46 assays shared with ProteinGym v1.3 (`analysis/r3/shared46_probing_r3.py`).
+- **Figures** 2, 3 and 5 redrawn (`figures/generate_figures_r3.py`,
+  `figures/output_r3/`): 200-position similarity matrices and single-substitution
+  mutant-arm curves.
+- **Build and audit scripts** for the manuscript and SI (`analysis/r3/build_*.py`,
+  `check_r3.py`, `audit_*.py`). They expect the original project layout
+  (`revision_results/`, `revision_docs/`); the corresponding inputs are in
+  `results/r2/`, `results/r3/` and `results/rev/` here.
+- **Credentials removed.** Four early scripts (`analysis/analyze_probe.py`,
+  `analysis/download_and_analyze.py`, `analysis/final_analysis.py`,
+  `code/final_chain.py`) now read the remote-server login from the environment
+  variables `REMOTE_HOST`, `REMOTE_PORT`, `REMOTE_USER` and `REMOTE_PASSWORD`.
 
 ## What v3 (second revision) adds
 

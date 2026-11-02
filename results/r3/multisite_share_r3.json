@@ -1,0 +1,522 @@
+{
+ "per_dataset": {
+  "A0A1I9GEU1_NEIME_Kennouche_2019": {
+   "rows": 922,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "A0A2Z5U3Z0_9INFA_Doud_2016": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "A4_HUMAN_Seuma_2021": {
+   "rows": 5000,
+   "rows_multi": 4917,
+   "rows_multi_with_sibling": 1246,
+   "test_rows_with_variant_in_train_modulo": 1004,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 1058
+  },
+  "A4GRB6_PSEAI_Chen_2020": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "AACC1_PSEAI_Dandage_2018": {
+   "rows": 1801,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "ADRB2_HUMAN_Jones_2020": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "AMIE_PSEAE_Wrenbeck_2017": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "B3VI55_LIPST_Klesmith_2015": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "BLAT_ECOLX_Deng_2012": {
+   "rows": 4996,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "BLAT_ECOLX_Firnberg_2014": {
+   "rows": 4783,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "BLAT_ECOLX_Jacquier_2013": {
+   "rows": 989,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "BLAT_ECOLX_Stiffler_2015": {
+   "rows": 4996,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "CALM1_HUMAN_Weile_2017": {
+   "rows": 1813,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "CCDB_ECOLI_Adkar_2012": {
+   "rows": 1176,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "CCDB_ECOLI_Tripathi_2016": {
+   "rows": 1663,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "CP2C9_HUMAN_Amorosi_abundance_2021": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "CP2C9_HUMAN_Amorosi_activity_2021": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "DLG4_HUMAN_Faure_2021": {
+   "rows": 5000,
+   "rows_multi": 4489,
+   "rows_multi_with_sibling": 1784,
+   "test_rows_with_variant_in_train_modulo": 1454,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 1468
+  },
+  "DLG4_RAT_McLaughlin_2012": {
+   "rows": 1576,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "DYR_ECOLI_Thompson_plusLon_2019": {
+   "rows": 2363,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "ESTA_BACSU_Nutschel_2020": {
+   "rows": 2172,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "F7YBW8_MESOW_Aakre_2015": {
+   "rows": 5000,
+   "rows_multi": 4995,
+   "rows_multi_with_sibling": 1785,
+   "test_rows_with_variant_in_train_modulo": 1499,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 1785
+  },
+  "GAL4_YEAST_Kitzman_2015": {
+   "rows": 1195,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "GCN4_YEAST_Staller_induction_2018": {
+   "rows": 5000,
+   "rows_multi": 4997,
+   "rows_multi_with_sibling": 4416,
+   "test_rows_with_variant_in_train_modulo": 4312,
+   "test_rows_with_variant_in_train_contiguous": 3448,
+   "test_rows_with_variant_in_train_position_groupkfold": 4292
+  },
+  "GFP_AEQVI_Sarkisyan_2016": {
+   "rows": 5000,
+   "rows_multi": 4970,
+   "rows_multi_with_sibling": 1824,
+   "test_rows_with_variant_in_train_modulo": 1571,
+   "test_rows_with_variant_in_train_contiguous": 1490,
+   "test_rows_with_variant_in_train_position_groupkfold": 1549
+  },
+  "GRB2_HUMAN_Faure_2021": {
+   "rows": 5000,
+   "rows_multi": 4958,
+   "rows_multi_with_sibling": 1290,
+   "test_rows_with_variant_in_train_modulo": 1020,
+   "test_rows_with_variant_in_train_contiguous": 606,
+   "test_rows_with_variant_in_train_position_groupkfold": 1046
+  },
+  "HIS7_YEAST_Pokusaeva_2019": {
+   "rows": 5000,
+   "rows_multi": 5000,
+   "rows_multi_with_sibling": 1869,
+   "test_rows_with_variant_in_train_modulo": 1600,
+   "test_rows_with_variant_in_train_contiguous": 138,
+   "test_rows_with_variant_in_train_position_groupkfold": 1672
+  },
+  "HSP82_YEAST_Flynn_2019": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "HSP82_YEAST_Mishra_2016": {
+   "rows": 4323,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "IF1_ECOLI_Kelsic_2016": {
+   "rows": 1367,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "KKA2_KLEPN_Melnikov_2014": {
+   "rows": 4960,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "MK01_HUMAN_Brenan_2016": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "MSH2_HUMAN_Jia_2020": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "MTH3_HAEAE_Rockah-Shmuel_2015": {
+   "rows": 1777,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "NUD15_HUMAN_Suiter_2020": {
+   "rows": 2844,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "P53_HUMAN_Giacomelli_NULL_Etoposide_2018": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "P53_HUMAN_Giacomelli_NULL_Nutlin_2018": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "P53_HUMAN_Giacomelli_WT_Nutlin_2018": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "P53_HUMAN_Kotler_2018": {
+   "rows": 1048,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "P84126_THETH_Chan_2017": {
+   "rows": 1519,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "PABP_YEAST_Melamed_2013": {
+   "rows": 5000,
+   "rows_multi": 4906,
+   "rows_multi_with_sibling": 1194,
+   "test_rows_with_variant_in_train_modulo": 1022,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 932
+  },
+  "PTEN_HUMAN_Matreyek_2021": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "PTEN_HUMAN_Mighell_2018": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "Q59976_STRSQ_Romero_2015": {
+   "rows": 2999,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "RASH_HUMAN_Bandaru_2017": {
+   "rows": 3134,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "RL401_YEAST_Mavor_2016": {
+   "rows": 1253,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "RL401_YEAST_Roscoe_2013": {
+   "rows": 1195,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "RL401_YEAST_Roscoe_2014": {
+   "rows": 1380,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "SC6A4_HUMAN_Young_2021": {
+   "rows": 5000,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "SPG1_STRSG_Olson_2014": {
+   "rows": 5000,
+   "rows_multi": 4993,
+   "rows_multi_with_sibling": 1256,
+   "test_rows_with_variant_in_train_modulo": 1032,
+   "test_rows_with_variant_in_train_contiguous": 446,
+   "test_rows_with_variant_in_train_position_groupkfold": 1052
+  },
+  "SRC_HUMAN_Ahler_CD_2019": {
+   "rows": 3372,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "SUMO1_HUMAN_Weile_2017": {
+   "rows": 1700,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "SYUA_HUMAN_Newberry_2020": {
+   "rows": 2497,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "TADBP_HUMAN_Bolognesi_2019": {
+   "rows": 1196,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "TPK1_HUMAN_Weile_2017": {
+   "rows": 3181,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "TPMT_HUMAN_Matreyek_2018": {
+   "rows": 3648,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "TPOR_HUMAN_Bridgford_S505N_2020": {
+   "rows": 562,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "TRPC_SACS2_Chan_2017": {
+   "rows": 1519,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "TRPC_THEMA_Chan_2017": {
+   "rows": 1519,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "UBC9_HUMAN_Weile_2017": {
+   "rows": 2563,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "VKOR1_HUMAN_Chiasson_abundance_2020": {
+   "rows": 2695,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "VKOR1_HUMAN_Chiasson_activity_2020": {
+   "rows": 697,
+   "rows_multi": 0,
+   "rows_multi_with_sibling": 0,
+   "test_rows_with_variant_in_train_modulo": 0,
+   "test_rows_with_variant_in_train_contiguous": 0,
+   "test_rows_with_variant_in_train_position_groupkfold": 0
+  },
+  "YAP1_HUMAN_Araya_2012": {
+   "rows": 5000,
+   "rows_multi": 4906,
+   "rows_multi_with_sibling": 1336,
+   "test_rows_with_variant_in_train_modulo": 1110,
+   "test_rows_with_variant_in_train_contiguous": 30,
+   "test_rows_with_variant_in_train_position_groupkfold": 1106
+  }
+ },
+ "summary": {
+  "rows": 213393,
+  "rows_multi": 49131,
+  "rows_multi_with_sibling": 18000,
+  "test_rows_shared": {
+   "modulo": 15624,
+   "contiguous": 6158,
+   "position_groupkfold": 15960
+  },
+  "n_datasets_with_multi": 10,
+  "pct_rows_multi": 23.023716804206323,
+  "pct_rows_multi_with_sibling": 8.435140796558462,
+  "rows_in_multi_datasets": 50000
+ }
+}

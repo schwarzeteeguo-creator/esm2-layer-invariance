@@ -1,0 +1,582 @@
+{
+ "summary": {
+  "rows": 213393,
+  "var": 203056,
+  "mrows": 18000,
+  "mvar": 7663,
+  "smod": 6481,
+  "scon": 2022,
+  "ds_multi": 10,
+  "mrow_pct": 8.435140796558462,
+  "mvar_pct": 3.7738357891419114
+ },
+ "rows": {
+  "A0A1I9GEU1_NEIME_Kennouche_2019": {
+   "rows": 922,
+   "variants": 922,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "A0A2Z5U3Z0_9INFA_Doud_2016": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": true
+  },
+  "A4GRB6_PSEAI_Chen_2020": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "A4_HUMAN_Seuma_2021": {
+   "rows": 5000,
+   "variants": 4377,
+   "multi_variants": 623,
+   "multi_rows": 1246,
+   "straddle_modulo": 502,
+   "straddle_contig": 0,
+   "capped": true
+  },
+  "AACC1_PSEAI_Dandage_2018": {
+   "rows": 1801,
+   "variants": 1801,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "ADRB2_HUMAN_Jones_2020": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "AMIE_PSEAE_Wrenbeck_2017": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "B3VI55_LIPST_Klesmith_2015": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "BLAT_ECOLX_Deng_2012": {
+   "rows": 4996,
+   "variants": 4996,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "BLAT_ECOLX_Firnberg_2014": {
+   "rows": 4783,
+   "variants": 4783,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "BLAT_ECOLX_Jacquier_2013": {
+   "rows": 989,
+   "variants": 989,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "BLAT_ECOLX_Stiffler_2015": {
+   "rows": 4996,
+   "variants": 4996,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "CALM1_HUMAN_Weile_2017": {
+   "rows": 1813,
+   "variants": 1813,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "CCDB_ECOLI_Adkar_2012": {
+   "rows": 1176,
+   "variants": 1176,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "CCDB_ECOLI_Tripathi_2016": {
+   "rows": 1663,
+   "variants": 1663,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "CP2C9_HUMAN_Amorosi_abundance_2021": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "CP2C9_HUMAN_Amorosi_activity_2021": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "DLG4_HUMAN_Faure_2021": {
+   "rows": 5000,
+   "variants": 4108,
+   "multi_variants": 892,
+   "multi_rows": 1784,
+   "straddle_modulo": 727,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "DLG4_RAT_McLaughlin_2012": {
+   "rows": 1576,
+   "variants": 1576,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "DYR_ECOLI_Thompson_plusLon_2019": {
+   "rows": 2363,
+   "variants": 2363,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "ESTA_BACSU_Nutschel_2020": {
+   "rows": 2172,
+   "variants": 2172,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "F7YBW8_MESOW_Aakre_2015": {
+   "rows": 5000,
+   "variants": 4059,
+   "multi_variants": 844,
+   "multi_rows": 1785,
+   "straddle_modulo": 701,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "GAL4_YEAST_Kitzman_2015": {
+   "rows": 1195,
+   "variants": 1195,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "GCN4_YEAST_Staller_induction_2018": {
+   "rows": 5000,
+   "variants": 1660,
+   "multi_variants": 1076,
+   "multi_rows": 4416,
+   "straddle_modulo": 1027,
+   "straddle_contig": 751,
+   "capped": false
+  },
+  "GFP_AEQVI_Sarkisyan_2016": {
+   "rows": 5000,
+   "variants": 4008,
+   "multi_variants": 832,
+   "multi_rows": 1824,
+   "straddle_modulo": 706,
+   "straddle_contig": 668,
+   "capped": true
+  },
+  "GRB2_HUMAN_Faure_2021": {
+   "rows": 5000,
+   "variants": 4355,
+   "multi_variants": 645,
+   "multi_rows": 1290,
+   "straddle_modulo": 510,
+   "straddle_contig": 303,
+   "capped": true
+  },
+  "HIS7_YEAST_Pokusaeva_2019": {
+   "rows": 5000,
+   "variants": 3989,
+   "multi_variants": 858,
+   "multi_rows": 1869,
+   "straddle_modulo": 726,
+   "straddle_contig": 62,
+   "capped": true
+  },
+  "HSP82_YEAST_Flynn_2019": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": true
+  },
+  "HSP82_YEAST_Mishra_2016": {
+   "rows": 4323,
+   "variants": 4323,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "IF1_ECOLI_Kelsic_2016": {
+   "rows": 1367,
+   "variants": 1367,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "KKA2_KLEPN_Melnikov_2014": {
+   "rows": 4960,
+   "variants": 4960,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "MK01_HUMAN_Brenan_2016": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "MSH2_HUMAN_Jia_2020": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": true
+  },
+  "MTH3_HAEAE_Rockah-Shmuel_2015": {
+   "rows": 1777,
+   "variants": 1777,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "NUD15_HUMAN_Suiter_2020": {
+   "rows": 2844,
+   "variants": 2844,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "P53_HUMAN_Giacomelli_NULL_Etoposide_2018": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "P53_HUMAN_Giacomelli_NULL_Nutlin_2018": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "P53_HUMAN_Giacomelli_WT_Nutlin_2018": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "P53_HUMAN_Kotler_2018": {
+   "rows": 1048,
+   "variants": 1048,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "P84126_THETH_Chan_2017": {
+   "rows": 1519,
+   "variants": 1519,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "PABP_YEAST_Melamed_2013": {
+   "rows": 5000,
+   "variants": 4403,
+   "multi_variants": 597,
+   "multi_rows": 1194,
+   "straddle_modulo": 511,
+   "straddle_contig": 0,
+   "capped": true
+  },
+  "PTEN_HUMAN_Matreyek_2021": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "PTEN_HUMAN_Mighell_2018": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "Q59976_STRSQ_Romero_2015": {
+   "rows": 2999,
+   "variants": 2999,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "RASH_HUMAN_Bandaru_2017": {
+   "rows": 3134,
+   "variants": 3134,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "RL401_YEAST_Mavor_2016": {
+   "rows": 1253,
+   "variants": 1253,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "RL401_YEAST_Roscoe_2013": {
+   "rows": 1195,
+   "variants": 1195,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "RL401_YEAST_Roscoe_2014": {
+   "rows": 1380,
+   "variants": 1380,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "SC6A4_HUMAN_Young_2021": {
+   "rows": 5000,
+   "variants": 5000,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": true
+  },
+  "SPG1_STRSG_Olson_2014": {
+   "rows": 5000,
+   "variants": 4372,
+   "multi_variants": 628,
+   "multi_rows": 1256,
+   "straddle_modulo": 516,
+   "straddle_contig": 223,
+   "capped": true
+  },
+  "SRC_HUMAN_Ahler_CD_2019": {
+   "rows": 3372,
+   "variants": 3372,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "SUMO1_HUMAN_Weile_2017": {
+   "rows": 1700,
+   "variants": 1700,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "SYUA_HUMAN_Newberry_2020": {
+   "rows": 2497,
+   "variants": 2497,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "TADBP_HUMAN_Bolognesi_2019": {
+   "rows": 1196,
+   "variants": 1196,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "TPK1_HUMAN_Weile_2017": {
+   "rows": 3181,
+   "variants": 3181,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "TPMT_HUMAN_Matreyek_2018": {
+   "rows": 3648,
+   "variants": 3648,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "TPOR_HUMAN_Bridgford_S505N_2020": {
+   "rows": 562,
+   "variants": 562,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "TRPC_SACS2_Chan_2017": {
+   "rows": 1519,
+   "variants": 1519,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "TRPC_THEMA_Chan_2017": {
+   "rows": 1519,
+   "variants": 1519,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "UBC9_HUMAN_Weile_2017": {
+   "rows": 2563,
+   "variants": 2563,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "VKOR1_HUMAN_Chiasson_abundance_2020": {
+   "rows": 2695,
+   "variants": 2695,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "VKOR1_HUMAN_Chiasson_activity_2020": {
+   "rows": 697,
+   "variants": 697,
+   "multi_variants": 0,
+   "multi_rows": 0,
+   "straddle_modulo": 0,
+   "straddle_contig": 0,
+   "capped": false
+  },
+  "YAP1_HUMAN_Araya_2012": {
+   "rows": 5000,
+   "variants": 4332,
+   "multi_variants": 668,
+   "multi_rows": 1336,
+   "straddle_modulo": 555,
+   "straddle_contig": 15,
+   "capped": true
+  }
+ }
+}

@@ -1,9 +1,9 @@
 """Final analysis of all probing results for Bioinformatics paper."""
-import paramiko, json, time
+import os, paramiko, json, time
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect('connect.westc.seetacloud.com', port=27439, username='root', password='ONn5cUuobkX2', timeout=15)
+ssh.connect(os.environ['REMOTE_HOST'], port=int(os.environ['REMOTE_PORT']), username=os.environ.get('REMOTE_USER', 'root'), password=os.environ['REMOTE_PASSWORD'], timeout=15)
 
 def r(cmd):
     s, o, e = ssh.exec_command(cmd)
